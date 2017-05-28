@@ -5,12 +5,13 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use Notifiable;
 
-	public $table = "tbl_user";
-	protected $primaryKey = "id_user";
+	protected $guard = "admin";
+	public $table = "tbl_admin";
+	protected $primaryKey = "id_admin";
 
     /**
      * The attributes that are mass assignable.

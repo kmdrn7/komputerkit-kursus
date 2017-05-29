@@ -52,4 +52,21 @@ Route::group(['prefix' => '/admin'], function ()
 	{
 		return redirect(route('admin.dashboard'));
 	});
+
+	// Route untuk reset password
+	Route::post('/password/email', [
+		'uses' => 'Auth\AdminForgotPasswordController@sendResetLinkEmail',
+		'as' => 'admin.password.email'
+	]);
+	Route::get('/password/reset', [
+		'uses' => 'Auth\AdminForgotPasswordController@showLinkRequestForm',
+		'as' => 'admin.password.requests'
+	]);
+	Route::post('/password/reset', [
+		'uses' => 'Auth\AdminResetPasswordController@reset'
+	]);
+	Route::get('password/reset/{token}', [
+		'uses' => 'Auth\AdminResetPasswordController@showResetForm',
+		'as' => 'admin.password.reset'
+	]);
 });

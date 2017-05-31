@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'token', 'status'
     ];
 
     /**
@@ -29,4 +29,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+	public function detailkursus()
+	{
+		return $this->hasMany('App\Models\QDetailKursus', 'id_user');
+	}
+
+	public function bookmark()
+	{
+		return $this->hasMany('App\Models\QBookmark', 'id_user');
+	}
 }

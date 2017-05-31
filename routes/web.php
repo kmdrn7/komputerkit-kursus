@@ -11,62 +11,196 @@
 |
 */
 
+// ============ ROUTE USER ===============
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+// Login route
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+// Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+// Registration Routes...
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('register', 'Auth\RegisterController@register');
+Route::get('/verify/{token}/{id}', [
+	'uses' => 'Auth\RegisterController@verify',
+	'as' => 'verify',
+]);
+// Password Reset Routes...
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::get('user/logout', [
 	'uses' => 'Auth\LoginController@userLogout',
 	'as' => 'user.logout',
 ]);
 
-// , 'middleware' => 'isadmin'
-Route::group(['prefix' => '/admin'], function ()
+Route::group(['middleware' => 'auth'], function ()
 {
-
-	Route::get('/login', [
-		'uses' => 'AdminLoginController@showLoginForm',
-		'as' => 'admin.login',
+	Route::get('/me', [
+		'uses' => 'HomeController@index',
+		'as' => 'home'
 	]);
 
-	Route::post('/login', [
-		'uses' => 'AdminLoginController@login',
-		'as' => 'admin.login.submit',
+	Route::get('/notifikasi', [
+		'uses' => 'NotifikasiController@index',
+		'as' => 'notifikasi',
 	]);
 
-	Route::get('/dashboard', [
-		'uses' => 'AdminController@index',
-		'as' => 'admin.dashboard',
+	Route::get('/histori', [
+		'uses' => 'HistoriController@index',
+		'as' => 'histori',
 	]);
 
-	Route::get('/logout', [
-		'uses' => 'AdminLoginController@adminLogout',
-		'as' => 'admin.logout',
-	]);
-
-	Route::get('/', function ()
+	Route::get('/konfirmasi', function ()
 	{
-		return redirect(route('admin.dashboard'));
+		return redirect('/histori');
 	});
 
-	// Route untuk reset password
-	Route::post('/password/email', [
-		'uses' => 'Auth\AdminForgotPasswordController@sendResetLinkEmail',
-		'as' => 'admin.password.email'
+	Route::get('/konfirmasi/{id}', [
+		'uses' => 'KonfirmasiController@index',
+		'as' => 'konfirmasi.id',
 	]);
-	Route::get('/password/reset', [
-		'uses' => 'Auth\AdminForgotPasswordController@showLinkRequestForm',
-		'as' => 'admin.password.requests'
-	]);
-	Route::post('/password/reset', [
-		'uses' => 'Auth\AdminResetPasswordController@reset'
-	]);
-	Route::get('password/reset/{token}', [
-		'uses' => 'Auth\AdminResetPasswordController@showResetForm',
-		'as' => 'admin.password.reset'
-	]);
+
+	// Route untuk KELAS
+	Route::group(['prefix' => '/kelas'], function ()
+	{
+		Route::get('/', [
+			'uses' => 'KelasController@index',
+			'as' => 'kelas'
+		]);
+
+		Route::get('/kursus', function ()
+		{
+			return redirect('/kelas');
+		});
+
+		Route::get('kursus/{id}/materi', [
+			'uses' => 'KelasController@materi',
+			'as' => 'kelas.kursus.materi',
+		]);
+
+		Route::get('kursus/{id}/materi/{id_materi}', [
+			'uses' => 'KelasController@detailMateri',
+			'as' => 'kelas.kursus.materi.detail',
+		]);
+
+		Route::get('kursus/{id}/tugas', [
+			'uses' => 'KelasController@tugas',
+			'as' => 'kelas.kursus.tugas',
+		]);
+
+		Route::get('kursus/{id}/tugas/{id_tugas}', [
+			'uses' => 'KelasController@detailTugas',
+			'as' => 'kelas.kursus.tugas.detail',
+		]);
+
+		Route::get('kursus/{id}/diskusi', [
+			'uses' => 'KelasController@diskusi',
+			'as' => 'kelas.kursus.diskusi',
+		]);
+
+		Route::get('/promosi', [
+			'uses' => 'KelasController@promosi',
+			'as' => 'kelas.promosi',
+		]);
+
+		Route::get('/promosi/{id}', [
+			'uses' => 'KelasController@detailPromosi',
+			'as' => 'kelas.promosi.id',
+		]);
+	});
+
+
+	// Route untuk KURSUS
+	Route::group(['prefix' => '/kursus'], function ()
+	{
+		Route::get('/', function ()
+		{
+			return redirect('kursus/all');
+		});
+		Route::get('/free', function ()
+		{
+			return redirect('kursus/free/all');
+		});
+
+		Route::get('/free/{id}', [
+			'uses' => 'KursusController@indexFree',
+			'as' => 'kursus.free.id',
+		]);
+
+		Route::get('/{id}', [
+			'uses' => 'KursusController@index',
+			'as' => 'kursus.id',
+		]);
+
+		Route::get('/checkout/{id}', [
+			'uses' => 'KursusController@showCheckoutForm',
+			'as' => 'kursus.checkout.id',
+		]);
+	});
+
+	Route::group(['prefix' => '/expert'], function ()
+	{
+		Route::get('/', [
+			'uses' => 'ExpertController@index',
+			'as' => 'expert',
+		]);
+
+		Route::get('/{id}', [
+			'uses' => 'ExpertController@detail',
+			'as' => 'expert.id',
+		]);
+	});
+});
+
+Route::group(['middleware' => 'auth:admin'], function ()
+{
+	// ============ ROUTE ADMIN ===============
+	Route::group(['prefix' => '/admin'], function ()
+	{
+
+		Route::get('/', function ()
+		{
+			return redirect(route('admin.dashboard'));
+		});
+
+		Route::get('/login', [
+			'uses' => 'AdminLoginController@showLoginForm',
+			'as' => 'admin.login',
+		]);
+
+		Route::post('/login', [
+			'uses' => 'AdminLoginController@login',
+			'as' => 'admin.login.submit',
+		]);
+
+		Route::get('/dashboard', [
+			'uses' => 'AdminController@index',
+			'as' => 'admin.dashboard',
+		]);
+
+		Route::get('/logout', [
+			'uses' => 'AdminLoginController@adminLogout',
+			'as' => 'admin.logout',
+		]);
+
+		Route::post('/password/email', [
+			'uses' => 'Auth\AdminForgotPasswordController@sendResetLinkEmail',
+			'as' => 'admin.password.email'
+		]);
+		Route::get('/password/reset', [
+			'uses' => 'Auth\AdminForgotPasswordController@showLinkRequestForm',
+			'as' => 'admin.password.requests'
+		]);
+		Route::post('/password/reset', [
+			'uses' => 'Auth\AdminResetPasswordController@reset'
+		]);
+		Route::get('password/reset/{token}', [
+			'uses' => 'Auth\AdminResetPasswordController@showResetForm',
+			'as' => 'admin.password.reset'
+		]);
+	});
 });

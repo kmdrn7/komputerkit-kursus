@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Mail;
+use App\Mail\userRegistered;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -62,10 +66,45 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+			'token' => str_random(60),
         ]);
+
+		Mail::to($user->email)->send(new userRegistered($user));
     }
+
+	public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        // $this->guard()->login($user);
+		//
+        // return $this->registered($request, $user)
+        //                 ?: redirect($this->redirectPath());
+		return redirect('/login');
+    }
+
+	protected function registered(Request $request, $user)
+    {
+        //
+    }
+
+	public function verify($token, $id)
+	{
+		$user = User::find($id);
+		if ( $user ) {
+			if ( $token == $user->token ) {
+				$user->status = 1;
+				$user->save();
+				$this->guard()->login($user);
+				return redirect('/me');
+			}
+			return redirect('/login')->with('token_fail', 'Token missmatch');
+		}
+	}
 }

@@ -50,7 +50,8 @@
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
-								<div class="g-recaptcha" data-sitekey="6LdntiMUAAAAAKSj6TMlYRLW55v-ljGjAiENjKGC"></div>
+								{!! app('captcha')->display()!!}
+								{!! $errors->first('g-recaptcha-response','<p class="alert alert-danger">:message</p>')!!}
 							</div>
 						</div>
 

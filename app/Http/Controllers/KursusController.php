@@ -43,13 +43,15 @@ class KursusController extends Controller
 	public function indexFree($id)
 	{
 
+		$data['kategori'] = Kategori::all();
+
 		if ( $id == 'all' ) {
 			$data['kursus'] = Kursus::all();
 			return view('user.kursus.listfree', $data);
 		}
 
 		if ( $this->isCategory($id) ) {
-			$data['kursus'] = Kursus::where('slug', $id)->first();
+			$data['kursus'] = Kursus::where('kategori', $id)->get();
 			return view('user.kursus.listfree', $data);
 		}
 

@@ -15,6 +15,7 @@ class Kursus extends Model
 		'id_kursus',
 		'slug',
 		'kursus',
+		'kategori',
 		'waktu',
 		'ket_kursus',
 		'harga',

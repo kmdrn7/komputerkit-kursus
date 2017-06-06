@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Auth;
 use App\Models\Kursus;
 use App\Models\Kategori;
+use App\Models\DetailKursus;
+use Illuminate\Http\Request;
 use App\Models\QDetailMateri;
 use App\Models\QDetailKursus;
 
@@ -97,8 +99,33 @@ class KursusController extends Controller
 		return false;
 	}
 
-	public function premium()
+	public function showCheckoutForm($id)
 	{
-		echo "ini adalah kursus premium";
+		if ( $this->isExists($id) ) {
+			$kursus = Kursus::where('slug', $id)->first();
+			$data['kursus'] = $kursus;
+			$data['kursus_lain'] = Kursus::where('kursus', 'like', '%'.$kursus->kursus.'%')->get();
+			return view('user.kursus.checkout', $data);
+		}
+
+		return redirect('/kursus');
+	}
+
+	public function postCheckoutForm(Request $request, $id)
+	{
+
+		if ( $this->isExists($id) ) {
+
+			DetailKursus::create([
+				'id_kursus' => $request->id_kursus,
+				'id_user' => Auth::guard()->user()->id_user,
+				'bayar' => $request->bayar_kursus,
+				'flag_kursus' => 0,
+			]);
+
+			return redirect('/kelas');
+		}
+
+		return redirect('/kursus');
 	}
 }

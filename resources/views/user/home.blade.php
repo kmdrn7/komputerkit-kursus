@@ -11,11 +11,13 @@
                     You are logged in!
 					<br><br>
 					<pre>{{ Auth::guard('web')->user() }}</pre>
-					<pre>{{ Auth::guard('admin')->user() }}</pre>
                 </div>
             </div>
         </div>
     </div>
+
+	<example></example>
+
 	<div class="row">
 		<div class="col-md-12">
 			<div class="panel panel-default">
@@ -97,8 +99,6 @@
 
 				<div class="panel-body">
 					<div class="row ">
-						<style media="screen">
-						</style>
 						@foreach ($kursus as $item)
 							@php
 								$slug = $item->slug
@@ -116,6 +116,7 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="row">
 		<div class="col-md-12">
 			<div class="panel panel-default">

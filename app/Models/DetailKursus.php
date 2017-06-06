@@ -16,7 +16,7 @@ class DetailKursus extends Model
 		'bayar',
 		'tgl_mulai',
 		'tgl_selesai',
-		'flag',
+		'flag_kursus',
 	];
 
 	protected $guarded = [];

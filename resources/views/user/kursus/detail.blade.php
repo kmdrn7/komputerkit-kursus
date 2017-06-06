@@ -40,3 +40,11 @@
 		</div>
 	</div>
 @endsection
+
+@section('content-js')
+	<script type="text/javascript">
+		$(document).ready(function() {
+			console.log("Berhasil");
+		});
+	</script>
+@endsection

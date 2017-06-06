@@ -14,7 +14,7 @@
 // ============ ROUTE USER ===============
 Route::get('/', function () {
     return redirect('/login');
-});
+})->name('kk');
 // Login route
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
@@ -78,7 +78,7 @@ Route::group(['middleware' => 'auth'], function ()
 		});
 
 		Route::get('kursus/{id}/materi', [
-			'uses' => 'KelasController@materi',
+			'uses' => 'KelasController@showMateri',
 			'as' => 'kelas.kursus.materi',
 		]);
 
@@ -88,7 +88,7 @@ Route::group(['middleware' => 'auth'], function ()
 		]);
 
 		Route::get('kursus/{id}/tugas', [
-			'uses' => 'KelasController@tugas',
+			'uses' => 'KelasController@showTugas',
 			'as' => 'kelas.kursus.tugas',
 		]);
 
@@ -98,7 +98,7 @@ Route::group(['middleware' => 'auth'], function ()
 		]);
 
 		Route::get('kursus/{id}/diskusi', [
-			'uses' => 'KelasController@diskusi',
+			'uses' => 'KelasController@showDiskusi',
 			'as' => 'kelas.kursus.diskusi',
 		]);
 
@@ -139,6 +139,11 @@ Route::group(['middleware' => 'auth'], function ()
 		Route::get('/checkout/{id}', [
 			'uses' => 'KursusController@showCheckoutForm',
 			'as' => 'kursus.checkout.id',
+		]);
+
+		Route::post('/checkout/{id}', [
+			'uses' => 'KursusController@postCheckoutForm',
+			'as' => 'kursus.checkout.post'
 		]);
 	});
 

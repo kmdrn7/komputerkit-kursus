@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Kursus;
 use App\User;
+use App\Models\Kursus;
+use App\Models\QDetailMateri;
+use App\Models\QDetailTugas;
+use Illuminate\Http\Request;
+use App\Models\DetailKursus;
 use Illuminate\Support\Facades\Auth;
 
 class KelasController extends Controller
@@ -12,8 +15,141 @@ class KelasController extends Controller
     public function index()
     {
 		$data['kursus'] = Kursus::all();
-		$data['qkursus'] = User::find(Auth::id())->detailkursus()->where('flag_kursus', 1)->get();
+		// $data['qkursus'] = User::find(Auth::id())->detailkursus()->where('flag_kursus', 1)->get();
+		$data['qkursus'] = User::find(Auth::id())->detailkursus()->get();
 		$data['qbookmark'] = User::find(Auth::id())->bookmark;
-    	return view('user.kelas',$data);
+    	return view('user.kelas.kelas',$data);
     }
+
+	public function showMateri($id)
+	{
+		if ( substr_count($id, "-") === 2 ) {
+
+			$id_kursus 			= explode('--', $id)[0];
+			$id_detail_kursus 	= explode('--', $id)[1];
+
+			if ( $this->isActive($id_kursus, $id_detail_kursus) ) {
+
+				$data['materi'] = QDetailMateri::where('id_detail_kursus', $id_detail_kursus)->get();
+				$data['id'] = $id;
+				return view('user.kelas.materi', $data);
+			} else {
+				echo "salah";
+			}
+
+		}
+
+		return redirect('/kelas');
+	}
+
+	public function detailMateri($id, $id_materi)
+	{
+		if ( substr_count($id, "-") === 2 ) {
+
+			$id_kursus 			= explode('--', $id)[0];
+			$id_detail_kursus 	= explode('--', $id)[1];
+
+			if ( $this->isActive($id_kursus, $id_detail_kursus) ) {
+
+				if ( $this->isExist($id_materi) ) {
+
+					$data['materi'] = QDetailMateri::find($id_materi);
+					return view('user.kelas.detailMateri', $data);
+				}
+			}
+		}
+
+		return redirect('/kelas');
+	}
+
+	public function showTugas($id)
+	{
+		if ( substr_count($id, "-") === 2 ) {
+
+			$id_kursus 			= explode('--', $id)[0];
+			$id_detail_kursus 	= explode('--', $id)[1];
+
+			if ( $this->isActive($id_kursus, $id_detail_kursus) ) {
+
+				$data['tugas'] = QDetailTugas::where('id_detail_kursus', $id_detail_kursus)->get();
+				$data['id'] = $id;
+				return view('user.kelas.tugas', $data);
+			} else {
+				echo "salah";
+			}
+
+		}
+	}
+
+	public function detailTugas($id, $id_tugas)
+	{
+		if ( substr_count($id, "-") === 2 ) {
+
+			$id_kursus 			= explode('--', $id)[0];
+			$id_detail_kursus 	= explode('--', $id)[1];
+
+			if ( $this->isActive($id_kursus, $id_detail_kursus) ) {
+
+				if ( $this->isExistTugas($id_tugas) ) {
+
+					$data['tugas'] = QDetailTugas::find($id_tugas);
+					return view('user.kelas.detailTugas', $data);
+				}
+			}
+		}
+
+		return redirect('/kelas');
+	}
+
+	public function showDiskusi($id)
+	{
+		if ( substr_count($id, "-") === 2 ) {
+
+			$id_kursus 			= explode('--', $id)[0];
+			$id_detail_kursus 	= explode('--', $id)[1];
+
+			if ( $this->isActive($id_kursus, $id_detail_kursus) ) {
+				
+				$data['id'] = $id;
+				return view('user.kelas.diskusi', $data);
+			} else {
+				echo "salah";
+			}
+
+		}
+	}
+
+	public function isActive($id_kursus, $id_detail_kursus)
+	{
+		$exist = DetailKursus::where('id_user', Auth::user()->id_user)
+							->where('id_kursus', $id_kursus)
+							->where('id_detail_kursus', $id_detail_kursus)
+							->where('flag_kursus', 1)
+							->get()
+							->count();
+
+		if ( $exist > 0 ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function isExist($id)
+	{
+		if ( QDetailMateri::find($id) ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function isExistTugas($id)
+	{
+		if ( QDetailTugas::find($id) ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

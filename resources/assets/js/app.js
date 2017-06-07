@@ -7,6 +7,18 @@
 
 require('./bootstrap');
 
+require('materialize-css');
+
+// require('materialize-css/js/initial');
+// require('materialize-css/js/jquery.easing.1.3');
+// require('materialize-css/js/animation');
+// window.Vel = require('materialize-css/js/velocity.min');
+// require('materialize-css/js/hammer.min');
+// require('materialize-css/js/jquery.hammer');
+// require('materialize-css/js/global');
+// require('materialize-css/js/toasts');
+// require('./materialize-src/js/carousel');
+
 window.Vue = require('vue');
 
 /**

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Test;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\QDetailKursus;
 use App\Models\Kursus;
@@ -18,6 +20,27 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
+
+	public function test()
+	{
+		Test::create([
+			'time_from' => Carbon::now(),
+			'time_to' => Carbon::now()->addDays(1),
+		]);
+		$data = Test::all();
+		foreach ($data as $item) {
+			$diff = $item->time_from->diffInDays($item->time_to);
+			if ( $diff > 0 ) {4
+
+				echo $item->time_from . " sampai " . $item->time_to . " memiliki beda waktu " . $diff . " hari";
+				echo "<br>";
+			} else {
+
+				echo "Masa berlaku habis";
+				echo "<br>";
+			}
+		}
+	}
 
     /**
      * Show the application dashboard.

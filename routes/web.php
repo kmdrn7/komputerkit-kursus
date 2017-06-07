@@ -11,6 +11,11 @@
 |
 */
 
+Route::get('/test', [
+	'uses' => 'HomeController@test',
+	'as' => 'test'
+]);
+
 // ============ ROUTE USER ===============
 Route::get('/', function () {
     return redirect('/login');

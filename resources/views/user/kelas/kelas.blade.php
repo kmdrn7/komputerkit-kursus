@@ -7,8 +7,8 @@
 			<div class="col-md-12">
 				<h2>Kelas</h2>
 			</div>
-		</div>
-				
+		</div>		
+
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-default">

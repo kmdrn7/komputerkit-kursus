@@ -19,10 +19,12 @@
 		<ul id="slide-out" class="side-nav">
             <li><div class="userView">
             <div class="background" style="background-color: #292C44;"></div>
-            <a href="#!user"><img class="circle" src="images/com.jpg"></a>
+            <a href="#!user"><img class="circle" src="{{ asset('img/com.jpg') }}"></a>
             <a href="#!name"><span class="white-text name">Komputer Kit</span></a>
             <a href="#!email"><span class="white-text email">komputerkit.dev@gmail.com</span></a>
             </div></li>
+			<input type="hidden" name="KJashkjasdb" id="KJashkjasdb" value="{{ $id_detail_kursus }}">
+			<input type="hidden" name="aASDbjkbasd" id="aASDbjkbasd" value="{{ Auth::user()->name }}">			
             <li><a href="index.html">Dasbor</a></li>
             <li><a href="pages/new-semua-kursus.html">Semua Kursus</a></li>
             <li><a href="pages/bookmark.html">Bookmark</a></li>

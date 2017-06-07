@@ -1,6 +1,6 @@
 <template lang="html">
 	<div class="chat-log">
-		<chat-message v-for="message in messages" :message="message" :key="message.id">
+		<chat-message v-for="pesan in messages" :pesan="pesan" :key="pesan.id_pesan">
 
 		</chat-message>
 	</div>
@@ -9,7 +9,7 @@
 <script>
 export default {
 	props: ['messages']
-}
+};
 </script>
 
 <style lang="css">

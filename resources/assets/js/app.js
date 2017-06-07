@@ -35,20 +35,19 @@ Vue.component('chat-composer', require('./components/ChatComposer.vue'));
 const app = new Vue({
     el: '#app',
 	data: {
-		messages : [
-			{
-				message : "Hey bro!",
-				user 	: "kmdr7"
-			},
-			{
-				message : "Hello!",
-				user 	: "kmdr7"
-			}
-		]
+		messages : []
 	},
 	methods: {
 		addMessage(message) {
 			this.messages.push(message);
+			axios.post('/api/pesan', message).then(response => {
+				console.log(response);
+			});
 		}
+	},
+	created() {
+		axios.get('/api/pesan').then(response => {
+			this.messages = response.data;
+		});
 	}
 });

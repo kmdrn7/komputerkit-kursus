@@ -6,6 +6,7 @@
 </template>
 
 <script>
+
 export default {
 	data() {
 		return {
@@ -15,8 +16,9 @@ export default {
 	methods : {
 		sendMessage() {
 			this.$emit('messagesent', {
-				message : this.messageText,
-				user 	: "Andika"
+				id_detail_kursus 	: $('#KJashkjasdb').val(),
+				dari 				: $('#aASDbjkbasd').val(),
+				pesan 				: this.messageText,
 			});
 			this.messageText = '';
 		}

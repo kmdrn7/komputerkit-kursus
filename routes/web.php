@@ -152,6 +152,8 @@ Route::group(['middleware' => 'auth'], function ()
 		]);
 	});
 
+
+	// ROUTE UNTUK EXPERT
 	Route::group(['prefix' => '/expert'], function ()
 	{
 		Route::get('/', [
@@ -162,6 +164,23 @@ Route::group(['middleware' => 'auth'], function ()
 		Route::get('/{id}', [
 			'uses' => 'ExpertController@detail',
 			'as' => 'expert.id',
+		]);
+	});
+
+
+	// ROUTE UNTUK API USER
+	Route::group(['prefix' => '/api'], function ()
+	{
+
+		// API PESAN
+		Route::get('/pesan', [
+			'uses' => 'UserApiController@semuaPesan',
+			'as' => 'api.pesan',
+		]);
+
+		Route::post('/pesan', [
+			'uses' => 'UserApiController@postPesan',
+			'as' => 'api.pesan.post',
 		]);
 	});
 });

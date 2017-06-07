@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Route;
 use App\User;
 use App\Models\Kursus;
 use App\Models\QDetailMateri;
@@ -109,8 +110,10 @@ class KelasController extends Controller
 			$id_detail_kursus 	= explode('--', $id)[1];
 
 			if ( $this->isActive($id_kursus, $id_detail_kursus) ) {
-				
+
 				$data['id'] = $id;
+				$data['id_detail_kursus'] = $id_detail_kursus;
+				
 				return view('user.kelas.diskusi', $data);
 			} else {
 				echo "salah";

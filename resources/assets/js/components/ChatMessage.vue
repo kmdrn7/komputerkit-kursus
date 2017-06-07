@@ -1,13 +1,13 @@
 <template lang="html">
 	<div class="chat-message">
-		<p>{{ message.message }}</p>
-		<small>{{ message.user }}</small>
+		<small>{{ pesan.dari }}</small>
+		<p>{{ pesan.pesan }}</p>
 	</div>
 </template>
 
 <script>
 export default {
-	props : ['message']
+	props : ['pesan']
 }
 </script>
 

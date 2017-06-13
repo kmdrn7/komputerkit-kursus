@@ -15,6 +15,12 @@
                 </div>
             </div>
         </div>
+
+		<div class="col-md-12">
+			<h2>ChatRoom</h2>
+			<chat-log :messages="messages"></chat-log>
+			<chat-composer v-on:messagesent="addMessage"></chat-composer>
+		</div>
     </div>
 </div>
 @endsection

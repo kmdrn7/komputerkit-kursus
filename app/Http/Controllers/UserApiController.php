@@ -13,22 +13,38 @@ class UserApiController extends Controller
     	echo "terimakasih telah menggunakan api user ini";
     }
 
-	public function semuaPesan()
+	public function semuaPesan($id)
 	{
-		return Pesan::all();
+		// return Pesan::where('id_detail_kursus', $id)->where('flag_pesan', 1)->limit(10)->orderBy('id_pesan', 'desc')->get();
+		return Pesan::where('id_detail_kursus', $id)->where('flag_pesan', 1)->get();
+	}
+
+	public function detPesan($id)
+	{
+		return Pesan::where('id_detail_kursus', $id)->where('flag_pesan', 0)->get();
 	}
 
 	public function postPesan(Request $request)
 	{
+
+		$user = Auth::user();
+
 		$data = [
 			'id_detail_kursus' => $request->id_detail_kursus,
-			'dari' => Auth::user()->name,
+			'dari' => $user->name,
 			'pesan' => $request->pesan,
 			'flag_pesan' => 1,
 		];
 
-		Pesan::create($data);
+		$pesan = Pesan::create($data);
+	}
 
-		return ['result' => $data];
+	public function setFalse(Request $request)
+	{
+		$id = $request->id_pesan;
+		$pesan = Pesan::find($id);
+		$pesan->flag_pesan = 1;
+		$pesan->save();
+		return ['update' => "Berhasil"];
 	}
 }

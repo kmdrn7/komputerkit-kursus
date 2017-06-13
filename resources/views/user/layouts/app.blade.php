@@ -13,22 +13,25 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/main-app.css') }}" rel="stylesheet">
+	@yield('custom--css')
 </head>
 <body>
-    <div id="app">
+    {{-- <div id="app"> --}}
 		<ul id="slide-out" class="side-nav">
             <li><div class="userView">
             <div class="background" style="background-color: #292C44;"></div>
             <a href="#!user"><img class="circle" src="{{ asset('img/com.jpg') }}"></a>
-            <a href="#!name"><span class="white-text name">Komputer Kit</span></a>
-            <a href="#!email"><span class="white-text email">komputerkit.dev@gmail.com</span></a>
+            <a href="#!name"><span class="white-text name">{{ Auth::user()->name }}</span></a>
+            <a href="#!email"><span class="white-text email">{{ Auth::user()->email }}</span></a>
             </div></li>
-			<input type="hidden" name="KJashkjasdb" id="KJashkjasdb" value="{{ $id_detail_kursus }}">
-			<input type="hidden" name="aASDbjkbasd" id="aASDbjkbasd" value="{{ Auth::user()->name }}">			
-            <li><a href="index.html">Dasbor</a></li>
-            <li><a href="pages/new-semua-kursus.html">Semua Kursus</a></li>
+			@isset( $id_detail_kursus )
+				<input type="hidden" name="KJashkjasdb" id="KJashkjasdb" value="{{ $id_detail_kursus }}">
+				<input type="hidden" name="aASDbjkbasd" id="aASDbjkbasd" value="{{ Auth::user()->name }}">
+			@endisset
+            <li><a href="{{ url('/me') }}">Dasbor</a></li>
+            <li><a href="{{ url('/kursus/all') }}">Semua Kursus</a></li>
             <li><a href="pages/bookmark.html">Bookmark</a></li>
-            <li><a href="pages/kelas.html">Kelas</a></li>
+            <li><a href="{{ url('/kelas') }}">Kelas</a></li>
             <li><div class="divider" style="margin-bottom: 8px;"></div></li>
             <li><a href="#!">Kursus Saya</a></li>
             <li><div class="divider" style="margin-bottom: 8px;"></div></li>
@@ -45,33 +48,38 @@
 					<i class="material-icons right" style=";">notifications</i>
 				</a>
 				<!-- Dropdown Trigger -->
-				<a class='dropdown-button right btn-menu'  data-beloworigin="true" href='#' data-activates='dropdown1'>
-					Andika Ahmad Ramadhan
+				{{-- <a href="#" data-activates="slide-out" class="button-collapse right">
+					Andika Ahmad Ramdhan
+					<i class="material-icons left" style="font-size: 40px;">menu</i>
+				</a> --}}
+				<a class='right button-collapse btn-menu' href='#' data-activates='slide-out'>
+					{{ Auth::user()->name }}
 					<i class="material-icons" style="font-size: 30px">arrow_drop_down</i>
 				</a>
 
 				<!-- Dropdown Structure -->
-				<ul id='dropdown1' class='dropdown-content'>
-					<li><a href="#!">one</a></li>
-					<li><a href="#!">two</a></li>
-					<li class="divider"></li>
-					<li><a href="#!">three</a></li>
-				</ul>
+				{{-- <ul id='dropdown1' class='dropdown-content'> --}}
+					{{-- <li><a href="#!">Profil</a></li> --}}
+					{{-- <li><a href="#!">two</a></li> --}}
+					{{-- <li class="divider"></li> --}}
+					{{-- <li><a href="#!">three</a></li> --}}
+				{{-- </ul> --}}
+				{{-- <a href="" class=" right btn-menu">Menu</a>
 				<a href="" class=" right btn-menu">Menu</a>
-				<a href="" class=" right btn-menu">Menu</a>
-				<a href="" class=" right btn-menu">Menu</a>
+				<a href="" class=" right btn-menu">Menu</a> --}}
             </div>
             <div class="row no-margin-bottom valign-wrapper" style="height: 150px; margin-left: auto; margin-right: auto;">
 				<a href="{{ url('/') }}" style="margin:auto">
-					<img src="{{ asset('img/logo/logo-KIT.png') }}" alt="" style="width: 400px; margin: auto">
+					<img src="{{ asset('img/logo/logo-KIT.png') }}" alt="" style="width: 400px; margin: auto" class="bd">
 				</a>
             </div>
         </div>
         @yield('content')
-    </div>
+    {{-- </div> --}}
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('js/main_app.js') }}"></script>
+	@yield('custom--js')
 	@yield('content-js')
 </body>
 </html>

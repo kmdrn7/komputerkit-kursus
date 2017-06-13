@@ -19,6 +19,7 @@ export default {
 				id_detail_kursus 	: $('#KJashkjasdb').val(),
 				dari 				: $('#aASDbjkbasd').val(),
 				pesan 				: this.messageText,
+				created_at			: moment().format("YYYY-MM-DD HH:mm:ss"),
 			});
 			this.messageText = '';
 		}

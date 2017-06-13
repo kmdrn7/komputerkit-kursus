@@ -1,6 +1,6 @@
 <template lang="html">
 	<div class="chat-message">
-		<small>{{ pesan.dari }}</small>
+		<small>{{ pesan.dari }} {{ pesan.created_at }}</small> 
 		<p>{{ pesan.pesan }}</p>
 	</div>
 </template>

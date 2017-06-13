@@ -171,22 +171,37 @@ Route::group(['middleware' => 'auth'], function ()
 	// ROUTE UNTUK API USER
 	Route::group(['prefix' => '/api'], function ()
 	{
+		// Main api request
+		Route::get('/', [
+			'uses' => 'UserApiController@index',
+			'as' => 'api',
+		]);
 
 		// API PESAN
-		Route::get('/pesan', [
+		Route::get('/pesan/all/{id}', [
 			'uses' => 'UserApiController@semuaPesan',
 			'as' => 'api.pesan',
+		]);
+
+		Route::get('/pesan/{id}', [
+			'uses' => 'UserApiController@detPesan',
+			'as' => 'api.pesan.id',
 		]);
 
 		Route::post('/pesan', [
 			'uses' => 'UserApiController@postPesan',
 			'as' => 'api.pesan.post',
 		]);
+
+		Route::post('/pesan/setFalse', [
+			'uses' => 'UserApiController@setFalse',
+			'as' => 'api.pesan.setfalse',
+		]);
 	});
 });
 
-Route::group(['middleware' => 'auth:admin'], function ()
-{
+// Route::group(['middleware' => 'auth:admin'], function ()
+// {
 	// ============ ROUTE ADMIN ===============
 	Route::group(['prefix' => '/admin'], function ()
 	{
@@ -194,6 +209,7 @@ Route::group(['middleware' => 'auth:admin'], function ()
 		Route::get('/', function ()
 		{
 			return redirect(route('admin.dashboard'));
+			// return "ini admin";
 		});
 
 		Route::get('/login', [
@@ -232,4 +248,4 @@ Route::group(['middleware' => 'auth:admin'], function ()
 			'as' => 'admin.password.reset'
 		]);
 	});
-});
+// });

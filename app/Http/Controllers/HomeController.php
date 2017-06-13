@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Route;
 use App\Test;
 use Carbon\Carbon;
@@ -52,8 +53,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-		$id = str_pad(substr(Kursus::orderBy('id_kursus', 'desc')->take(1)->get()->first()->id_kursus, 2, strlen(Kursus::orderBy('id_kursus', 'desc')->take(1)->get()->first()->id_kursus))+1, 4, '0', STR_PAD_LEFT);
-		$data['id'] = str_pad(substr(Kursus::orderBy('id_kursus', 'desc')->take(1)->get()->first()->id_kursus, 2, strlen(Kursus::orderBy('id_kursus', 'desc')->take(1)->get()->first()->id_kursus))+1, 4, '0', STR_PAD_LEFT);
+		// $id = str_pad(substr(Kursus::orderBy('id_kursus', 'desc')->take(1)->get()->first()->id_kursus, 2, strlen(Kursus::orderBy('id_kursus', 'desc')->take(1)->get()->first()->id_kursus))+1, 4, '0', STR_PAD_LEFT);
+		// $data['id'] = str_pad(substr(Kursus::orderBy('id_kursus', 'desc')->take(1)->get()->first()->id_kursus, 2, strlen(Kursus::orderBy('id_kursus', 'desc')->take(1)->get()->first()->id_kursus))+1, 4, '0', STR_PAD_LEFT);
 		// Kursus::create([
 		// 	'id_kursus' => "kk".$id,
 		// 	'slug' => 'nama-kursus-andka--14--kk'.$id,
@@ -63,10 +64,13 @@ class HomeController extends Controller
 		// 	'harga' => 20000,
 		// 	'gambar' => 'nope',
 		// ]);
-
-		$data['kursus'] = Kursus::all();
-		$data['topFirst'] = Top::first();
-		$data['topThird'] = Top::third();
+		// dd($id);
+		$data['kursus'] = Kursus::take(3)->get();
+		$data['kursus_anda'] = QDetailKursus::where(['id_user'=> Auth::id(), 'flag_kursus' => 1,])->get();
+		$data['kursus_tunggakan'] = QDetailKursus::where(['id_user'=> Auth::id(), 'flag_kursus' => 0,])->get();
+		// dd($data['kursus_anda']->tgl_mulai->diffInDays($data['kursus_anda']->tbl_selesai));
+		// $data['topFirst'] = Top::first();
+		// $data['topThird'] = Top::third();
         return view('user.home', $data);
     }
 }

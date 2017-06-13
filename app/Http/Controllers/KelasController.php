@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Route;
 use App\User;
 use App\Models\Kursus;
+use App\Models\QDetailKursus;
 use App\Models\QDetailMateri;
 use App\Models\QDetailTugas;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class KelasController extends Controller
     {
 		$data['kursus'] = Kursus::all();
 		// $data['qkursus'] = User::find(Auth::id())->detailkursus()->where('flag_kursus', 1)->get();
-		$data['qkursus'] = User::find(Auth::id())->detailkursus()->get();
+		$data['qkursus'] = User::find(Auth::id())->detailkursus()->orderBy('flag_kursus', 'desc')->get();
 		$data['qbookmark'] = User::find(Auth::id())->bookmark;
     	return view('user.kelas.kelas',$data);
     }
@@ -31,6 +32,7 @@ class KelasController extends Controller
 
 			if ( $this->isActive($id_kursus, $id_detail_kursus) ) {
 
+				$data['kursus'] = QDetailKursus::find($id_detail_kursus);
 				$data['materi'] = QDetailMateri::where('id_detail_kursus', $id_detail_kursus)->get();
 				$data['id'] = $id;
 				return view('user.kelas.materi', $data);
@@ -72,6 +74,7 @@ class KelasController extends Controller
 
 			if ( $this->isActive($id_kursus, $id_detail_kursus) ) {
 
+				$data['kursus'] = QDetailKursus::find($id_detail_kursus);
 				$data['tugas'] = QDetailTugas::where('id_detail_kursus', $id_detail_kursus)->get();
 				$data['id'] = $id;
 				return view('user.kelas.tugas', $data);
@@ -113,7 +116,8 @@ class KelasController extends Controller
 
 				$data['id'] = $id;
 				$data['id_detail_kursus'] = $id_detail_kursus;
-				
+				$data['kursus'] = QDetailKursus::find($id_detail_kursus);
+
 				return view('user.kelas.diskusi', $data);
 			} else {
 				echo "salah";

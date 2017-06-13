@@ -9,4 +9,9 @@ class Kategori extends Model
     protected $table = 'tbl_kategori';
 	protected $primaryKey = 'id_kategori';
 	public $timestamps = false;
+
+	protected $fillable = [
+		'kategori',
+		'slug',
+	];
 }

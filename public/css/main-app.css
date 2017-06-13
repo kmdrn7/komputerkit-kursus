@@ -10,7 +10,13 @@ body {
 
 
 .container {
-	width: 85%!important;
+	/*width: 90%!important;*/
+	width: 1280px;
+	max-width: 1280px;
+}
+
+.container-kelas {
+
 }
 
 .bd {
@@ -35,6 +41,23 @@ body {
 
 .no-margin-bottom {
 	margin-bottom: 0px;
+}
+
+.no-margin-top {
+	margin-bottom: 0px;
+}
+
+.iklan-img {
+	width: 65px;
+}
+
+.tutorial-panel {
+	background-image: url('/img/web/tutorial-panel.jpg');
+	background-repeat: no-repeat;
+	background-position: top;
+	background-size: cover;
+	background-color: rgb(204,204,204);
+	background-blend-mode: luminosity;
 }
 
 .card-kelas > div {
@@ -130,6 +153,7 @@ body {
     box-shadow: 1px 2px 3px 0 #E6E9EC;
     transition: .1s all ease-in-out;
     width: 100% !important;
+	height: 80px;
     margin-bottom: 15px;
     color: #809196;
     border: 1px solid white;
@@ -152,6 +176,12 @@ body {
     line-height: 20px;
 }
 
+/*
+
+	KURSUS
+
+*/
+
 #kursus {
     margin: 50px 0 50px 0;
     border-radius: 5px;
@@ -168,6 +198,149 @@ body {
     transition: .2s all ease-in;
     background: #fff;
     box-shadow: 1px 1px 1px 0 rgba(0,0,0,.04);
+}
+
+.kursus-kursus {
+	font-size: 16px;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	font-weight: 400;
+	position: relative;
+	margin-bottom: 15px;
+}
+
+#border-bottom {
+	position: absolute;
+	top: 5px;
+	border-radius: 1px;
+	border-bottom: 3px solid green;
+	width: 30px;
+	margin: 0;
+}
+
+.kursus-title {
+	font-size: 33px;
+	font-weight: 300;
+	height: 100px !important;
+	margin-bottom: 5px;
+}
+
+.kursus-mini-detail {
+	margin-bottom: 20px;
+}
+
+.kursus-detail-header {
+	font-size: 30px;
+	font-weight: 300;
+}
+
+.kursus-detail-content {
+	font-size: 16px;
+	font-weight: 300;
+	margin-top: 15px;
+}
+
+.kursus-kanan-head {
+	font-size: 30px;
+	font-weight: 300;
+	color: rgb(79,79,79);
+	margin-bottom: 15px;
+}
+
+.kursus-kanan-content {
+
+}
+
+.dvd-kursus {
+	margin: 10px 0;
+}
+
+.apa-yang-anda {
+	padding: 10px 5px!important;
+}
+
+.kursus-img {
+	background-color: white;
+	height: 180px;
+}
+
+.kursus-img img {
+	height: 100%;
+	object-fit: contain;
+}
+
+.kursus-title {
+	margin-top: 10px;
+	height: 50px;
+	/*border: 1px solid;*/
+}
+
+.kursus-buy {
+	margin: 10px 0px;
+}
+
+.kursus-syarat-header {
+	margin: 15px 0;
+	font-size: 35px;
+	font-weight: 300;
+}
+
+.kursus-syarat-content {
+	text-align: justify;
+}
+
+.kursus-materi-header {
+	font-size: 35px;
+	font-weight: 300;
+	text-align: center;
+	margin-bottom: 25px;
+}
+
+.owl-item {
+	width: 310px!important;
+}
+
+.owl-stage-outer {
+	width: 100%!important;
+}
+
+.card-materi {
+	height: 400px;
+	overflow: hidden;
+	border-radius: 8px;
+}
+
+.materi-header {
+	font-size: 14px;
+	position: relative;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	color: rgb(99,99,99);
+}
+
+	.bdMateri {
+		position: absolute;
+		top: 36px;
+		left: 0;
+		height: 60px;
+		border: 3px solid rgb(4,139,86);
+	}
+
+.materi-title {
+	font-size: 25px;
+	font-weight: 400;
+	margin-bottom: 20px;
+}
+
+.materi-content {
+	font-size: 15px;
+	font-weight: 300;
+}
+
+.card-sub-materi {
+	position: relative;
+	height: 340px;
+	overflow: hidden;
 }
 
 #item-bookmark {
@@ -187,6 +360,10 @@ body {
     color: #738e8d;
     font-weight: 600;
     font-size: 20px;
+}
+
+#whoIsTyping {
+	display: none;
 }
 
 .my-button {
@@ -213,6 +390,135 @@ body {
     font-size: 14px;
     line-height: 20px;
 }
+
+/*
+
+	KELAS
+
+*/
+
+.kelas-panel-head {
+	font-size: 13px;
+	text-transform: uppercase;
+	color: rgb(98,98,98);
+	letter-spacing: 2px;
+		text-shadow: 1px 1px 20px rgb(189,189,189);
+}
+
+.btn-flat {
+	text-transform: uppercase;
+	background-color: transparent!important;
+	border: 1px solid;
+	border-radius: 4px;
+	letter-spacing: 1px;
+	font-weight: 500;
+}
+
+.btn-red {
+	color: rgb(213,50,21);
+	background-color: rgb(213,50,21);
+}
+
+.btn-blue {
+	color: rgb(47,140,170);
+	background-color: rgb(47,140,170);
+}
+
+.btn-flat:hover {
+	background-color: transparent;
+}
+
+.leftKursusGreen {
+	position: absolute;
+	top: 20px;
+	left: 0;
+	width: 10px;
+	height: 60px;
+	background-color: rgb(33,134,79);
+}
+
+.leftKursusRed {
+	position: absolute;
+	top: 20px;
+	left: 0;
+	width: 10px;
+	height: 60px;
+	background-color: rgb(223,89,76);
+}
+
+.kelas-kursus-title {
+	font-size: 20px;
+	font-weight: 500;
+	margin-top: -10px;
+	color: rgb(51,51,51);
+	margin-bottom: 10px;
+}
+
+.kelas-kursus-detail {
+	font-size: 14px;
+	color: rgb(96,96,96);
+}
+
+.kelas-materi-materi {
+	font-size: 14px;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	font-weight: 400;
+	position: relative;
+	margin-bottom: 5px;
+	color: rgb(121,121,121);
+}
+
+.kelas-materi-head {
+	font-size: 20px;
+	font-weight: 500;
+	color: rgb(51,51,51);
+	margin-bottom: 10px;
+}
+
+.kelas-materi-content {
+	font-size: 14px;
+	color: rgb(96,96,96);
+	margin-bottom: 20px;
+}
+
+/*.kelas-materi-status {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 150px;
+	height: 50px;
+	background-color: red;
+	font-weight: 300;
+	font-size: 20px;
+	text-align: right;
+}*/
+
+.kelas-materi-status {
+	font-size: 15px;
+	font-weight: 300;
+}
+
+.kelas-materi-media {
+	height: 200px;
+}
+
+.kelas-materi-media img {
+	margin: auto;
+	display: block;
+}
+
+.leftKelasMateri {
+	position: absolute;
+	width: 6px;
+	height: 65px;
+	background-color: rgb(16,140,99);
+	top: 18px;
+	left: 0;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
 
 @media only screen and (max-width: 600px) {
     #count {

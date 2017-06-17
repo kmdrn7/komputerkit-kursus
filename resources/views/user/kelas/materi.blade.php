@@ -59,19 +59,25 @@
 									{{ $m->materi }}
 								</div>
 								<div class="kelas-materi-content">
-									{{ substr($m->desc_materi, 0, 180) }}...
+									{{ substr($m->ket_materi, 0, 180) }}...
 								</div>
 								<div class="kelas-materi-button left">
-									<a href="{{ route('kelas.kursus.materi.detail', ['id' => $id, 'id_materi' => $m->id_materi]) }}" class="btn btn-primary btn-large">Mulai Materi</a>
+									<a href="{{ route('kelas.kursus.materi.detail', ['id' => $id, 'id_materi' => $m->id_detail_materi]) }}" class="btn btn-primary btn-large">Mulai Materi</a>
 								</div>
 							</div>
 							<div class="col m4">
 								<div class="kelas-materi-media valign-wrapper">
-									<img src="{{ asset('img/web/youtube.png') }}" alt="" style="margin: auto">
+									{{-- <img src="{{ asset('img/web/youtube.png') }}" alt="" style="margin: auto">
+									{{ $m->yt_embed }} --}}
+									<img src="http://img.youtube.com/vi/{{$m->yt_id}}/0.jpg" alt="" style="margin: auto; width: 100%" class="z-depth-2">
 								</div>
 							</div>
 						</div>
-						<div class="leftKelasMateri"></div>
+						@if ( $m->flag_materi == 1 )
+							<div class="leftKelasMateriGreen"></div>
+						@else
+							<div class="leftKelasMateriGray"></div>
+						@endif
 					</div>
 				</div>
 			@endforeach

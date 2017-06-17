@@ -86,29 +86,60 @@ class KursusController extends Controller
 		}
 	}
 
-	public function indexFree($id)
+	public function indexFree(Request $request, $id)
 	{
 
-		$data['kategori'] = Kategori::all();
-
 		if ( $id == 'all' ) {
-			$data['kursus'] = Kursus::all();
+
+			// Ajax Request
+			if ( $this->isJsonRequest($request) ) {
+				$req = $request->all();
+
+				if ( isset($req['kursus']) ) {
+
+					$data['kursus'] = Kursus::where('kursus', 'like', "%".$req['kursus']."%")->paginate(3);
+					return Response::json(View::make('user.kursus.kursusfree', $data)->render());
+				}
+
+				$data['kursus'] = Kursus::paginate(3);
+				return Response::json(View::make('user.kursus.kursusfree', $data)->render());
+			}
+
+			$data['kursus'] = Kursus::paginate(3);
+			$data['kategori'] = Kategori::all();
 			return view('user.kursus.listfree', $data);
 		}
 
 		if ( $this->isCategory($id) ) {
-			$data['kursus'] = Kursus::where('kategori', $id)->get();
+
+			// Ajax Request
+			if ( $this->isJsonRequest($request) ) {
+				$req = $request->all();
+
+				if ( isset($req['kursus']) ) {
+
+					$data['kursus'] = Kursus::where('kursus', 'like', "%".$req['kursus']."%")->where('kategori', $id)->paginate(3);
+					return Response::json(View::make('user.kursus.kursusfree', $data)->render());
+				}
+
+				$data['kursus'] = Kursus::where('kategori', $id)->paginate(3);
+				return Response::json(View::make('user.kursus.kursusfree', $data)->render());
+			}
+
+			$data['kursus'] = Kursus::where('kategori', $id)->paginate(3);
+			$data['kategori'] = Kategori::all();
 			return view('user.kursus.listfree', $data);
 		}
 
+		// Lihat detail kursus
 		if ( $this->isExists($id) ) {
 
 			if ( $id == 'all' ) {
 				$data['kursus'] = Kursus::all();
 			} else {
+				$idKursus = explode('--', $id)[1];
 				$data['kursus'] = Kursus::where('slug', $id)->first();
-				$data['materi'] = QDetailMateri::where('slug', $id)->get();
-				$data['user'] = QDetailKursus::where('slug', $id)->get();
+				$data['materi'] = Materi::where('id_kursus', $idKursus)->get();
 			}
 
 			return view('user.kursus.detailfree', $data);

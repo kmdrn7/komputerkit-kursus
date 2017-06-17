@@ -18,25 +18,29 @@
 <body>
     {{-- <div id="app"> --}}
 		<ul id="slide-out" class="side-nav">
-            <li><div class="userView">
-            <div class="background" style="background-color: #292C44;"></div>
-            <a href="#!user"><img class="circle" src="{{ asset('img/com.jpg') }}"></a>
-            <a href="#!name"><span class="white-text name">{{ Auth::user()->name }}</span></a>
-            <a href="#!email"><span class="white-text email">{{ Auth::user()->email }}</span></a>
-            </div></li>
+            <li>
+				<div class="userView">
+		            <div class="background teal" style=""></div>
+		            <img class="circle" src="{{ asset('img/com.jpg') }}" style="background-color: whitesmoke; padding: 2px;">
+		            <span class="white-text name">{{ Auth::user()->name }}</span>
+		            <span class="white-text email">{{ Auth::user()->email }}</span>
+	            </div>
+			</li>
 			@isset( $id_detail_kursus )
 				<input type="hidden" name="KJashkjasdb" id="KJashkjasdb" value="{{ $id_detail_kursus }}">
 				<input type="hidden" name="aASDbjkbasd" id="aASDbjkbasd" value="{{ Auth::user()->name }}">
 			@endisset
-            <li><a href="{{ url('/me') }}">Dasbor</a></li>
+            <li><a href="{{ url('/me') }}">Dashboard</a></li>
             <li><a href="{{ url('/kursus/all') }}">Semua Kursus</a></li>
-            <li><a href="pages/bookmark.html">Bookmark</a></li>
-            <li><a href="{{ url('/kelas') }}">Kelas</a></li>
-            <li><div class="divider" style="margin-bottom: 8px;"></div></li>
-            <li><a href="#!">Kursus Saya</a></li>
-            <li><div class="divider" style="margin-bottom: 8px;"></div></li>
-            <li><a href="#!">Notifikasi</a></li>
-            <li><a href="#!">Log Out</a></li>
+			<li><a href="{{ url('/histori') }}">Histori Kursus</a></li>
+            <li><a href="{{ url('/bookmark') }}">Bookmark</a></li>
+
+			<li><div class="divider" style="margin-bottom: 8px;"></div></li>
+			<li><a href="{{ url('/kelas') }}">Kelas</a></li>
+			<li><div class="divider" style="margin-bottom: 8px;"></div></li>
+
+			<li><a href="{{ url('/notifikasi') }}">Notifikasi</a></li>
+            <li><a href="{{ url('/user/logout') }}">Log Out</a></li>
         </ul>
 
 		<div class="col s12 main-header">
@@ -44,7 +48,8 @@
                 <a href="#" data-activates="slide-out" class="button-collapse">
 					<i class="material-icons left" style="font-size: 40px;">menu</i>
 				</a>
-                <a href="#" class="btn-floating pulse right">
+                {{-- <a href="#" class="btn-floating pulse right"> --}}
+				<a href="#" class="btn-floating right">
 					<i class="material-icons right" style=";">notifications</i>
 				</a>
 				<!-- Dropdown Trigger -->
@@ -76,6 +81,33 @@
         </div>
         @yield('content')
     {{-- </div> --}}
+
+	<footer class="teal page-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col l6 s12">
+					<h5 class="white-text">KomputerKit</h5>
+					<p class="grey-text text-lighten-4">Tempat belajar pemrograman mulai dari dasar hingga profesional.</p>
+				</div>
+				<div class="col l4 offset-l2 s12">
+					<h5 class="white-text">Komtak Kami</h5>
+					<ul>
+						<li><a class="grey-text text-lighten-3" href="#!">Email</a></li>
+						<li><a class="grey-text text-lighten-3" href="#!">Facebook</a></li>
+						<li><a class="grey-text text-lighten-3" href="#!">Instagram</a></li>
+						<li><a class="grey-text text-lighten-3" href="#!">Line</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				© 2014 KomputerKit - Sidoarjo - Jawa Timur
+				<a class="grey-text text-lighten-4 right" href="#!">Google Maps</a>
+			</div>
+		</div>
+	</footer>
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('js/main_app.js') }}"></script>

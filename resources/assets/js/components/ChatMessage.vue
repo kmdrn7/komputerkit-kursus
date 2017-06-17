@@ -1,7 +1,23 @@
 <template lang="html">
-	<div class="chat-message">
-		<small>{{ pesan.dari }} {{ pesan.created_at }}</small> 
-		<p>{{ pesan.pesan }}</p>
+	<div class="row row-message">
+		<div class="col m12 s12">
+			<div v-if="pesan.dari == 'admin'">
+				<div class="message-from message-admin">
+					{{ pesan.dari }}
+				</div>
+				<div class="white message-item message-admin">
+					{{ pesan.pesan }}
+				</div>
+			</div>
+			<div v-else>
+				<div class="message-from message-user">
+					{{ pesan.created_at }}
+				</div>
+				<div class="white message-item message-user">
+					{{ pesan.pesan }}
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -11,11 +27,5 @@ export default {
 }
 </script>
 
-<style lang="css">
-	.chat-message {
-		padding: 1rem;
-	}
-	.chat-message > p {
-		margin-bottom: .5rem;
-	}
+<style>
 </style>

@@ -4,22 +4,29 @@ namespace App\Http\Controllers;
 
 use Route;
 use App\User;
+use Carbon\Carbon;
 use App\Models\Kursus;
+use App\Models\Promosi;
+use App\Models\DetailKursus;
+use App\Models\DetailMateri;
+use App\Models\DetailTugas;
 use App\Models\QDetailKursus;
 use App\Models\QDetailMateri;
 use App\Models\QDetailTugas;
 use Illuminate\Http\Request;
-use App\Models\DetailKursus;
 use Illuminate\Support\Facades\Auth;
 
 class KelasController extends Controller
 {
     public function index()
     {
+		$data['promosi'] = Promosi::limit(1)->first();
+		$data['now'] = Carbon::now();
 		$data['kursus'] = Kursus::all();
 		// $data['qkursus'] = User::find(Auth::id())->detailkursus()->where('flag_kursus', 1)->get();
 		$data['qkursus'] = User::find(Auth::id())->detailkursus()->orderBy('flag_kursus', 'desc')->get();
-		$data['qbookmark'] = User::find(Auth::id())->bookmark;
+		// $data['qbookmark'] = User::find(Auth::id())->bookmark;
+		$data['latest'] = QDetailMateri::where('flag_terbaru', 1)->first();
     	return view('user.kelas.kelas',$data);
     }
 
@@ -33,7 +40,7 @@ class KelasController extends Controller
 			if ( $this->isActive($id_kursus, $id_detail_kursus) ) {
 
 				$data['kursus'] = QDetailKursus::find($id_detail_kursus);
-				$data['materi'] = QDetailMateri::where('id_detail_kursus', $id_detail_kursus)->get();
+				$data['materi'] = QDetailMateri::where('id_detail_kursus', $id_detail_kursus)->orderBy('no_urut', 'asc')->get();
 				$data['id'] = $id;
 				return view('user.kelas.materi', $data);
 			} else {
@@ -56,7 +63,21 @@ class KelasController extends Controller
 
 				if ( $this->isExist($id_materi) ) {
 
-					$data['materi'] = QDetailMateri::find($id_materi);
+					// Update latest activity + watched course
+					DetailMateri::where('id_user', Auth::user()->id_user)
+								->update(['flag_terbaru' => 0]);
+					DetailMateri::where('id_user', Auth::user()->id_user)
+								->where('id_detail_materi', $id_materi)
+								->update(['flag_terbaru' => 1]);
+					DetailMateri::where('id_user', Auth::user()->id_user)
+								->where('id_detail_materi', $id_materi)
+								->update(['flag_materi' => 1]);
+
+					$materi = QDetailMateri::find($id_materi);
+					$no_urut = $materi->no_urut;
+					$data['materi'] = $materi;
+					$data['next'] = QDetailMateri::where(['id_detail_kursus'=>$id_detail_kursus, 'no_urut'=>($no_urut+1)])->first();
+					$data['prev'] = QDetailMateri::where(['id_detail_kursus'=>$id_detail_kursus, 'no_urut'=>($no_urut-1)])->first();
 					return view('user.kelas.detailMateri', $data);
 				}
 			}
@@ -103,6 +124,24 @@ class KelasController extends Controller
 		}
 
 		return redirect('/kelas');
+	}
+
+	public function postTugas(Request $request)
+	{
+		
+		$this->validate($request, [
+			'id' => 'required',
+			'id_detail_tugas' => 'required|integer',
+			'link_jawaban' => 'bail|required|url|active_url'
+		]);
+
+		DetailTugas::where('id_detail_tugas', $request->id_detail_tugas)
+					->update([
+						'jawaban' => $request->link_jawaban,
+						'flag' => 1 	,
+					]);
+
+		return back();
 	}
 
 	public function showDiskusi($id)

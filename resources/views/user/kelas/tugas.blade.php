@@ -1,68 +1,160 @@
 @extends('user.layouts.app')
 
 @section('content')
-	<div class="container">
 
-		<div class="row teal no-margin-bottom">
-			<div class="container">
-				<div class="row">
-					<div class="col l3">
-						<img class="img-responsive" src="{{ asset('img/'. $kursus->gambar) }}" alt="{{ $kursus->gambar }}" style="width:100%">
+	<div class="row teal no-margin-bottom">
+		<div class="container">
+			<div class="row">
+				<div class="col l3">
+					<img class="img-responsive" src="{{ asset('img/'. $kursus->gambar) }}" alt="{{ $kursus->gambar }}" style="width:100%">
+				</div>
+				<div class="col l5">
+					<div class="materi-kursus-title">
+						{{ $kursus->kursus }}
 					</div>
-					<div class="col l5">
-						<div class="materi-kursus-title">
-							{{ $kursus->kursus }}
-						</div>
-						<div class="materi-kursus-detail">
-							{{ $kursus->ket_kursus }}
-						</div>
+					<div class="materi-kursus-detail">
+						{{ $kursus->ket_kursus }}
 					</div>
-					<div class="col l4">
-						<div class="tgl-mulai-head">
-							Tanggal Mulai
-						</div>
-						<div class="tgl-mulai-content">
-							{{  $kursus->tgl_mulai->formatLocalized('%A, %d %B %Y') }}
-						</div>
-						<div class="tgl-selesai-head">
-							Tanggal Selesai
-						</div>
-						<div class="tgl-selesai-content">
-							{{ $kursus->tgl_selesai->formatLocalized('%A, %d %B %Y') }}
-						</div>
+				</div>
+				<div class="col l4">
+					<div class="tgl-mulai-head">
+						Tanggal Mulai
+					</div>
+					<div class="tgl-mulai-content">
+						{{  $kursus->tgl_mulai->formatLocalized('%A, %d %B %Y') }}
+					</div>
+					<div class="tgl-selesai-head">
+						Tanggal Selesai
+					</div>
+					<div class="tgl-selesai-content">
+						{{ $kursus->tgl_selesai->formatLocalized('%A, %d %B %Y') }}
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row white" style="margin-bottom: 30px">
-			<div class="col l12 s12 m12">
-				{{-- <div class="container"> --}}
-					<ul id="tabs-swipe-demo" class="tabs" style="max-width: 1280px">
-						<li class="tab col s4 m4 l4"><a class="amtr" href="{{ url('/kelas/kursus/'. $id . '/materi') }}">Materi</a></li>
-						<li class="tab col s4 m4 l4"><a class="amtr active" href="{{ url('/kelas/kursus/'. $id . '/tugas') }}">Tugas</a></li>
-						<li class="tab col s4 m4 l4"><a class="amtr" href="{{ url('/kelas/kursus/'. $id . '/diskusi') }}">Diskusi</a></li>
-					</ul>
-				{{-- </div> --}}
-			</div>
+	</div>
+	<div class="row white" style="margin-bottom: 30px">
+		<div class="col l12 s12 m12">
+			{{-- <div class="container"> --}}
+				<ul id="tabs-swipe-demo" class="tabs" style="max-width: 1280px">
+					<li class="tab col s4 m4 l4"><a class="amtr" href="{{ url('/kelas/kursus/'. $id . '/materi') }}">Materi</a></li>
+					<li class="tab col s4 m4 l4"><a class="amtr active" href="{{ url('/kelas/kursus/'. $id . '/tugas') }}">Tugas</a></li>
+					<li class="tab col s4 m4 l4"><a class="amtr" href="{{ url('/kelas/kursus/'. $id . '/diskusi') }}">Diskusi</a></li>
+				</ul>
+			{{-- </div> --}}
 		</div>
+	</div>
 
+	<div class="container" style="max-width: 860px!important">
+		<div class="row" style="display:flex">
+			<div class="col s12 m9 l9">
+				<div class="row">
+					@foreach ($tugas as $t)
+						<div id="tugas-{{$t->id_detail_tugas}}" class="col s12 m12 center-align scrollspy--tugas" style="position:relative">
+							<div class="card-panel white left-align" style="border-radius: 5px; position: relative">
+								<div class="tugas-header">
+									Tugas #{{ $t->id_detail_tugas }}
+								</div>
+								<div class="tugas-title">
+									{{ $t->tugas }}
+								</div>
+								<div class="tugas-content">
+									{{ $t->ket_tugas }}
+								</div>
+								<hr style="border: 1px dashed rgb(96,96,96)">
+								@if ( !$t->jawaban && !$t->nilai_siswa )
+									<div class="tugas-unggah-jawaban" style="display:none" id-tugas="{{ $t->id_detail_tugas }}">
+								@elseif ( $t->jawaban )
+									<div class="tugas-unggah-jawaban" id-tugas="{{ $t->id_detail_tugas }}">
+								@else
+									<div class="tugas-unggah-jawaban" id-tugas="{{ $t->id_detail_tugas }}">
+								@endif
+									@if ( $t->jawaban && $t->nilai_siswa )
+										<div class="tugas-nilai">
+											Nilai anda : {{ $t->nilai_siswa }}/{{ $t->nilai_patokan }}
+										</div>
+										<div class="tugas-jawaban-benar">
+											Klik <a href="{{ $t->jawaban_benar }}">disini</a> untuk melihat jawaban yang sesuai
+										</div>
+									@elseif ( $t->jawaban )
+										Tunggu jawaban di koreksi oleh pembimbing
+									@else
+										<span>
+											Upload file anda menggunakan fasilitas google drive dalam bentuk archieve .zip, kemudian salin link berbagi file di bawah ini.
+											Klik <a href="http://youtube.com" target="_blank">disini</a> untuk tutorial upload jawaban anda.
+										</span>
+										@php
+											print_r($errors)
+										@endphp
+										<form action="{{ route('kelas.tugas.post') }}" method="POST">
+											<div class="input-field">
+												<div class="form-group">
+													{{ csrf_field() }}
+													<input type="hidden" name="id" value="{{ $id }}">
+													<input type="hidden" name="id_detail_tugas" value="{{ $t->id_detail_tugas }}">
+													<label class="control-label" for="">Link Jawaban</label>
+													<input type="text" class="form-control" name="link_jawaban" id="" placeholder="http://drive.google.com/....">
+												</div>
+											</div>
 
-		<div class="row">
-			<div class="col-md-12">
-				@foreach ($tugas as $item)
-					<a href="{{ route('kelas.kursus.tugas.detail', ['id' => $item->id_kursus.'--'.$item->id_detail_kursus,'id_materi' => $item->id_detail_tugas]) }}"><h3>{{ $item->tugas }}</h3></a> <br>
-				@endforeach
+											<button type="submit" class="btn">Kirim</button>
+										</form>
+									@endif
+								</div>
+								@if ( $t->flag_det == 1 )
+									<div class="leftTugasGreen"></div>
+								@else
+									<div class="leftTugasOrange"></div>
+								@endif
+							</div>
+							@if ( !$t->jawaban && !$t->nilai_siswa )
+								<button type="button" data-tugas="{{ $t->id_detail_tugas }}" class="toggle-tugas btn-floating btn-small waves-effect waves-light orange" style="margin-top: -50px;">
+									<i class="material-icons tugas-drop">keyboard_arrow_down</i>
+								</button>
+							@endif
+						</div>
+					@endforeach
+				</div>
+			</div>
+			<div class="col hide-on-small-only m3 l3">
+				<div id="stickySection">
+					<div class="section-tugas-head">
+						Daftar Tugas
+					</div>
+					<ul class="section table-of-contents">
+						@foreach ($tugas as $t)
+							<li><a href="#tugas-{{$t->id_detail_tugas}}">{{ $t->tugas }}</a></li>
+						@endforeach
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
+
+@endsection
+
+@section('custom--js')
+	<script src="{{ asset('js/sticky.min.js') }}" charset="utf-8"></script>
 @endsection
 
 @section('content-js')
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$('#stickySection').stick_in_parent();
 			$('.amtr').click(function(event) {
 				event.preventDefault();
 				window.location.href = $(this).attr('href');
+			});
+			$('.toggle-tugas').click(function(e) {
+				e.preventDefault();
+				var id = $(this).attr('data-tugas');
+				$('div[id-tugas="' + id + '"]').toggle('300');
+				// console.log($(this).);
+				if ( $(this).html().includes('arrow_down') ) {
+					$(this).html('<i class="material-icons tugas-drop">keyboard_arrow_up</i>');
+				} else {
+					$(this).html('<i class="material-icons tugas-drop">keyboard_arrow_down</i>');
+				}
 			});
 		});
 	</script>

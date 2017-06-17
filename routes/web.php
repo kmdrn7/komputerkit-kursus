@@ -59,6 +59,16 @@ Route::group(['middleware' => 'auth'], function ()
 		'as' => 'histori',
 	]);
 
+	Route::get('/bookmark', [
+		'uses' => 'BookmarkController@index',
+		'as' => 'bookmark',
+	]);
+
+	Route::post('/bookmark/delete', [
+		'uses' => 'BookmarkController@postDelete',
+		'as' => 'bookmark.delete',
+	]);
+
 	Route::get('/konfirmasi', function ()
 	{
 		return redirect('/histori');
@@ -100,6 +110,11 @@ Route::group(['middleware' => 'auth'], function ()
 		Route::get('kursus/{id}/tugas/{id_tugas}', [
 			'uses' => 'KelasController@detailTugas',
 			'as' => 'kelas.kursus.tugas.detail',
+		]);
+
+		Route::post('kursus/tugas/upload_jawaban', [
+			'uses' => 'KelasController@postTugas',
+			'as' => 'kelas.tugas.post',
 		]);
 
 		Route::get('kursus/{id}/diskusi', [

@@ -10,8 +10,8 @@ body {
 
 
 .container {
-	/*width: 90%!important;*/
-	width: 1280px;
+	width: 90%!important;
+	/*width: 1280px;*/
 	max-width: 1280px;
 }
 
@@ -85,7 +85,7 @@ body {
 	font-size: 20px;
 	height: 40px;
 	vertical-align: middle;
-	border: .5px dashed;
+	/*border: .5px dashed;*/
 	padding: 5px;
 	margin-left: 5px;
 	margin-right: 5px;
@@ -325,6 +325,11 @@ body {
 		height: 60px;
 		border: 3px solid rgb(4,139,86);
 	}
+	.closeMateri {
+		position: absolute;
+		top: 15px;
+		right: 20px;
+	}
 
 .materi-title {
 	font-size: 25px;
@@ -341,6 +346,136 @@ body {
 	position: relative;
 	height: 340px;
 	overflow: hidden;
+}
+
+/*
+	KURSUS FREE
+*/
+.kur-col {
+	height: 176px;
+}
+.kur-col {
+
+}
+.kursus-free-img {
+	/*height: 100px;
+	width: 100px;*/
+}
+.kursus-free-img img {
+	object-fit: contain;
+	max-width: 158px;
+	width: 100%;
+	height: 126px;
+}
+.kursus-free-title {
+	font-size: 18px;
+	font-weight: 500;
+	margin-bottom: 5px;
+	/*height: 27px;*/
+}
+.kursus-free-content {
+	font-weight: 400;
+	font-size: 12px;
+	color: rgb(93,93,93);
+	height: 72px;
+	overflow: hidden;
+}
+.kursus-free-btn a {
+	border-radius: 20px;
+}
+.kursus-slider {
+	position: absolute;
+	top: 100%;
+	left: 11px;
+	z-index: 22;
+	background-color: rgba(19,19,19,.94);
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 30px;
+	text-align: center;
+	vertical-align: middle;
+}
+.kur-col:hover .kursus-slider {
+	top: 0%;
+	animation:.3s ease;
+}
+.kursus-icon {
+	font-size: 20px;
+}
+
+/*
+	BOOKMARK
+*/
+.bookmark-page-header {
+	font-size: 30px;
+}
+.bookmark-page-content {
+	font-size: 18px;
+}
+.bookmark-a {
+	text-decoration: none;
+	color: inherit;
+	position: relative;
+}
+.bookmark-panel {
+	height: 250px;
+	overflow: hidden;
+	border-radius: 5px;
+}
+.bookmark-header {
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	font-weight: 400;
+	position: relative;
+	color: rgb(121,121,121);
+	margin-bottom: 5px;
+}
+.bookmark-title {
+	font-size: 25px;
+	font-weight: 400;
+}
+.bookmark-hari {
+	margin-bottom: 10px;
+	margin-top: -5px;
+	color: rgb(133,133,133);
+	font-size: 12px;
+}
+.bookmark-content {
+	font-size: 14px;
+	font-weight: 300;
+	color: rgb(140,140,140);
+}
+.bookmark-left {
+	position: absolute;
+	top: 20px;
+	left: 0;
+	width: 5px;
+	height: 40px;
+	background-color: rgb(231,175,67);
+}
+.bookmark-right {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+.btn-delete-bookmark {
+	background-color: inherit;
+	box-shadow: none;
+	width: 30px;
+	height: 30px;
+}
+.btn-delete-bookmark:hover {
+	background-color: inherit;
+	border: none;
+	border-radius: 4px;
+}
+.btn-delete-bookmark i {
+	color: rgb(96,96,96);
+	font-size: 18px;
+	margin-top: -10px;
+	color: rgb(121,121,121);
 }
 
 #item-bookmark {
@@ -397,12 +532,59 @@ body {
 
 */
 
+.promosi-title {
+	font-size: 22px;
+	font-weight: 500;
+	margin-bottom: 10px;
+}
+
+.promosi-content {
+	text-align: justify;
+	font-size: 14px;
+	color: rgb(98,98,98);
+	line-height: 25px;
+}
+
+.promosi-img {
+	overflow: hidden;
+}
+
+.promosi-img img {
+	object-fit: cover;
+	width: 100%;
+}
+
 .kelas-panel-head {
 	font-size: 13px;
 	text-transform: uppercase;
 	color: rgb(98,98,98);
 	letter-spacing: 2px;
-		text-shadow: 1px 1px 20px rgb(189,189,189);
+	text-shadow: 1px 1px 20px rgb(189,189,189);
+}
+
+.latest-title {
+	font-size: 18px;
+	font-weight: 400;
+	margin-bottom: 10px;
+}
+
+.latest-title span {
+	font-weight: 500;
+	font-size: 20px
+}
+
+#latestLeft {
+	position: absolute;
+	height: 35px;
+	width: 4px;
+	top: 23px;
+	left: 0;
+	background-color: rgb(217,159,31);
+}
+
+.latest-content {
+	font-size: 13px;
+	color: rgb(92,92,92);
 }
 
 .btn-flat {
@@ -508,7 +690,7 @@ body {
 	display: block;
 }
 
-.leftKelasMateri {
+.leftKelasMateriGreen {
 	position: absolute;
 	width: 6px;
 	height: 65px;
@@ -519,6 +701,165 @@ body {
 	border-bottom-right-radius: 3px;
 }
 
+.leftKelasMateriGray {
+	position: absolute;
+	width: 6px;
+	height: 65px;
+	background-color: rgb(159,159,159);
+	top: 18px;
+	left: 0;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+
+/*
+	DETAIL MATERI
+*/
+
+.btn-next,
+.btn-prev {
+	width: 150px;
+	height: 70px;
+	background-color: transparent;
+	border: 1px solid white;
+	color: white;
+	line-height: 70px;
+	/*vertical-align: middle;*/
+	text-align: center;
+	/*padding: 15px 15px;*/
+}
+
+.iWrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    padding-top: 25px;
+    height: 600px!important;
+}
+.iWrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/*
+	TUGAS
+*/
+
+.tugas-header {
+	font-size: 14px;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	font-weight: 400;
+	position: relative;
+	margin-bottom: 5px;
+	color: rgb(121,121,121);
+}
+.tugas-title {
+	font-size: 20px;
+	font-weight: 500;
+	color: rgb(51,51,51);
+	margin-bottom: 10px;
+}
+.tugas-content {
+	font-size: 14px;
+	color: rgb(96,96,96);
+	margin-bottom: 20px;
+}
+.tugas-unggah-jawaban {
+	padding-top: 10px;
+}
+.tugas-unggah-jawaban span {
+	font-size: 13px;
+	color: rgb(139,139,139);
+}
+.tugas-unggah-jawaban a {
+	font-size: 14px;
+	font-weight: bold;
+}
+.tugas-unggah-jawaban form {
+	margin-top: 20px;
+}
+.tugas-drop {
+	font-size: 20px;
+}
+.section-tugas-head {
+	font-size: 25px;
+	font-weight: 400;
+	padding: 10px 15px;
+}
+.table-of-contents {
+	margin: 0;
+}
+.leftTugasGreen {
+	position: absolute;
+	width: 3px;
+	height: 30px;
+	background-color: rgb(16,140,99);
+	top: 20px;
+	left: 0;
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
+}
+.leftTugasOrange {
+	position: absolute;
+	width: 3px;
+	height: 30px;
+	background-color: rgb(249,180,65);
+	top: 20px;
+	left: 0;
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
+}
+.tugas-nilai {
+	font-weight: 300;
+	font-size: 18px;
+}
+.tugas-jawaban-benar {
+	font-size: 14px;
+	color: rgb(108,108,107);
+}
+.tugas-jawaban-benar a {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+/*
+	DISKUSI // CHAT // PESAN
+*/
+.chat-log {
+	height: 400px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding: 15px;
+}
+.message-from {
+	clear: both;
+	border: none!important;
+	font-size: 11px;
+	color: rgb(91,91,91);
+}
+.message-item {
+	border: 1px solid grey;
+	padding: 5px 15px;
+	border-radius: 15px;
+	font-size: 16px;
+}
+.message-admin {
+	float: left;
+	border: 1px solid #ff9800;
+	clear: both;
+}
+.message-user {
+	float: right;
+	border: 1px solid grey;
+	clear: both;
+}
+.row-message {
+	margin-bottom: 10px!important;
+}
 
 @media only screen and (max-width: 600px) {
     #count {
@@ -528,4 +869,34 @@ body {
     #count2 {
         font-size: 13px;
     }
+	.kur-col {
+		height: auto;
+	}
+		.kursus-free-content {
+			height: auto;
+		}
+}
+
+@media only screen and (max-width: 645px) {
+	.btn-control {
+		/*display: inline;*/
+	}
+		.btn-ctl {
+			/*display: list-item;*/
+			padding: 2px 10px;
+			margin: 0 auto;
+			list-style: none;
+			text-align: center;
+			border-radius: 0;
+		}
+			.btn-ctl i {
+				float: none!important;
+				vertical-align: middle;
+			}
+}
+
+@media only screen and (max-width: 870px) {
+	.section-tugas-head {
+		font-size: 20px;
+	}
 }

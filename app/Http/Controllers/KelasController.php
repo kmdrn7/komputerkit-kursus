@@ -24,7 +24,7 @@ class KelasController extends Controller
 		$data['now'] = Carbon::now();
 		$data['kursus'] = Kursus::all();
 		// $data['qkursus'] = User::find(Auth::id())->detailkursus()->where('flag_kursus', 1)->get();
-		$data['qkursus'] = User::find(Auth::id())->detailkursus()->orderBy('flag_kursus', 'desc')->get();
+		$data['qkursus'] = User::find(Auth::id())->detailkursus()->orderBy('id_detail_kursus', 'asc')->get();
 		// $data['qbookmark'] = User::find(Auth::id())->bookmark;
 		$data['latest'] = QDetailMateri::where('flag_terbaru', 1)->first();
     	return view('user.kelas.kelas',$data);
@@ -128,7 +128,7 @@ class KelasController extends Controller
 
 	public function postTugas(Request $request)
 	{
-		
+
 		$this->validate($request, [
 			'id' => 'required',
 			'id_detail_tugas' => 'required|integer',

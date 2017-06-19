@@ -67,7 +67,11 @@ class HomeController extends Controller
 		// dd($id);
 		$data['kursus'] = Kursus::take(3)->get();
 		$data['kursus_anda'] = QDetailKursus::where(['id_user'=> Auth::id(), 'flag_kursus' => 1,])->get();
-		$data['kursus_tunggakan'] = QDetailKursus::where(['id_user'=> Auth::id(), 'flag_kursus' => 0,])->get();
+		$data['kursus_tunggakan'] = QDetailKursus::where(['id_user'=> Auth::id()])
+												->where(function ($query){
+													$query->where('flag_kursus', 0)
+														->orWhere('flag_kursus', 2);
+												})->get();
 		// dd($data['kursus_anda']->tgl_mulai->diffInDays($data['kursus_anda']->tbl_selesai));
 		// $data['topFirst'] = Top::first();
 		// $data['topThird'] = Top::third();

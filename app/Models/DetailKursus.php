@@ -8,7 +8,6 @@ class DetailKursus extends Model
 {
     protected $table = "tbl_detail_kursus";
 	protected $primaryKey = "id_detail_kursus";
-	public $timestamps = false;
 
 	protected $fillable = [
 		'id_kursus',

@@ -79,6 +79,11 @@ Route::group(['middleware' => 'auth'], function ()
 		'as' => 'konfirmasi.id',
 	]);
 
+	Route::post('/konfirmasi', [
+		'uses' => 'KonfirmasiController@postKonfirmasi',
+		'as' => 'konfirmasi.post',
+	]);
+
 	// Route untuk KELAS
 	Route::group(['prefix' => '/kelas'], function ()
 	{

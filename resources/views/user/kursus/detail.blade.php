@@ -153,7 +153,7 @@
 												{{ $m->materi }}
 											</div>
 											<div class="materi-content">
-												{{ $m->desc_materi }}
+												{{ $m->ket_materi }}
 											</div>
 										</div>
 									</div>

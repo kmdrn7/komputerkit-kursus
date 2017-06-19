@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Expert;
 use Illuminate\Http\Request;
+use App\Models\QDetailKeahlian;
 
 class ExpertController extends Controller
 {
@@ -13,77 +15,30 @@ class ExpertController extends Controller
      */
     public function index()
     {
-        return view('user.expert.main');
+		$data['expert'] = Expert::all();
+        return view('user.expert.main', $data);
     }
 
 	public function detail($id)
 	{
-		return view('user.expert.detail');
+		if ( $this->isExists($id) ) {
+
+			$data['detail'] = QDetailKeahlian::where('id_detail_keahlian', $id)->get();
+			return view('user.expert.detail', $data);
+		}
+
+		return "masuk ke halaman 404";
 	}
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+	public function isExists($id='')
+	{
+		$expert = Expert::find($id)->count();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+		if ( $expert > 0 ) {
+			return true;
+		}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return view('user.expert.detail');
-    }
+		return false;
+	}
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

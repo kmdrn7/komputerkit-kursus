@@ -75,8 +75,10 @@
 							<div class="card-panel white z-depth-2" style="position: relative; border-radius: 6px">
 								@if ($qk->flag_kursus == 1)
 									<a href="{{ url('/kelas/kursus/'. $qk->id_kursus .'--'. $qk->id_detail_kursus . '/materi') }}" style="position:relative; text-decoration: none; color: black; display: block">
+								@elseif ( $qk->flag_kursus == 2 )
+									<div class="contain" style="position:relative; color: black; display: block">
 								@else
-									<a href="!#" style="position:relative; text-decoration: none; color: black; display: block">
+									<a href="{{ url('/konfirmasi/'. $qk->id_kursus .'--'.$qk->id_detail_kursus) }}" style="position:relative; text-decoration: none; color: black; display: block">
 								@endif
 									<div class="row">
 										<div class="col m12">
@@ -95,9 +97,15 @@
 											</div>
 										</div>
 									</div>
-								</a>
+								@if ( $qk->flag_kursus == 1 )
+									</a>
+								@elseif ( $qk->flag_kursus == 2 )
+									</div>
+								@else
+									</a>
+								@endif
 
-								@if ($qk->flag_kursus)
+								@if ($qk->flag_kursus === 1)
 									<div class="leftKursusGreen"></div>
 								@else
 									<div class="leftKursusRed"></div>
@@ -108,10 +116,12 @@
 									<div class="col m12">
 										@if ($qk->flag_kursus == 1)
 											<span class="left" style="margin-top: 7px; font-weight: 300">Sisa {{ $qk->tgl_selesai->diffInDays($now) }} hari</span>
-											{{-- <button type="button" class="waves-effect waves btn-flat btn-blue right">Lihat Kursus</button> --}}
-											<a href="{{ url('/kelas/kursus/'. $qk->id_kursus .'--'. $qk->id_detail_kursus . '/materi') }}" class="waves-effect waves btn-flat btn-blue right">Lihat Kursus</a>
+											<a href="{{ url('/kelas/kursus/'. $qk->id_kursus .'--'. $qk->id_detail_kursus . '/materi') }}" class="waves-effect waves btn-flat-custom btn-blue right">Lihat Kursus</a>
+										@elseif ( $qk->flag_kursus == 2 )
+											<span class="left" style="margin-top: 7px; font-weight: 300; height: 44px">Pembayaran anda sedang dikonfirmasi oleh admin</span>
+											{{-- <button type="button" class="waves-effect waves btn-flat-custom btn-red right">Tunggu konfirmasi admin</button> --}}
 										@else
-											<button type="button" class="waves-effect waves btn-flat btn-red right">Kirim bukti bayar</button>
+											<a href="{{ url('/konfirmasi/'. $qk->id_kursus .'--'.$qk->id_detail_kursus) }}" class="waves-effect waves btn-flat-custom btn-red right">Kirim bukti bayar</a>
 										@endif
 									</div>
 								</div>

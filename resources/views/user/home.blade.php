@@ -43,57 +43,30 @@
 				</div>
 			</div>
 		</div>
+	</div>
 
-		{{-- Ruang Kelas --}}
-		<div class="row">
-			<div class="col s12 m12">
-				<div class="card-panel card-kelas white">
-					<div class="row no-margin-bottom">
-						<div class="col l2">
-							<div class="panel-image">
-								<img src="{{ asset('img/web/desk.png') }}" alt="">
-							</div>
-						</div>
-						<div class="col l10">
-							<div class="panel-content">
-								<div class="panel-content-header">
-									Ruang Kelas
-								</div>
-								<div class="panel-content-main">
-									Masuk ke ruang kelas untuk melihat pelajaran dan materi apa saja yang telah kalian ambil.
-									Kalian juga bisa berdiskusi dengan para ahli untuk memecahkan masalah terkait coding yang kalian hadapi.
-									Lihat tugas apa saja yang kalian dapatkan ketika mengikuti sebuah kursus.
-								</div>
-							</div>
-							<div class="panel-option">
-								<div class="panel-button">
-									<a href="{{ route('kelas') }}" class="waves-effect waves-light btn btn-large right"><i class="mdi-file-cloud left"></i>Masuk Kelas</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col m8">
-				<div class="row">
+	{{-- REKOMENDASI KURSUS DAN KURSUS ANDA --}}
+	<div class="container">
+		<div class="row no-margin-bottom">
+			<div class="col m12 l8">
+				<div class="row no-margin-bottom">
 					<div class="col s12 m12">
-						<div class="card-panel red">
+						<div class="card-panel">
 							<div class="row">
 								<div class="col s12">
-									<h5 class="white-text">Rekomendasi Kursus</h5>
+									<h5 class="">Rekomendasi Kursus</h5>
 									<div class="divider"></div>
 								</div>
+							</div>
+							<div class="row no-margin-bottom">
 								@foreach ($kursus as $k)
-									<div class="col s4 center-align" style="">
-										<div class="card-panel z-depth-2 hoverable">
+									<div class="col s12 m12 l4 center-align">
+										<div class="card-panel z-depth-2 hoverable" style="height: 390px">
 											<div class="kursus-img">
 												<img src="{{ asset('img/'. $k->gambar) }}" class="responsive-img" style="margin-bottom: 10px;" alt="">
 											</div>
-											<div class="kursus-title valign-wrapper">
-												<h6 id="label-kursus" style="margin: auto">{{ $k->kursus }}</h6>
+											<div class="kursus-title">
+												<h6 class="label-kursus" style="margin: auto">{{ $k->kursus }}</h6>
 											</div>
 											<div class="kursus-buy">
 												<a class="waves-effect waves-light btn my-button" href="{{ url('/kursus/'. $k->slug) }}">Beli Kursus</a>
@@ -110,10 +83,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="col m4">
+			<div class="col m12 l4">
 				<div class="row no-margin-bottom">
 					<div class="col s12 m12">
-						<div class="card-panel teal" style="padding: 0">
+						<div class="card-panel" style="padding: 0">
 							<div class="row ">
 								<div class="col s12">
 									<h5 style="padding: 20px 30px;">Kursus Anda</h5>
@@ -159,7 +132,7 @@
 					<div class="col m12 s12">
 						<div class="row">
 							<div class="col s12 m12">
-								<div class="card-panel teal" style="padding: 0">
+								<div class="card-panel" style="padding: 0">
 									<div class="row">
 			                            <div class="col s12">
 			                                <h5 style="padding: 20px 30px;">Pembayaran Pending</h5>
@@ -167,12 +140,19 @@
 			                            </div>
 			                            <div class="col s12">
 			                                <div class="collection" style="margin: 0; border: 0;">
-												@foreach ($kursus_tunggakan as $kt)
-													<a href="pages/bukti-bayar.html" class="collection-item">
-														<span class="new badge red" data-badge-caption="Kirim Bukti Pembayaran"></span>
-														{{ $kt->kursus }} : {{ $kt->waktu }} Hari
-													</a>
-												@endforeach
+												@if ( count($kursus_tunggakan) > 0 )
+													@foreach ($kursus_tunggakan as $kt)
+														@if ( $kt-> )
+
+														@endif
+														<a href="pages/bukti-bayar.html" class="collection-item">
+															<span class="new badge red" data-badge-caption="Kirim Bukti Pembayaran"></span>
+															{{ $kt->kursus }} : {{ $kt->waktu }} Hari
+														</a>
+													@endforeach
+												@else
+													<div class="collection-item center-align" style="color: rgb(111,111,111)">Tidak ada tunggakan.</div>
+												@endif
 			                                </div>
 			                            </div>
 			                        </div>
@@ -183,17 +163,50 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 
+	{{-- Ruang Kelas --}}
+	<div class="row teal no-margin-bottom">
+		<div class="container" style="max-width: 860px;">
+			<div class="row no-margin-bottom">
+				<div class="col s12 m12">
+					<div class="card-panel card-kelas white">
+						<div class="row no-margin-bottom">
+							<div class="col l2 m3 s4 offset-s4">
+								<div class="kelas-image center-align">
+									<img src="{{ asset('img/web/desk.png') }}" alt="" style="width: 100%;">
+								</div>
+							</div>
+							<div class="col l10 m9 s12">
+								<div class="kelas-text">
+									<div class="kelas-title">
+										Ruang Kelas
+									</div>
+									<div class="kelas-content">
+										Masuk ke ruang kelas untuk melihat pelajaran dan materi apa saja yang telah kalian ambil.
+										Diskusikan dengan pembimbing tentang masalah coding yang kalian hadapi.
+									</div>
+									<div class="kelas-button">
+										<a href="{{ route('kelas') }}" class="waves-effect waves-light btn right">
+											<i class="mdi-file-cloud"></i>
+											Masuk ke Kelas
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{{-- PILIHAN KURSUS --}}
 	<div class="row" style="background-color: #F5F6F7; margin-bottom: 0;">
 		<div class="col s12 white tutorial-panel">
-			<div class="row" style="margin-bottom: 0; padding: 4%;">
-				<div class="col l5 m6 s12">
-					{{-- <img src="images/patrick.png" class="responsive-img" alt=""> --}}
-				</div>
-				<div class="container teal">
-					<div class="col l7 m6 s12 bd" style="padding: 3%;">
+			<div class="row" style="margin-bottom: 0; padding: 30px">
+				<div class="container">
+					<div class="col l7 offset-l5 m7 s12 bd" style="padding: 20px">
 						<p style="font-size: 19px; text-align: justify">
 							Lihat semua tutorial secara gratis tanpa dipungut biaya apapun. Mulai sebuah kursus untuk memperdalam sebuah materi.
 							Dapatkan tugas untuk mengetahui seberapa kemampuan kalian dalam menguasai sebuah kursus.
@@ -201,10 +214,8 @@
 							sampai kalian memahami materi yang kalian ambil.
 						</p>
 						<div class="row" style="margin: auto;">
-							<div class="col l3 offset-l6 m12 s12 center-on-small-only">
+							<div class="col s12 center-on-small-only right-align">
 								<a href="{{ url('kursus/free/all') }}" class="blue waves-effect waves-light btn-large tooltipped" data-position="left" data-delay="50" data-tooltip="Lihat semua tutorial gratis.">tutorial</a>
-							</div>
-							<div class="col l3 m12 s12 center-on-small-only">
 								<a href="{{ url('kursus/all') }}" class="blue waves-effect waves-light btn-large tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ikuti kursus yang menakjubkan.">kursus</a>
 							</div>
 						</div>

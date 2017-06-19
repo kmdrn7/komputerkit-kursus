@@ -48,34 +48,14 @@
                 <a href="#" data-activates="slide-out" class="button-collapse">
 					<i class="material-icons left" style="font-size: 40px;">menu</i>
 				</a>
-                {{-- <a href="#" class="btn-floating pulse right"> --}}
-				<a href="#" class="btn-floating right">
-					<i class="material-icons right" style=";">notifications</i>
-				</a>
-				<!-- Dropdown Trigger -->
-				{{-- <a href="#" data-activates="slide-out" class="button-collapse right">
-					Andika Ahmad Ramdhan
-					<i class="material-icons left" style="font-size: 40px;">menu</i>
-				</a> --}}
 				<a class='right button-collapse btn-menu' href='#' data-activates='slide-out'>
 					{{ Auth::user()->name }}
 					<i class="material-icons" style="font-size: 30px">arrow_drop_down</i>
 				</a>
-
-				<!-- Dropdown Structure -->
-				{{-- <ul id='dropdown1' class='dropdown-content'> --}}
-					{{-- <li><a href="#!">Profil</a></li> --}}
-					{{-- <li><a href="#!">two</a></li> --}}
-					{{-- <li class="divider"></li> --}}
-					{{-- <li><a href="#!">three</a></li> --}}
-				{{-- </ul> --}}
-				{{-- <a href="" class=" right btn-menu">Menu</a>
-				<a href="" class=" right btn-menu">Menu</a>
-				<a href="" class=" right btn-menu">Menu</a> --}}
             </div>
             <div class="row no-margin-bottom valign-wrapper" style="height: 150px; margin-left: auto; margin-right: auto;">
 				<a href="{{ url('/') }}" style="margin:auto">
-					<img src="{{ asset('img/logo/logo-KIT.png') }}" alt="" style="width: 400px; margin: auto" class="bd">
+					<img src="{{ asset('img/logo/logo-KIT.png') }}" alt="" style="width: 400px; margin: auto">
 				</a>
             </div>
         </div>

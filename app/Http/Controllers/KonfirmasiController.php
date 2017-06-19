@@ -2,83 +2,72 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bayar;
+use App\Models\Bank;
+use App\Models\Kursus;
+use App\Models\QDetailKursus;
+use App\Models\DetailKursus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KonfirmasiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index($id)
     {
-        //
+
+		if ( $this->isExists($id) ) {
+
+			$data['bank'] = Bank::all();
+			$data['kursus'] = QDetailKursus::find(explode('--', $id)[1]);
+			return view('user.histori.konfirmasi', $data);
+		}
+
+		return "redirect ke halaman 404";
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+	public function isExists($id='')
+	{
+		$kursus = Kursus::find(explode('--', $id)[0])->count();
+		$detail = QDetailKursus::find(explode('--', $id)[1])->count();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+		if ( $kursus > 0 && $detail > 0 ) {
+			return true;
+		}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+		return false;
+	}
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+	public function postKonfirmasi(Request $request)
+	{
+		$this->validate($request, [
+			'detail_materi' => 'required',
+			'atas_nama' => 'required',
+			'bank_asal' => 'required',
+			'bank_tujuan' => 'required',
+			'tgl_bayar' => 'required'
+		]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+		$detail = explode('/', $request->detail_materi);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+		Bayar::create([
+			'id_user' => Auth::id(),
+			'id_detail_kursus' => $detail[1],
+			'faktur' => $request->detail_materi .'/'. Auth::id(),
+			'atas_nama' => $request->atas_nama,
+			'nama_bank' => $request->bank_asal,
+			'bank_tujuan' => $request->bank_tujuan,
+			'ket_bayar' => $request->ket_bayar,
+			'tgl_bayar' => $request->tgl_bayar,
+			'status' => 0,
+		]);
+
+		DetailKursus::where('id_detail_kursus', $detail[1])
+					->update([
+						'flag_kursus' => 2
+					]);
+
+		return redirect('/histori');
+	}
+
 }

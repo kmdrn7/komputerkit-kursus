@@ -142,9 +142,9 @@
 			                                <div class="collection" style="margin: 0; border: 0;">
 												@if ( count($kursus_tunggakan) > 0 )
 													@foreach ($kursus_tunggakan as $kt)
-														@if ( $kt-> )
+														{{-- @if ( $kt-> )
 
-														@endif
+														@endif --}}
 														<a href="pages/bukti-bayar.html" class="collection-item">
 															<span class="new badge red" data-badge-caption="Kirim Bukti Pembayaran"></span>
 															{{ $kt->kursus }} : {{ $kt->waktu }} Hari

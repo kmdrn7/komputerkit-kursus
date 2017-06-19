@@ -1,0 +1,48 @@
+.bd {
+	border: 1px solid;
+}
+
+/*
+	ADMIN LOGIN
+*/
+.col-login--outter {
+	display: table;
+	height: 100vh;
+	width: 100%;
+}
+.col-login--inner {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+.card--login {
+	text-align: left;
+	width: 460px;
+	margin: auto;
+}
+
+/*
+	DASHBOARD
+*/
+.logo {
+	height: 100px!important;
+}
+.sidebar-wrapper--custom {
+	height: calc(100vh - 100px)!important;
+}
+
+/*
+	FOOTER
+*/
+.sticky-footer {
+	position: fixed;
+	width: 100%;
+	background-color: whitesmoke;
+	padding: 0;
+}
+
+@media only screen and (max-width: 995px) {
+	.active-pro {
+		display: none!important;
+	}
+}

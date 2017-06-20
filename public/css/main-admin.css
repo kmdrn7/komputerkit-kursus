@@ -1,7 +1,9 @@
 .bd {
 	border: 1px solid;
 }
-
+.content {
+	padding-top: 15px!important;
+}
 /*
 	ADMIN LOGIN
 */
@@ -22,23 +24,77 @@
 }
 
 /*
+	MAIN DASHBOARD --> SIDEBAR, FOOTER, CONTAINER
+*/
+.navbar-custom {
+	background-color: #fff!important;
+	border-bottom: .2px solid rgb(170,170,170)!important;
+	box-shadow: 1px 1px 1pxrgb(176,176,176);
+}
+.content {
+	height:calc(100vh - 123px);
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+/*
 	DASHBOARD
 */
 .logo {
 	height: 100px!important;
 }
 .sidebar-wrapper--custom {
-	height: calc(100vh - 100px)!important;
+	position: relative;
+	height: calc(90vh - 100px)!important;
 }
-
+.sidebar-footer {
+	height: 10vh;
+	width: 260px;
+	position: fixed;
+	display: table;
+	z-index: 9;
+}
+.sidebar-footer a {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+.sidebar-footer::before {
+	display: block;
+	position: absolute;
+	text-align: center;
+	content: " ";
+	width: 80%;
+	margin: auto;
+	border: .4px solid rgb(139,139,139);
+}
+.sidebar[data-color="purple"] .nav li.active a, .off-canvas-sidebar[data-color="purple"] .nav li.active a {
+	background-color: rgba(183,59,199,.84)!important;
+}
+.li--main {
+	background-color: rgba(217,217,217,.8);
+}
+.li--main-child {
+	padding-left: 35px!important;
+}
+.active--custom {
+	background-color: rgba(130,231,216,.89)!important;
+}
+.active--custom a {
+	border-radius: 0!important;
+	background-color: rgba(250,250,250,.83)!important;
+}
 /*
 	FOOTER
 */
 .sticky-footer {
-	position: fixed;
+	/*position: absolute;*/
+	bottom: 0;
+	right: 0;
 	width: 100%;
 	background-color: whitesmoke;
 	padding: 0;
+	z-index: 1;
 }
 
 @media only screen and (max-width: 995px) {

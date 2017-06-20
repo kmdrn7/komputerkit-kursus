@@ -14,6 +14,14 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+window.moment = require('moment');
+
+moment.locale("id");
+
+// window.DataTable = require('./dt.min');
+
+// $('#DT').DataTable();
+
 require('./material.min');
 require('./bootstrap.min');
 require('./bootstrap-notify');

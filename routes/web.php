@@ -242,11 +242,6 @@ Route::group(['middleware' => 'auth'], function ()
 			'as' => 'admin.login.submit',
 		]);
 
-		Route::get('/dashboard', [
-			'uses' => 'AdminController@index',
-			'as' => 'admin.dashboard',
-		]);
-
 		Route::get('/logout', [
 			'uses' => 'AdminLoginController@adminLogout',
 			'as' => 'admin.logout',
@@ -267,5 +262,21 @@ Route::group(['middleware' => 'auth'], function ()
 			'uses' => 'Auth\AdminResetPasswordController@showResetForm',
 			'as' => 'admin.password.reset'
 		]);
+
+		Route::get('/dashboard', [
+			'uses' => 'AdminController@index',
+			'as' => 'admin.dashboard',
+		]);
+
+		Route::group(['prefix' => '/kursus'], function ()
+		{
+			// Kursus
+			Route::get('/', [
+				'uses' => 'Admin\KursusController@index',
+				'as' => 'admin.kursus'
+			]);
+		});
+
+
 	});
 // });

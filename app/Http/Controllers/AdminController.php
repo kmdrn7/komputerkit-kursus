@@ -24,6 +24,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+		$data['active'] = 'dashboard';
+        return view('admin.dashboard', $data);
     }
 }

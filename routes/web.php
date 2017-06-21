@@ -275,6 +275,31 @@ Route::group(['middleware' => 'auth'], function ()
 				'uses' => 'Admin\KursusController@index',
 				'as' => 'admin.kursus'
 			]);
+			// Ajax Kursus
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\KursusController@ajaxKursus',
+				'as' => 'ajax.kursus'
+			]);
+			// Tambah Kursus
+			Route::post('/add', [
+				'uses' => 'Admin\KursusController@store',
+				'as' => 'a.kursus.a'
+			]);
+			// Ubah Kursus
+			Route::post('/update', [
+				'uses' => 'Admin\KursusController@update',
+				'as' => 'a.kursus.u'
+			]);
+			// Hapus Kursus
+			Route::post('/delete', [
+				'uses' => 'Admin\KursusController@destroy',
+				'as' => 'a.kursus.d'
+			]);
+			// Show Detail per kursus
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\KursusController@show',
+				'as' => 'a.kursus.s'
+			]);
 		});
 
 

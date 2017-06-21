@@ -13,6 +13,7 @@
 	    <!-- Styles -->
 	    <link href="{{ asset('css/admin_app.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/main-admin.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/dropify.css') }}" rel="stylesheet">
 		@yield('custom--css')
 	</head>
 	<body>
@@ -115,11 +116,21 @@
 	    <!-- Scripts -->
 	    <script src="{{ asset('js/admin_app.js') }}"></script>
 		<script src="{{ asset('js/dt.min.js') }}" charset="utf-8"></script>
+		<script src="{{ asset('js/dropify.js') }}" charset="utf-8"></script>
 
 		@yield('custom--js')
 
 		<script type="text/javascript">
 			$(document).ready(function() {
+				$('.dropify').dropify({
+					messages: {
+				        'default': 'Drag atau drop file didalam area berikut',
+				        'replace': 'Drag atau drop file untuk mengganti',
+				        'remove':  'Hapus',
+				        'error':   'Upppssss, ada sesuatu buruk terjadi.'
+				    }
+				});
+
 				$('#admin--jam').click(function(event) {
 					event.preventDefault();
 				});

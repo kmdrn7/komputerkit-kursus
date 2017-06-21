@@ -2,11 +2,11 @@
 
 @section('content')
 
-	<div class="row top-container" style="background-color: gray; margin-top: 20px">
+	<div class="row top-container white no-margin-bottom" style="padding: 50px 0;">
 		<div class="container">
 			{{-- TOP ROW ->> Sekilas Tentang Kursus --}}
-			<div class="row red no-margin-bottom valign-wrapper">
-				<div class="col s12 l7">
+			<div class="row no-margin-bottom">
+				<div class="col l7 m12 s12" style="padding: 10% 20px;">
 					<div class="kursus-kursus">
 						Kursus
 						<div id="border-bottom">&nbsp;</div>
@@ -18,10 +18,10 @@
 						<small style="font-weight: 300; font-size: 13px">{{ $kursus->waktu }} hari</small>
 					</div>
 					<div class="kursus-button">
-						<a href="#tutorial" class="btn btn-large waves-effet waves-light">Lihat Tutorial</a>
+						<a style="margin: 10px 0;" href="#tutorial" class="button-ku2 waves-effect waves-light">Lihat Tutorial Gratis</a>
 					</div>
 				</div>
-				<div class="col s12 l5 ">
+				<div class="col l5 m12 s12">
 					<div class="col s12" style="margin: 20px 0;">
 						<img src="{{ asset('img/'. $kursus->gambar) }}" class="materialboxed responsive-img" style="border-radius: 5px;" alt="js">
 					</div>
@@ -30,67 +30,60 @@
 		</div>
 	</div>
 
-	<div class="container">
-		{{-- SECOND ROW ->> Detail Tentang Kursus --}}
-		<div class="row">
-			<div class="col l6">
-				<div class="kursus-detail-header">
-					Tentang kursus ini
-				</div>
-				<div class="kursus-detail-content">
-					{{ $kursus->ket_kursus }}
+	<div class="row white no-margin-bottom" style="padding: 50px 0;">
+		<div class="container">
+			<div class="col l8 m12 s12" style="padding: 0 2%;">
+				<h5>Tentang kursus ini</h5>
+				<div class="row" style="margin-bottom: 50px;"><div class="garis" style="margin-left: 10px;"></div></div>
+				<p>{{ $kursus->ket_kursus }}</p>
+				<div class="row">
+					<div class="col l6 m12 s12" style="margin: 10px 0;">
+						<div class="center-align" style="background: linear-gradient(-4deg, #8bc6e7, #8d8bf2); padding: 1px 20px 30px 20px;">
+							<p class="white-text" style="font-size: 18px; font-weight: 600;">Biaya Kursus</p>
+							<a class="button-ku">Rp{{ number_format($kursus->harga,0,",",".") }}</a>
+						</div>
+					</div>
+					<div class="col l6 m12 s12" style="margin: 10px 0;">
+						<div class="center-align" style="background: linear-gradient(-4deg, #8bc6e7, #8d8bf2); padding: 1px 20px 30px 20px;">
+							<p class="white-text" style="font-size: 18px; font-weight: 600;">Lama Kursus</p>
+							<a class="button-ku">{{ $kursus->waktu }} Hari</a>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="col l6">
-				<div class="row no-margin-bottom">
-					<div class="col m12">
-						<div class="kursus-kanan-head">
-							Apa yang anda dapatkan
-						</div>
-						<div class="kursus-kanan-content">
+			<div class="col l4 m12 s12" style="padding: 0 2%;">
+				<h5>Apa yang anda dapatkan</h5>
+				<div class="row" style="margin-bottom: 50px;"><div class="garis" style="margin-left: 10px;"></div></div>
+				<div class="kursus-kanan-content" style="padding: 0 20px;">
+					<div class="row">
+						<div class="col s12">
 							<div class="row">
-								<div class="col m6">
-									<div class="row no-margin-bottom">
-										<div class="col m12 valign-wrapper apa-yang-anda">
-											<img class="circle" src="{{ asset('img/web/video-player.png') }}" alt="">
-											<span style="font-weight: bold; margin: 5px 10px;">Video Tutorial</span>
-											<i class="green-text material-icons right">check</i>
-										</div>
-										<div class="col m12 valign-wrapper apa-yang-anda">
-											<img class="circle" src="{{ asset('img/web/books.png') }}" alt="">
-											<span style="font-weight: bold; margin: 5px 10px;">Materi Pembelajaran</span>
-											<i class="green-text material-icons right">check</i>
-										</div>
-										<div class="col m12 valign-wrapper apa-yang-anda">
-											<img class="circle" src="{{ asset('img/web/list.png') }}" alt="">
-											<span style="font-weight: bold; margin: 5px 10px;">Tugas</span>
-											<i class="red-text material-icons right">close</i>
-										</div>
-									</div>
+								<div class="col m12 valign-wrapper apa-yang-anda">
+									<img class="circle" src="{{ asset('img/web/video-player.png') }}" alt="">
+									<span style="font-weight: bold; margin: 5px 10px;">Video Tutorial</span>
+									<i class="green-text material-icons right">check</i>
 								</div>
-								<div class="col m6">
-									<div class="row no-margin-bottom">
-										<div class="col m12 valign-wrapper apa-yang-anda">
-											<img class="circle" src="{{ asset('img/web/clipboard.png') }}" alt="">
-											<span style="font-weight: bold; margin: 5px 10px;">Contoh Pekerjaan</span>
-											<i class="red-text material-icons right">close</i>
-										</div>
-										<div class="col m12 valign-wrapper apa-yang-anda">
-											<img class="circle" src="{{ asset('img/web/chat.png') }}" alt="">
-											<span style="font-weight: bold; margin: 5px 10px;">Diskusi dengan ahli</span>
-											<i class="red-text material-icons right">close</i>
-										</div>
-									</div>
+								<div class="col m12 valign-wrapper apa-yang-anda">
+									<img class="circle" src="{{ asset('img/web/books.png') }}" alt="">
+									<span style="font-weight: bold; margin: 5px 10px;">Materi Pembelajaran</span>
+									<i class="green-text material-icons right">check</i>
+								</div>
+								<div class="col m12 valign-wrapper apa-yang-anda">
+									<img class="circle" src="{{ asset('img/web/list.png') }}" alt="">
+									<span style="font-weight: bold; margin: 5px 10px;">Tugas</span>
+									<i class="green-text material-icons right">check</i>
+								</div>
+								<div class="col m12 valign-wrapper apa-yang-anda">
+									<img class="circle" src="{{ asset('img/web/clipboard.png') }}" alt="">
+									<span style="font-weight: bold; margin: 5px 10px;">Contoh Pekerjaan</span>
+									<i class="green-text material-icons right">check</i>
+								</div>
+								<div class="col m12 valign-wrapper apa-yang-anda">
+									<img class="circle" src="{{ asset('img/web/chat.png') }}" alt="">
+									<span style="font-weight: bold; margin: 5px 10px;">Diskusi dengan ahli</span>
+									<i class="green-text material-icons right">check</i>
 								</div>
 							</div>
-						</div>
-						<div class="kursus-kanan-footer center-align">
-							Ingin mengikuti kursus secara keseluruhan? Ingin mendapatkan bimbingan para ahli? Jangan khawatir,
-							segera ikuti kursus yang sesungguhnya untuk materi ini dengan klik tombol di bawah ini. <br>
-							<a href="{{ url('/kursus/'. $kursus->slug) }}" class="waves-effect waves-light btn">
-								<i class="material-icons right">cloud</i>
-								Lihat Kursus
-							</a>
 						</div>
 					</div>
 				</div>
@@ -98,28 +91,15 @@
 		</div>
 	</div>
 
-	<div class="row top-container white">
-		<div class="container">
-			{{-- THIRD ROW ->> Syarat Mengikuti Kursus --}}
-			<div class="row center-align">
-				<div class="kursus-syarat-header">
-					Syarat Mengkuti Kursus
-				</div>
-				<div class="kursus-syarat-content">
-					Syarat untuk mengikuti kursus ini adalah anda harus hafal teks berikut ini
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					dalam hanya 2 hari saja.
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="row top-container" style="max-width: 1200px!important">
+	<div class="row white top-container" style="margin-bottom: 0; padding: 50px 0;">
 		{{-- FOURTH ROWS ->> Materi Dalam Kursus --}}
 		<div class="row" id="tutorial">
 			<div class="col s12 l10 offset-l1">
-				<div class="kursus-materi-header">
-					Tutorial
+				<div class="row">
+					<div class="col s12 center-align">
+						<h5 style="color: #333;">Rekomendasi Kursus</h5>
+						<div class="row"><div class="garis"></div></div>
+					</div>
 				</div>
 				<ul class="collapsible popout" data-collapsible="accordion">
 					@php

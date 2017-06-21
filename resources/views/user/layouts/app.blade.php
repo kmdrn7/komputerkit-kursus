@@ -68,14 +68,14 @@
     {{-- </div> --}}
 
 	<footer class="page-footer" style="background: linear-gradient(-4deg, #8bc6e7, #8d8bf2);">
-		<!--<div class="container">
+		<div class="container">
 			<div class="row">
 				<div class="col l6 s12">
 					<h5 class="white-text">KomputerKit</h5>
 					<p class="grey-text text-lighten-4">Tempat belajar pemrograman mulai dari dasar hingga profesional.</p>
 				</div>
 				<div class="col l4 offset-l2 s12">
-					<h5 class="white-text">Komtak Kami</h5>
+					<h5 class="white-text">Kontak Kami</h5>
 					<ul>
 						<li><a class="grey-text text-lighten-3" href="#!">Email</a></li>
 						<li><a class="grey-text text-lighten-3" href="#!">Facebook</a></li>
@@ -84,7 +84,7 @@
 					</ul>
 				</div>
 			</div>
-		</div>-->
+		</div>
 		<div class="footer-copyright">
 			<div class="container">
 				© 2014 KomputerKit - Sidoarjo - Jawa Timur

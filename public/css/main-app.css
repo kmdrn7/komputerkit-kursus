@@ -244,7 +244,6 @@ body {
 	background-color: rgb(223,36,30);
 }
 .histori-right {
-	position: absolute;
 	bottom: 0;
 	right: 0;
 }
@@ -1013,6 +1012,12 @@ body {
     border-image-slice: 1;
     border-radius: 1px;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.kotak {
+	border: 5px solid #8bc6e7;
+	border-image: linear-gradient(to left, #3acfd5 0%, #8d8bf2 100%);
+	border-image-slice: 1;
 }
 
 /*--------------------------*/

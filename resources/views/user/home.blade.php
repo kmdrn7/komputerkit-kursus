@@ -42,7 +42,7 @@
 				</div>
 			</div>
 		</div>-->
-	<div class="row white white-text" style="padding: 3% 0;">
+	<div class="row white white-text" style="padding: 3% 0; margin-bottom: 0;">
 		<div class="container">
 			<div class="col s12 center-align">
 				<h5 style="color: #333;">Banner Penawaran</h5>
@@ -73,113 +73,115 @@
 	</div>
 
 	{{-- REKOMENDASI KURSUS DAN KURSUS ANDA --}}
-	<div class="container">
-		<div class="row no-margin-bottom">
-			<div class="col m12 l8">
-				<div class="row no-margin-bottom">
-					<div class="col s12 m12">
-						<div class="card-panel">
-							<div class="row">
-								<div class="col s12">
-									<h5 class="">Rekomendasi Kursus</h5>
-									<div class="divider"></div>
-								</div>
-							</div>
-							<div class="row no-margin-bottom">
-								@foreach ($kursus as $k)
-									<div class="col s12 m12 l4 center-align">
-										<div class="card-panel z-depth-2 hoverable" style="height: 390px">
-											<div class="kursus-img">
-												<img src="{{ asset('img/'. $k->gambar) }}" class="responsive-img" style="margin-bottom: 10px;" alt="">
-											</div>
-											<div class="kursus-title">
-												<h6 class="label-kursus" style="margin: auto">{{ $k->kursus }}</h6>
-											</div>
-											<div class="kursus-buy">
-												<a class="waves-effect waves-light btn my-button" href="{{ url('/kursus/'. $k->slug) }}">Beli Kursus</a>
-											</div>
-											<div class="kurus-price">
-												<p style="margin: 0; color: #6C6C6C; font-weight: 600; font-size: 20px;">Rp{{ number_format($k->harga,0,",",".") }}</p>
-											</div>
-											<span style="font-size: 14px; color: #969696;">per minggu</span>
-										</div>
+	<div class="row white" style="margin-bottom: 0; padding: 50px 0;">
+		<div class="container">
+			<div class="row no-margin-bottom">
+				<div class="col m12 l8">
+					<div class="row no-margin-bottom">
+						<div class="col s12 m12">
+							<div class="card-panel">
+								<div class="row">
+									<div class="col s12 center-align">
+										<h5 style="color: #333;">Rekomendasi Kursus</h5>
+										<div class="row"><div class="garis"></div></div>
 									</div>
-								@endforeach
+								</div>
+								<div class="row no-margin-bottom">
+									@foreach ($kursus as $k)
+										<div class="col s12 m12 l4 center-align">
+											<div class="card-panel hoverable" style="height: 390px">
+												<div class="kursus-img">
+													<img src="{{ asset('img/'. $k->gambar) }}" class="responsive-img" style="margin-bottom: 10px;" alt="">
+												</div>
+												<div class="kursus-title">
+													<h6 class="label-kursus" style="margin: auto">{{ $k->kursus }}</h6>
+												</div>
+												<div class="kursus-buy">
+													<a class="waves-effect waves-light btn my-button" href="{{ url('/kursus/'. $k->slug) }}">Beli Kursus</a>
+												</div>
+												<div class="kurus-price">
+													<p style="margin: 0; color: #6C6C6C; font-weight: 600; font-size: 20px;">Rp{{ number_format($k->harga,0,",",".") }}</p>
+												</div>
+												<span style="font-size: 14px; color: #969696;">per minggu</span>
+											</div>
+										</div>
+									@endforeach
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col m12 l4">
-				<div class="row no-margin-bottom">
-					<div class="col s12 m12">
-						<div class="card-panel" style="padding: 0">
-							<div class="row ">
-								<div class="col s12">
-									<h5 style="padding: 20px 30px;">Kursus Anda</h5>
-									<div class="divider"></div>
-								</div>
-								<div class="col s12">
-									<ul class="collapsible" data-collapsible="accordion" style="box-shadow: none; margin: 0; border: 0;">
-										@foreach ($kursus_anda as $ka)
-											<li>
-											  <div class="collapsible-header"><i class="material-icons right">keyboard_arrow_down</i>{{ $ka->kursus }}</div>
-											  <div class="collapsible-body" style="padding: 0;">
-												  <table class="responsive-table" style="background-color: #F9F9F9;">
-													  <thead>
-														  <tr>
-															<th style="padding: 10px 20px;" >Mulai</th>
-															<th style="padding: 10px 20px;" >Selesai</th>
-															<th style="padding: 10px 20px;" >Sisa</th>
-														</tr>
-													  </thead>
-													  <tbody>
-														  <tr>
-															  <td style="padding: 10px 20px;" >{{ $ka->tgl_mulai->format('d M Y') }}</td>
-															  <td style="padding: 10px 20px;" >{{ $ka->tgl_selesai->format('d M Y') }}</td>
-															  <td style="padding: 10px 20px;" >{{ $diff = $ka->tgl_mulai->diffInDays($ka->tgl_selesai) }} Hari</td>
-														  </tr>
-														  @if ($diff < 2)
-															  <tr class="orange">
-																  <td style="padding: 10px 20px; text-align: center" colspan="3">Segera lakukan perpanjangan kursus anda</td>
+				<div class="col m12 l4">
+					<div class="row no-margin-bottom">
+						<div class="col s12 m12">
+							<div class="card-panel" style="padding: 0">
+								<div class="row">
+									<div class="col s12 center-align" style="padding: 20px;">
+										<h5 style="color: #333;">Kursus Anda</h5>
+										<div class="row"><div class="garis"></div></div>
+									</div>
+									<div class="col s12">
+										<ul class="collapsible" data-collapsible="accordion" style="box-shadow: none; margin: 0; border: 0;">
+											@foreach ($kursus_anda as $ka)
+												<li>
+												  <div class="collapsible-header"><i class="material-icons right">keyboard_arrow_down</i>{{ $ka->kursus }}</div>
+												  <div class="collapsible-body" style="padding: 0;">
+													  <table class="responsive-table" style="background-color: #F9F9F9;">
+														  <thead>
+															  <tr>
+																<th style="padding: 10px 20px;" >Mulai</th>
+																<th style="padding: 10px 20px;" >Selesai</th>
+																<th style="padding: 10px 20px;" >Sisa</th>
+															</tr>
+														  </thead>
+														  <tbody>
+															  <tr>
+																  <td style="padding: 10px 20px;" >{{ $ka->tgl_mulai->format('d M Y') }}</td>
+																  <td style="padding: 10px 20px;" >{{ $ka->tgl_selesai->format('d M Y') }}</td>
+																  <td style="padding: 10px 20px;" >{{ $diff = $ka->tgl_mulai->diffInDays($ka->tgl_selesai) }} Hari</td>
 															  </tr>
-														  @endif
-													  </tbody>
-												  </table>
-											  </div>
-											</li>
-										@endforeach
-									  </ul>
+															  @if ($diff < 2)
+																  <tr class="orange">
+																	  <td style="padding: 10px 20px; text-align: center" colspan="3">Segera lakukan perpanjangan kursus anda</td>
+																  </tr>
+															  @endif
+														  </tbody>
+													  </table>
+												  </div>
+												</li>
+											@endforeach
+										  </ul>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col m12 s12">
-						<div class="row">
-							<div class="col s12 m12">
-								<div class="card-panel" style="padding: 0">
-									<div class="row">
-			                            <div class="col s12">
-			                                <h5 style="padding: 20px 30px;">Pembayaran Pending</h5>
-			                                <div class="divider"></div>
-			                            </div>
-			                            <div class="col s12">
-			                                <div class="collection" style="margin: 0; border: 0;">
-												@if ( count($kursus_tunggakan) > 0 )
-													@foreach ($kursus_tunggakan as $kt)
-														<a href="pages/bukti-bayar.html" class="collection-item">
-															<span class="new badge red" data-badge-caption="Kirim Bukti Pembayaran"></span>
-															{{ $kt->kursus }} : {{ $kt->waktu }} Hari
-														</a>
-													@endforeach
-												@else
-													<div class="collection-item center-align" style="color: rgb(111,111,111)">Tidak ada tunggakan.</div>
-												@endif
-			                                </div>
-			                            </div>
-			                        </div>
+					<div class="row">
+						<div class="col m12 s12">
+							<div class="row">
+								<div class="col s12 m12">
+									<div class="card-panel" style="padding: 0">
+										<div class="row">
+				                            <div class="col s12 center-align" style="padding: 20px;">
+				                                <h5 style="color: #333;">Pembayaran Pending</h5>
+												<div class="row"><div class="garis"></div></div>
+				                            </div>
+				                            <div class="col s12">
+				                                <div class="collection" style="margin: 0; border: 0;">
+													@if ( count($kursus_tunggakan) > 0 )
+														@foreach ($kursus_tunggakan as $kt)
+															<a href="pages/bukti-bayar.html" class="collection-item">
+																<span class="new badge red" data-badge-caption="Kirim Bukti Pembayaran"></span>
+																{{ $kt->kursus }} : {{ $kt->waktu }} Hari
+															</a>
+														@endforeach
+													@else
+														<div class="collection-item center-align" style="color: rgb(111,111,111)">Tidak ada tunggakan.</div>
+													@endif
+				                                </div>
+				                            </div>
+				                        </div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -240,7 +242,7 @@
 							<p class="center" style="font-family: 'Lato', sans-serif; font-weight:300; font-size: 17px; padding: 15px;">
 								Masuk ke ruang kelas untuk melihat pelajaran dan materi apa saja yang telah kalian ambil.
 								Diskusikan dengan pembimbing tentang masalah coding yang kalian hadapi. <br> <br>
-								<a style="font-family: 'Spectral', serif;" href="{{ route('kelas') }}" class="button-ku">Lihat Paket</a>
+								<a style="font-family: 'Spectral', serif;" href="{{ route('kelas') }}" class="button-ku">Masuk Kelas</a>
 							</p>
 						</div>
 					</div>

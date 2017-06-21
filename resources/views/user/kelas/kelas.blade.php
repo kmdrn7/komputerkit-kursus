@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<div class="container" style="max-width: 960px!important">
+	<div class="container" style="max-width: 960px!important; padding: 60px 0;">
 
 		<div class="row no-margin-bottom">
 			<div class="col m12">

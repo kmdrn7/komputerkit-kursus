@@ -20,7 +20,7 @@ body {
 }
 
 .bd {
-	border: 1px solid black;
+	border: 5px solid white;
     box-sizing: border-box;
 }
 
@@ -33,7 +33,6 @@ body {
 
 .main-header {
     background-image: url('../img/web/welcome_bg.png');
-	height: 220px;
 	overflow: hidden;
 	/*background-size: contain;*/
 	/*background-repeat: no-repeat;*/
@@ -245,7 +244,6 @@ body {
 	background-color: rgb(223,36,30);
 }
 .histori-right {
-	position: absolute;
 	bottom: 0;
 	right: 0;
 }
@@ -937,6 +935,94 @@ body {
 .row-message {
 	margin-bottom: 10px!important;
 }
+
+/*--------------------*/
+/*--- Style Button ---*/
+/*--------------------*/
+
+.button-ku {
+	border: 1px solid white;
+	padding: 7px 20px;
+	font-size: 15px;
+	background-color: transparent;
+	border-radius: 2px;
+	color: white;
+	transition: all 0.3s ease 0s;
+}
+
+.button-ku:hover {
+	background-color: white;
+	color: #8d8bf2;
+}
+
+.button-ku2 {
+	border: 1px solid #43496D;
+	padding: 7px 20px;
+	font-size: 15px;
+	background-color: transparent;
+	border-radius: 2px;
+	color: #43496D;
+	transition: all 0.3s ease 0s;
+}
+
+.button-ku2:hover {
+	background-color: #43496D;
+	color: white;
+}
+
+/** {
+	border: 1px solid black;
+	box-sizing: border-box;
+}*/
+
+/*------------------------*/
+/*--- End Style Button ---*/
+/*------------------------*/
+/*----------------------*/
+/*--- Content Border ---*/
+/*----------------------*/
+
+.content-border {
+	border: 5px solid transparent; 
+	box-sizing: border-box; 
+	margin: 10px;
+	transition: all 0.3s ease 0s;
+}
+
+.content-border:hover {
+	border: 5px solid white;
+}
+
+.garis {
+	margin: auto;
+    width: 50px;
+	height: 3px;
+    border: 0.05em solid #8bc6e7;
+	border-image: linear-gradient(to left, #3acfd5 0%, #8d8bf2 100%);
+    border-image-slice: 1;
+    border-radius: 1px;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.garis2 {
+	margin: auto;
+    width: 50px;
+	height: 3px;
+    border: 0.05em solid white;
+    border-image-slice: 1;
+    border-radius: 1px;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.kotak {
+	border: 5px solid #8bc6e7;
+	border-image: linear-gradient(to left, #3acfd5 0%, #8d8bf2 100%);
+	border-image-slice: 1;
+}
+
+/*--------------------------*/
+/*--- End Content Border ---*/
+/*--------------------------*/
 
 @media only screen and (max-width: 600px) {
     #count {

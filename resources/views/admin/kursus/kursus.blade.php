@@ -35,6 +35,9 @@
                         <h4 class="card-title">Data Kursus</h4>
                         <div class="toolbar"></div>
                         <div class="table-responsive" id="table--container">
+							<div class="img-container">
+								<img id="loading" class="img-loading" src="{{ asset('img/web/loading.gif') }}" alt="">
+							</div>
 							@include('admin.kursus.tbl_kursus')
                         </div>
                     </div>
@@ -131,7 +134,7 @@
 		</div>
 	</div>
 	{{-- Modal Update  --}}
-	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true" style="overflow-y: auto">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -228,7 +231,7 @@
 		</div>
 	</div>
 	{{-- Modal Konfimrasi Hapus --}}
-	<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+	<div class="modal fade bs-example-modal-sm" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 		<div class="modal-dialog modal-md" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -240,7 +243,7 @@
 					<input type="hidden" id="id_kursus_delete" value="">
 					<table class="table table-striped">
 						<tr>
-							<td>ID Kursus</td>
+							<td width="130px">ID Kursus</td>
 							<td id="id_kursus_d"></td>
 						</tr>
 						<tr>
@@ -260,6 +263,20 @@
 			</div>
 		</div>
 	</div>
+	{{-- Modal Loading --}}
+	<div class="modal fade" id="modalLoading" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+				</div>
+				<div class="modal-body">
+					Sedang memproses permintaan anda ...
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection
 
 
@@ -267,19 +284,27 @@
 	<script type="text/javascript">
 
 		function initialize() {
+			// $('#loading').css('display', 'block');
 			$('#DT').DataTable({
 				"lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Semua"]]
 			});
+			$('#loading').css('display', 'none');
+			$('#DT').css('display', 'block');
 		}
 
 		function fetch() {
+			$('#loading').css('display', 'block');
+			$('#DT_wrapper').remove('');
 			axios.get('{{route('ajax.kursus')}}').then(function (res) {
-				$('#table--container').html(res.data);
+				$('#loading').css('display', 'none');
+				$('#table--container').append(res.data);
 				initialize();
+				$('.btn-refresh-item').removeClass('fa-spin');
 			});
 		}
 
 		function showUpdateForm(idKursus) {
+			$('#modalLoading').modal('show');
 			axios.get('/admin/kursus/show/' + idKursus).then(function (res) {
 				// Initialize res in data var
 				var data = res.data;
@@ -293,12 +318,15 @@
 				$('select[name="kategori_u"] option[value="'+data.kategori+'"]').attr('selected','selected');
 				$('#gambar_lama').attr('src', '/img/kursus/'+data.gambar);
 				$('input[name="gambar_u_lama"]').val(data.gambar);
+				$('#modalLoading').modal('hide');
+				$('#updateModal').modal('show');
 			}).catch(function (ex) {
 				console.log(ex);
 			});
 		}
 
 		function showDeleteConfirmation(idKursus) {
+			$('#modalLoading').modal('show');
 			axios.get('/admin/kursus/show/' + idKursus).then(function (res) {
 				// Initialize res in data var
 				var data = res.data;
@@ -307,6 +335,8 @@
 				$('#id_kursus_d').html(data.id_kursus);
 				$('#kursus_d').html(data.kursus);
 				$('#keterangan_d').html(data.ket_kursus);
+				$('#modalLoading').modal('hide');
+				$('.bs-example-modal-sm').modal('show');
 			}).catch(function (ex) {
 				console.log(ex);
 			});
@@ -361,24 +391,33 @@
 			$('#id_kursus_delete_info').html(id);
 		});
 
-		$('.btn-refresh-item').click(function(event) {
-			$('#i-refresh').addClass('fa-spin');
-			fetch();
-			$('#i-refresh').removeClass('fa-spin');
-		});
-
 		$(document).ready(function() {
 
 			initialize();
+
+			$('#modalLoading').modal({
+				backdrop: 'static',
+				keyboard: false,
+				show: false,
+			});
+
+			$('.btn-refresh-item').click(function(event) {
+				event.preventDefault();
+				$(this).addClass('fa-spin');
+				fetch();
+				// $('#i-refresh').removeClass('fa-spin');
+			});
 
 			$('#save').click(function(event) {
 				event.preventDefault();
 				// Validate form
 				if ( validateForm() ) {
 					// initialize form input data
+					$('#myModal').modal('hide');
+					$('#modalLoading').modal('show');
 					var kursus = $('input[name="kursus"]').val();
 					var waktu = $('input[name="waktu"]').val();
-					var kategori = $('select[name="kategori"]').find(":selected").text();
+					var kategori = $('select[name="kategori"]').find(":selected").val();
 					var harga = $('input[name="harga"]').val();
 					var ket = $('textarea[name="keterangan"]').val();
 					var syarat = $('textarea[name="syarat"]').val();
@@ -398,8 +437,7 @@
 						$('#reset').click();
 						// Reset the form + table
 						$(".dropify-clear").click();
-						$('#myModal').modal('hide');
-						$('#table--container').html('');
+						$('#modalLoading').modal('hide');
 						// Fill with new table
 						fetch();
 					});
@@ -415,10 +453,12 @@
 				// Validate form
 				if ( validateForm('update') ) {
 					// initialize form input data
+					$('#updateModal').modal('hide');
+					$('#modalLoading').modal('show');
 					var id = $('#id_kursus').val();
 					var kursus = $('input[name="kursus_u"]').val();
 					var waktu = $('input[name="waktu_u"]').val();
-					var kategori = $('select[name="kategori_u"]').find(":selected").text();
+					var kategori = $('select[name="kategori_u"]').find(":selected").val();
 					var harga = $('input[name="harga_u"]').val();
 					var ket = $('textarea[name="keterangan_u"]').val();
 					var syarat = $('textarea[name="syarat_u"]').val();
@@ -448,8 +488,7 @@
 						$('#reset').click();
 						// Reset the form + table
 						$(".dropify-clear").click();
-						$('#updateModal').modal('hide');
-						$('#table--container').html('');
+						$('#modalLoading').modal('hide');
 						// Fill with new table
 						fetch();
 					});
@@ -462,14 +501,19 @@
 
 			$('#confirm_delete').click(function(event) {
 				event.preventDefault();
-				// 
-				var id = $('#id_kursus').val();
+				// Close This Modal
+				$('#deleteModal').modal('hide');
+				$('#modalLoading').modal('show');
+				// Initialize ID
+				var id = $('#id_kursus_delete').val();
 				var form = new FormData();
 				form.append('id', id);
-
-
-				axios.post('{{ route('a.kursus.d') }}').then(function (res) {
-
+				// Post delete request
+				axios.post('{{ route('a.kursus.d') }}', form).then(function (res) {
+					console.log(res);
+					$('#modalLoading').modal('hide');
+					// Fill with new table
+					fetch();
 				});
 			});
 

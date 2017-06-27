@@ -8,7 +8,11 @@ class Promosi extends Model
 {
     protected $table = 'tbl_promosi';
 	protected $primaryKey = 'id_promosi';
-	public $timestamps = false;
+
+	protected $dates = [
+		'created_at',
+		'updated_at',
+	];
 
 	protected $fillable = [
 		'promosi',

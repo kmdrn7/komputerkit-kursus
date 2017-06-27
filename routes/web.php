@@ -277,7 +277,7 @@ Route::group(['middleware' => 'auth'], function ()
 			]);
 			// Ajax Kursus
 			Route::get('/fetch_all', [
-				'uses' => 'Admin\KursusController@ajaxKursus',
+				'uses' => 'Admin\KursusController@ajax_fetch_all',
 				'as' => 'ajax.kursus'
 			]);
 			// Tambah Kursus
@@ -302,6 +302,297 @@ Route::group(['middleware' => 'auth'], function ()
 			]);
 		});
 
+		Route::group(['prefix' => '/promosi'], function()
+		{
+			// Promosi
+			Route::get('/', [
+				'uses' => 'Admin\PromosiController@index',
+				'as' => 'admin.promosi'
+			]);
+			// Ajax Promosi
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\PromosiController@ajax_fetch_all',
+				'as' => 'ajax.promosi'
+			]);
+			// Tambah Promosi
+			Route::post('/add', [
+				'uses' => 'Admin\PromosiController@store',
+				'as' => 'a.promosi.a'
+			]);
+			// Ubah Promosi
+			Route::post('/update', [
+				'uses' => 'Admin\PromosiController@update',
+				'as' => 'a.promosi.u'
+			]);
+			// Hapus Promosi
+			Route::post('/delete', [
+				'uses' => 'Admin\PromosiController@destroy',
+				'as' => 'a.promosi.d'
+			]);
+			// Show Detail per kursus
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\PromosiController@show',
+				'as' => 'a.promosi.s'
+			]);
+		});
+
+		Route::group(['prefix' => '/expert'], function()
+		{
+			// Expert
+			Route::get('/', [
+				'uses' => 'Admin\ExpertController@index',
+				'as' => 'admin.expert'
+			]);
+			// Ajax Expert
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\ExpertController@ajax_fetch_all',
+				'as' => 'ajax.expert'
+			]);
+			// Tambah Expert
+			Route::post('/add', [
+				'uses' => 'Admin\ExpertController@store',
+				'as' => 'a.expert.a'
+			]);
+			// Ubah Expert
+			Route::post('/update', [
+				'uses' => 'Admin\ExpertController@update',
+				'as' => 'a.expert.u'
+			]);
+			// Hapus Expert
+			Route::post('/delete', [
+				'uses' => 'Admin\ExpertController@destroy',
+				'as' => 'a.expert.d'
+			]);
+			// Show Detail per Expert
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\ExpertController@show',
+				'as' => 'a.expert.s'
+			]);
+		});
+
+		Route::group(['prefix' => '/pembimbing'], function()
+		{
+			// Pembimbing
+			Route::get('/', [
+				'uses' => 'Admin\PembimbingController@index',
+				'as' => 'admin.pembimbing'
+			]);
+			// Ajax Pembimbing
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\PembimbingController@ajax_fetch_all',
+				'as' => 'ajax.pembimbing'
+			]);
+			// Tambah Pembimbing
+			Route::post('/add', [
+				'uses' => 'Admin\PembimbingController@store',
+				'as' => 'a.pembimbing.a'
+			]);
+			// Ubah Pembimbing
+			Route::post('/update', [
+				'uses' => 'Admin\PembimbingController@update',
+				'as' => 'a.pembimbing.u'
+			]);
+			// Hapus Pembimbing
+			Route::post('/delete', [
+				'uses' => 'Admin\PembimbingController@destroy',
+				'as' => 'a.pembimbing.d'
+			]);
+			// Show Detail per Pembimbing
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\PembimbingController@show',
+				'as' => 'a.pembimbing.s'
+			]);
+		});
+
+		Route::group(['prefix' => '/kategori'], function()
+		{
+			// Kategori
+			Route::get('/', [
+				'uses' => 'Admin\KategoriController@index',
+				'as' => 'admin.kategori'
+			]);
+			// Ajax Kategori
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\KategoriController@ajax_fetch_all',
+				'as' => 'ajax.kategori'
+			]);
+			// Tambah Kategori
+			Route::post('/add', [
+				'uses' => 'Admin\KategoriController@store',
+				'as' => 'a.kategori.a'
+			]);
+			// Ubah Kategori
+			Route::post('/update', [
+				'uses' => 'Admin\KategoriController@update',
+				'as' => 'a.kategori.u'
+			]);
+			// Hapus Kategori
+			Route::post('/delete', [
+				'uses' => 'Admin\KategoriController@destroy',
+				'as' => 'a.kategori.d'
+			]);
+			// Show Detail per Kategori
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\KategoriController@show',
+				'as' => 'a.kategori.s'
+			]);
+		});
+
+		Route::group(['prefix' => '/bank'], function()
+		{
+			// Bank
+			Route::get('/', [
+				'uses' => 'Admin\BankController@index',
+				'as' => 'admin.bank'
+			]);
+			// Ajax Bank
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\BankController@ajax_fetch_all',
+				'as' => 'ajax.bank'
+			]);
+			// Tambah Bank
+			Route::post('/add', [
+				'uses' => 'Admin\BankController@store',
+				'as' => 'a.bank.a'
+			]);
+			// Ubah Bank
+			Route::post('/update', [
+				'uses' => 'Admin\BankController@update',
+				'as' => 'a.bank.u'
+			]);
+			// Hapus Bank
+			Route::post('/delete', [
+				'uses' => 'Admin\BankController@destroy',
+				'as' => 'a.bank.d'
+			]);
+			// Show Detail per Bank
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\BankController@show',
+				'as' => 'a.bank.s'
+			]);
+		});
+
+		Route::group(['prefix' => '/materi'], function()
+		{
+			// Materi
+			Route::get('/', [
+				'uses' => 'Admin\MateriController@index',
+				'as' => 'admin.materi'
+			]);
+			// Ajax Materi
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\MateriController@ajax_fetch_all',
+				'as' => 'ajax.materi'
+			]);
+			// Get Latest Number Materi
+			Route::get('/get_no_urut', [
+				'uses' => 'Admin\MateriController@ajax_gno',
+				'as' => 'ajax.materi.gno'
+			]);
+			// Tambah Materi
+			Route::post('/add', [
+				'uses' => 'Admin\MateriController@store',
+				'as' => 'a.materi.a'
+			]);
+			// Tambah Materi Dari Materi Lama
+			Route::post('/add_old', [
+				'uses' => 'Admin\MateriController@storeOld',
+				'as' => 'a.materiold.a'
+			]);
+			// Ubah Materi
+			Route::post('/update', [
+				'uses' => 'Admin\MateriController@update',
+				'as' => 'a.materi.u'
+			]);
+			// Hapus Materi
+			Route::post('/delete', [
+				'uses' => 'Admin\MateriController@destroy',
+				'as' => 'a.materi.d'
+			]);
+			// Show Detail per Materi
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\MateriController@show',
+				'as' => 'a.materi.s'
+			]);
+		});
+
+		Route::group(['prefix' => '/tugas'], function()
+		{
+			// Tugas
+			Route::get('/', [
+				'uses' => 'Admin\TugasController@index',
+				'as' => 'admin.tugas'
+			]);
+			// Ajax Tugas
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\TugasController@ajax_fetch_all',
+				'as' => 'ajax.tugas'
+			]);
+			// Get Latest Number Tugas
+			Route::get('/get_no_urut', [
+				'uses' => 'Admin\TugasController@ajax_gno',
+				'as' => 'ajax.tugas.gno'
+			]);
+			// Tambah Tugas
+			Route::post('/add', [
+				'uses' => 'Admin\TugasController@store',
+				'as' => 'a.tugas.a'
+			]);
+			// Tambah Materi Dari Tugas Lama
+			Route::post('/add_old', [
+				'uses' => 'Admin\TugasController@storeOld',
+				'as' => 'a.tugasold.a'
+			]);
+			// Ubah Tugas
+			Route::post('/update', [
+				'uses' => 'Admin\TugasController@update',
+				'as' => 'a.tugas.u'
+			]);
+			// Hapus Tugas
+			Route::post('/delete', [
+				'uses' => 'Admin\TugasController@destroy',
+				'as' => 'a.tugas.d'
+			]);
+			// Show Detail per Tugas
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\TugasController@show',
+				'as' => 'a.tugas.s'
+			]);
+		});
+
+		Route::group(['prefix' => '/user'], function()
+		{
+			// User
+			Route::get('/', [
+				'uses' => 'Admin\UserController@index',
+				'as' => 'admin.user'
+			]);
+			// Ajax User
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\UserController@ajax_fetch_all',
+				'as' => 'ajax.user'
+			]);
+			// Tambah User
+			Route::post('/add', [
+				'uses' => 'Admin\UserController@store',
+				'as' => 'a.user.a'
+			]);
+			// Ubah User
+			Route::post('/update', [
+				'uses' => 'Admin\UserController@update',
+				'as' => 'a.user.u'
+			]);
+			// Hapus User
+			Route::post('/delete', [
+				'uses' => 'Admin\UserController@destroy',
+				'as' => 'a.user.d'
+			]);
+			// Show Detail per User
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\UserController@show',
+				'as' => 'a.user.s'
+			]);
+		});
 
 	});
 // });

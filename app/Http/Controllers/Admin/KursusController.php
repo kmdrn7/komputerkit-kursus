@@ -32,7 +32,7 @@ class KursusController extends Controller
         return view('admin.kursus.kursus', $data);
     }
 
-	public function ajaxKursus(Request $request)
+	public function ajax_fetch_all(Request $request)
 	{
 
 		if ( $this->isJsonRequest($request) ) {
@@ -183,8 +183,6 @@ class KursusController extends Controller
 			return response(['status' => 'Data berhasil diubah tanpa gambar']);
 		}
 
-
-
 		return response($errors);
     }
 
@@ -194,9 +192,23 @@ class KursusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $req)
     {
-        //
+        if ( $this->isJsonRequest($req) ) {
+
+			$gambar = Kursus::where('id_kursus', $req->id)->first();
+			$gambar_lama = $gambar->gambar;
+
+			if ( file_exists(public_path() . '/img/kursus/' . $gambar_lama) ) {
+				unlink(public_path() . '/img/kursus/' . $gambar_lama);
+			}
+
+			Kursus::destroy($req->id);
+
+			return response(['status' => 'Berhasil hapus data']);
+        }
+
+		return response(['status' => 'Error saat akan hapus']);
     }
 
 	public function isJsonRequest($request)

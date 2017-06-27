@@ -12,7 +12,7 @@
 
 	    <!-- Styles -->
 	    <link href="{{ asset('css/admin_app.css') }}" rel="stylesheet">
-		<link href="{{ asset('css/main-admin.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/main-admin.css?v='. mt_rand(0, 999)) }}" rel="stylesheet">
 		<link href="{{ asset('css/dropify.css') }}" rel="stylesheet">
 		@yield('custom--css')
 	</head>
@@ -84,7 +84,6 @@
 										</ul>
 									</li>
 									<li>
-										<a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
 			 							   <i class="material-icons">person</i>
 			 							   <p class="hidden-lg hidden-md">Profile</p>
 				 						</a>
@@ -95,6 +94,7 @@
 					</nav>
 
 					<div class="content">
+						<a href="#pablo" class="dropdown-toggle" data-toggle="dropdown"></a>
 						{{-- YIELD CONTENT DENGAN CONTENT DINAMIS --}}
 						@yield('content')
 					</div>

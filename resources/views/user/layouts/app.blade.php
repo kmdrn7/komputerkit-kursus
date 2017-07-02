@@ -14,7 +14,8 @@
 	<link href="https://fonts.googleapis.com/css?family=Spectral:200,300,400,500,600,700,800" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-	<link href="{{ asset('css/main-app.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/main-app.css?v=' . uniqid() ) }}" rel="stylesheet">
+	<script src="https://use.fontawesome.com/d8b86d541f.js"></script>
 	@yield('custom--css')
 </head>
 <body>
@@ -45,50 +46,54 @@
             <li><a href="{{ url('/user/logout') }}">Log Out</a></li>
         </ul>
 
-		<div class="col s12 main-header" style="background: linear-gradient(-4deg, #8bc6e7, #8d8bf2);">
-            <div class="row" style="padding: 20px 20px 0 20px; margin-bottom: 0;">
-                <a href="#" data-activates="slide-out" class="button-collapse">
-					<i class="material-icons left white-text" style="font-size: 40px;">menu</i>
-				</a>
-				<a class='right button-collapse button-ku' href='#' data-activates='slide-out'>
-					{{ Auth::user()->name }}
-				</a>
-            </div>
-            <div class="row no-margin-bottom valign-wrapper" style="margin-left: auto; margin-right: auto; padding: 0 20px 30px 20px;">
-				<a href="{{ url('/') }}" style="margin: auto;" class="center-align white-text">
-					<!--<img src="{{ asset('img/logo/logo-KIT.png') }}" alt="" style="width: 400px; margin: auto">-->
-					<h4 style="font-weight: 600; margin: 0; margin-top: 30px;">KOMPUTER KIT</h4>
-					<p style="font-family: 'Spectral', serif; font-size: 20px; margin-top: 0;">
-						Tempat terbaik untuk anda belajar coding dari dasar.
-					</p>
-				</a>
-            </div>
-        </div>
+		<div class="row row-header z-depth-3" style="z-index: 10000">
+			<div class="col s12">
+				<div class="row" style="padding: 20px 20px 0 20px; margin-bottom: 0;">
+					<a href="#" data-activates="slide-out" class="button-collapse button-nav-left">
+						<i class="material-icons left white-text" style="font-size: 40px;">menu</i>
+					</a>
+					<a href="{{ url('/') }}" class="button-nav left hide-on-small-only">
+						<strong>KomputerKit</strong><small>.com</small>
+					</a>
+					<a href="{{ url('kursus/free/all') }}" class="button-nav left">
+						Tutorial
+					</a>
+					<a href="{{ url('kursus/all') }}" class="button-nav left">
+						Kursus
+					</a>
+					{{-- <a class='right button-collapse button-main-header hide-on-small-only' href='#' data-activates='slide-out'> --}}
+					<a class='right button-main-header hide-on-small-only' href='#'>
+						{{ Auth::user()->name }}
+					</a>
+				</div>
+			</div>
+		</div>
+
         @yield('content')
     {{-- </div> --}}
 
-	<footer class="page-footer" style="background: linear-gradient(-4deg, #8bc6e7, #8d8bf2);">
+	<footer class="page-footer ft-top">
 		<div class="container">
-			<div class="row">
+			<div class="row no-margin-bottom ft-top">
 				<div class="col l6 s12">
-					<h5 class="white-text">KomputerKit</h5>
-					<p class="grey-text text-lighten-4">Tempat belajar pemrograman mulai dari dasar hingga profesional.</p>
+					<span class="white-text ft-header">Kursus Komputer Kit</span>
+					<p class="ft-subheader grey-text text-lighten-4">Tempat belajar pemrograman mulai dari dasar hingga profesional.</p>
 				</div>
 				<div class="col l4 offset-l2 s12">
-					<h5 class="white-text">Kontak Kami</h5>
+					<h5 class="white-text ft-kontak">Kontak Kami</h5>
 					<ul>
-						<li><a class="grey-text text-lighten-3" href="#!">Email</a></li>
-						<li><a class="grey-text text-lighten-3" href="#!">Facebook</a></li>
-						<li><a class="grey-text text-lighten-3" href="#!">Instagram</a></li>
-						<li><a class="grey-text text-lighten-3" href="#!">Line</a></li>
+						<li><a class="white-text text-lighten-3" href="mailto:komputerkit.dev@gmail.com"><i class="fa fa-inbox"></i>&nbsp; komputerkit.dev@gmail.com</a></li>
+						<li><a class="white-text text-lighten-3" href="https://facebook.com"><i class="fa fa-facebook-square"></i>&nbsp; Facebook</a></li>
+						<li><a class="white-text text-lighten-3" href="https://instagram.com"><i class="fa fa-instagram"></i>&nbsp; Instagram</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
-		<div class="footer-copyright">
-			<div class="container">
-				© 2014 KomputerKit - Sidoarjo - Jawa Timur
-				<a class="grey-text text-lighten-4 right" href="#!">Google Maps</a>
+		<div class="row no-margin-bottom ft-bot">
+			<div class="col m12 s12">
+				<div class="ft-copyright">
+					Kursus KomputerKit &copy; 2016 - {{ date('Y') }} <span style="margin: 0 5px;">||</span> {!! e('</>'); !!} dengan &nbsp;❤&nbsp; di Buduran.
+				</div>
 			</div>
 		</div>
 	</footer>
@@ -96,6 +101,12 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('js/main_app.js') }}"></script>
+	<script type="text/javascript">
+		$('.button-main-header').click(function(event) {
+			event.preventDefault();
+			$('.button-collapse').sideNav('show');
+		});
+	</script>
 	@yield('custom--js')
 	@yield('content-js')
 </body>

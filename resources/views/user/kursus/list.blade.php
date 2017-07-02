@@ -1,8 +1,10 @@
 @extends('user.layouts.app')
 
 @section('content')
+	<div class="list-container" style="margin-top: 85px">
+
 	<div class="container">
-		<div class="row" style="background-color: #F5F6F7; margin-bottom: 0;">
+		<div class="row">
             <div class="col s12">
 				{{-- ROW HEADER CONTENT --}}
                 <div class="row" style="margin-bottom: 0; padding: 40px 6%;">
@@ -81,6 +83,7 @@
                 </div>
             </div>
         </div>
+	</div>
 
 	</div>
 @endsection

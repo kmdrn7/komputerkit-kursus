@@ -1,10 +1,10 @@
-<div class="row" style="padding: 10px 0px">
+<div class="row no-margin-bottom" style="padding: 10px 0px">
 	@if ( count($kursus) > 0 )
 		@foreach ($kursus as $ku)
 			<div class="col l4 m4 s12">
 				<div class="card-panel hoverable center-align white">
 					<div class="kursus-img">
-						<img src="{{ asset('img/'. $ku->gambar) }}" class="responsive-img" style="margin-bottom: 10px;" alt="">
+						<img src="{{ asset('img/kursus/'. $ku->gambar) }}" class="responsive-img" style="margin-bottom: 10px;" alt="">
 					</div>
 					<div class="kursus-title valign-wrapper">
 						<h6 id="label-kursus" style="margin: auto">{{ $ku->kursus }}</h6>
@@ -22,15 +22,22 @@
 	@else
 		<div class="col m12 l12">
 			<div class="center-align">
-				Kategori yang anda inginkan tidak ada.
+				<div class="kursus-link-container">
+					Kategori yang anda inginkan tidak ada.
+				</div>
 			</div>
 		</div>
 	@endif
 </div>
 @if ( count($kursus) > 0 )
-	<div class="row">
+	<div class="row no-margin-bottom">
 		<div class="col l12 center-align">
-			{{ $kursus->links() }}
+			<div class="kursus-link-container">
+				<div class="kursus-link-header">
+					Menampilkan 10 dari 20 Kursus.
+				</div>
+				{{ $kursus->links() }}
+			</div>
 		</div>
 	</div>
 @endif

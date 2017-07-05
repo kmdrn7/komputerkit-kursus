@@ -198,10 +198,10 @@ class KursusController extends Controller
 				'flag_kursus' => 0,
 			]);
 
-			return redirect('/kelas');
+			return redirect('/histori');
 		}
 
-		return redirect('/kursus');
+		return redirect('/me');
 	}
 
 	public function isJsonRequest($request)

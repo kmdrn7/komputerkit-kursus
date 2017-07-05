@@ -1,3 +1,7 @@
+@php
+	$nownow = \Carbon\Carbon::now();
+@endphp
+
 @extends('user.layouts.app')
 
 @section('custom--css')
@@ -36,14 +40,73 @@
 				</a>
 			</div>
 			<div class="valign-container" style="padding-left: 20px;">
-				<h5>Kursus Anda</h5>
-				<p class="nav-header-p">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-				</p>
-				<h5>Pembayaran Pending</h5>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-				</p>
+				<h4 class="white-text">Kursus Anda</h4>
+				<div class="nav-header-item">
+					<ul class="collapsible cl-no-mt" data-collapsible="accordion">
+						@foreach ($kursus_anda as $ka)
+							<li>
+								<div class="collapsible-header">
+									<i class="fa fa-tasks"></i>
+									{{ $ka->kursus }}
+								</div>
+								<div class="collapsible-body white">
+									<table class="striped bordered highlight responsive-table">
+										<tbody class="centered">
+											<tr>
+												<th class="center-align">Tgl. Selesai</th>
+												<td>{{ $ka->tgl_selesai->formatLocalized('%A, %e %B %Y') }}</td>
+												<td class="center-align"><a class="btn btn-info" style="margin-top: -3px" href="{{ url('kelas') }}">Masuk</a></td>
+											</tr>
+											<tr>
+												<th class="center-align">Sisa Hari</th>
+												<td>{{ $beda_hari = $nownow->diffInDays($ka->tgl_selesai, false) }}</td>
+												<td class="center-align">
+													@if ( $beda_hari <= 5 )
+														<a class="btn" href="{{ url('kursus/checkout/'. $ka->slug) }}">Perpanjangan Kursus</a>
+													@endif
+												</td>
+											</tr>
+											{{-- <tr>
+												<td colspan="3" class="center-align">
+
+												</td>
+											</tr> --}}
+										</tbody>
+									</table>
+								</div>
+							</li>
+						@endforeach
+					</ul>
+				</div>
+				<h4 class="white-text">Pembayaran Pending</h4>
+				<div class="nav-header-item">
+					<ul class="collapsible cl-no-mt" data-collapsible="accordion">
+						@foreach ($kursus_tunggakan as $kt)
+							<li>
+								<div class="collapsible-header">
+									<i class="fa fa-tasks"></i>
+									{{ $kt->kursus }}
+								</div>
+								<div class="collapsible-body white">
+									<table class="bordered highlight responsive-table">
+										<tbody class="centered">
+											<tr>
+												<th class="center-align">Status</th>
+												<td colspan="2">
+													@if ( $kt->flag_kursus == 2 )
+														Sedang di proses, menunggu konfirmasi
+													@elseif ( $kt->flag_kursus == 0 )
+														<a href="" class="btn-custom-revert">Konfirmasi Pembayaran</a>
+													@endif
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</li>
+						@endforeach
+					</ul>
+				</div>
 			</div>
 		</div>
 		<div class="btn-penawaran-container">
@@ -190,7 +253,7 @@
 								</ul>
 								<div class="tabs-item" id="tab-kursus" class="col s12">
 									<p>
-										<i class="material-icons tabs-icon">play_circle_filled</i> <br>
+										<i class="material-icons tabs-icon">chrome_reader_mode</i> <br>
 										Ikuti kursus untuk mendapatkan pengalaman belajar pemrograman yang sangat menyenangkan dan juga mengesankan.
 									</p>
 									<p>
@@ -199,7 +262,7 @@
 								</div>
 								<div class="tabs-item" id="tab-tutor" class="col s12">
 									<p>
-										<i class="material-icons tabs-icon">chrome_reader_mode</i> <br>
+										<i class="material-icons tabs-icon">play_circle_filled</i> <br>
 										Ikuti tutorial
 									</p>
 									<p>

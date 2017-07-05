@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Komputer Kit') }}</title>
+    <title>Kursus - KomputerKit.com</title>
 
     <!-- Styles -->
 	<link href="https://fonts.googleapis.com/css?family=Spectral:200,300,400,500,600,700,800" rel="stylesheet">
@@ -46,7 +46,7 @@
             <li><a href="{{ url('/user/logout') }}">Log Out</a></li>
         </ul>
 
-		<div class="row row-header z-depth-3" style="z-index: 10000">
+		<div class="row row-header">
 			<div class="col s12">
 				<div class="row" style="padding: 20px 20px 0 20px; margin-bottom: 0;">
 					<a href="#" data-activates="slide-out" class="button-collapse button-nav-left">
@@ -74,7 +74,7 @@
 
 	<footer class="page-footer ft-top">
 		<div class="container">
-			<div class="row no-margin-bottom ft-top">
+			<div class="row ft-top">
 				<div class="col l6 s12">
 					<span class="white-text ft-header">Kursus Komputer Kit</span>
 					<p class="ft-subheader grey-text text-lighten-4">Tempat belajar pemrograman mulai dari dasar hingga profesional.</p>

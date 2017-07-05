@@ -8,7 +8,7 @@
 
 		<div class="col s12 center-align z-depth" style="margin-top: -75px; ">
 			<a href="{{ route('kk') }}">
-				<img src="{{ asset('assets/img/logo/favicon.png') }}" alt="" style="width: 180px">
+				<img src="{{ asset('img/logo/favicon.png') }}" alt="" style="width: 180px">
 				<h6 style="font-weight: 500">Kursus Komputerkit</h6>
 			</a>
 		</div>

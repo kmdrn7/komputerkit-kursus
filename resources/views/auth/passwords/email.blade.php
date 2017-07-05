@@ -8,7 +8,7 @@
 
 		<div class="col s12 center-align z-depth" style="margin-top: -75px; ">
 			<a href="{{ route('kk') }}">
-				<img src="{{ asset('assets/img/logo/favicon.png') }}" alt="" style="width: 180px">
+				<img src="{{ asset('img/logo/favicon.png') }}" alt="" style="width: 180px">
 				<h6 style="font-weight: 500">Kursus KomputerKit</h6>
 			</a>
 		</div>
@@ -18,8 +18,9 @@
             <h4 style="margin-bottom: 15px; font-weight: 300;" class="center-align">Reset Password</h4>
 
 			@if (session('status'))
-				<div class="alert alert-success">
-					{{ session('status') }}
+				<div class="alert alert-success center-align">
+					{{-- {{ session('status') }} --}}
+					Kami telah mengirim konfirmasi perubahan password ke alamat email anda
 				</div>
 			@endif
 
@@ -30,7 +31,7 @@
 
 					<div class="input-field col s12">
 						<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-						<label for="email" class="col-md-4 control-label">E-Mail Address</label>
+						<label for="email" class="col-md-4 control-label">Alamat Email</label>
 
 						@if ($errors->has('email'))
 							<span class="help-block">

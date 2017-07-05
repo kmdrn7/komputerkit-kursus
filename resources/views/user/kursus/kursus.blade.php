@@ -34,7 +34,7 @@
 		<div class="col l12 center-align">
 			<div class="kursus-link-container">
 				<div class="kursus-link-header">
-					Menampilkan 10 dari 20 Kursus.
+					Menampilkan {{ $kursus->firstItem() }} s/d {{ $kursus->lastItem() }} dari {{ $kursus->total() }} Kursus.
 				</div>
 				{{ $kursus->links() }}
 			</div>

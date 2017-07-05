@@ -25,7 +25,11 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 // Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 // Registration Routes...
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+// Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::get('register', function ()
+{
+	return redirect('login')->with('activated_tab', 'register');
+})->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 Route::get('/verify/{token}/{id}', [
 	'uses' => 'Auth\RegisterController@verify',

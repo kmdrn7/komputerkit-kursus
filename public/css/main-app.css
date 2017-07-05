@@ -25,23 +25,21 @@ html {
     overflow-x: hidden;
 }
 ::-webkit-scrollbar {
-    width: 0px;  /* remove scrollbar space */
-    background: transparent;  /* optional: just make scrollbar invisible */
+    width: 5px;  /* remove scrollbar space */
+    background: rgb(184,208,230);  /* optional: just make scrollbar invisible */
+	border: none;
+	border-color: transparent;
 }
 /* optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
-    background: #FF0000;
+    background: rgb(54,76,98);
+	border-radius: 8px;
 }
 .container {
 	width: 90%!important;
 	/*width: 1280px;*/
 	max-width: 1280px;
 }
-
-.container-kelas {
-
-}
-
 .bd {
 	border: 5px solid white;
     box-sizing: border-box;
@@ -83,6 +81,7 @@ html {
 	background-color: black;
 	/*border: 1px solid black;*/
 }
+
 /*\\\\\\\\\\\\\\\\\\\\\
   \\\\\\\\\\\\\\\\\
 	DASHBOARD CSS
@@ -96,7 +95,7 @@ html {
 	left: 0;
 	width: 100%;
 	height: 85px;
-	background-color: #263738;
+	/*background-color: #263738;*/
 	z-index: 988!important;
 }
 .main-header {
@@ -120,6 +119,9 @@ html {
 	font-family: "track";
 	line-height: 70px;
 }
+.valign-container {
+	width: 100%;
+}
 .nav-header-p {
 	color: white;
 	font-size: 1em;
@@ -128,11 +130,16 @@ html {
 	margin-bottom: 20px;
 	font-size: 1.2em;
 }
+.nav-header-item {
+	max-height: 200px;
+	overflow-y: scroll;
+}
 .header-navigation-back {
 	position: absolute;
 	top: 100px;
 	width: 100%;
 	text-align: right;
+	padding-right: 17px;
 }
 .btn-penawaran-container {
 	position: absolute;
@@ -141,15 +148,24 @@ html {
 	width: 100%;
 	text-align: right;
 }
+.cl-no-mt {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.collapsible-body {
+	padding: 0;
+}
 /* =====================
 	LIST
 ====================== */
 .list-container {
 	background-image: url('/img/web/cari_kursus.png');
-	background-position: top;
+	background-position: bottom;
 	background-size: cover;
 	margin-top: -1px;
-	height: calc(100vh + 1px);
+	padding-top: 85px;
+	height: auto;
+	/*height: calc(100vh + 1px);*/
 	border-bottom: 5px dashed white;
 }
 .kursus-link-header {
@@ -541,7 +557,7 @@ ul.pagination {
 /*===========================*/
 /*===========================*/
 /*BORDER*/
-.bordered {
+/*.bordered {
 	display: inline-block;
 	padding: 20px;
 	border: dashed 4px #000;
@@ -554,7 +570,7 @@ ul.pagination {
 	border-color: white;
 	border-image-source: url("http://i.stack.imgur.com/LKclP.png");
 	margin: 0 20px;
-}
+}*/
 /********/
 .floating-img-1 {
 	position: absolute;
@@ -722,9 +738,65 @@ ul.pagination {
     line-height: 20px;
 }
 
-/*
+/* ===========================
 	HISTORI
-*/
+============================== */
+.histori-nav {
+	padding-top: 85px;
+	height: 320px;
+	background-color: rgb(40,150,162);
+	border-radius: 0;
+}
+.hnav-container {
+	display: flex;
+	height: 100%;
+}
+	.hn-left {
+		flex: 1;
+		display: flex;
+	}
+		.hnl-ic {
+			width: 180px;
+			height: 180px;
+			padding: 20px;
+			background-color: rgba(222,250,238,.82);
+			overflow: hidden;
+			border: 7px solid white;
+			margin: auto;
+		}
+		.hnl-ic img {
+			width: 100%;
+			margin-top: 25px;
+		}
+	.hn-right {
+		flex: 3;
+		/*display: flex;*/
+		/*flex-direction: column;*/
+		color: white;
+	}
+		.hnsp-halo {
+			/*flex: 1;*/
+			margin-top: 50px;
+			font-size: 60px;
+			font-family: "exo";
+			line-height: 60px;
+		}
+		.hnsp-lihat {
+			/*flex: 1;*/
+			font-weight: 200;
+			font-size: 25px;
+			line-height: 35px;
+		}
+		.hnsp-member {
+			/*flex: 1*/
+			font-size: 15px;
+			line-height: 25px;
+		}
+
+.histori-row-content {
+	margin-top: 30px;
+}
+
 .histori-head {
 	font-size: 14px;
 	text-transform: uppercase;
@@ -787,7 +859,8 @@ ul.pagination {
 	height: 100vh;
 	display: flex;
 	position: relative;
-	overflow: hidden!important;
+	/*overflow: hidden!important;*/
+	overflow: visible;
 }
 .container-kursus {
 	flex: 1;
@@ -810,18 +883,29 @@ ul.pagination {
 	position: absolute;
 	top: 17vw;
 	left: -90vw;
-	height: 600px;
+	height: 650px;
 	width: 200vw;
 	background-color: white;
 	transform: rotate(-15deg);
 	z-index: 3;
 }
+.dk-bg-miring-2 {
+	position: absolute;
+	top: -25vw;
+	right: -69vw;
+	height: 300px;
+	width: 200vw;
+	transform: rotate(35deg);
+	z-index: 3;
+}
 .dk-img	 {
 	/*position: absolute;
 	left: calc(50% - 210px);*/
-	width: 420px;
-	height: 420px;
+	width: 350px;
+	height: 350px;
 	z-index: 57;
+	float: right;
+	margin-right: 60px;
 }
 
 .kursus-kursus {
@@ -846,9 +930,9 @@ ul.pagination {
 	font-family: 'Fira Sans', sans-serif;
 	letter-spacing: 1px;
 	font-size: 63px;
-	height: 50px!important;
+	/*height: 50px!important;*/
 	width: 100%;
-	line-height: 50px;
+	line-height: 70px;
 	margin-bottom: 5px;
 }
 .label-kursus {
@@ -876,14 +960,70 @@ ul.pagination {
 }
 	.kdc-img {
 		flex: 1;
-		/*width: 300px;*/
+		display: flex;
+		flex-direction: column;
+		/*width: 250px;*/
 	}
-	.kdc-img img {
+	.kdc-imgc {
+		flex-grow: 0;
 		width: 300px;
+		height: 300px;
+		padding: 45px;
+		margin: auto;
+		margin-top: -50px;
+		overflow: hidden;
+		background-color: rgb(46,46,46);
+		border: 10px solid white;
+	}
+		.kdc-imgc img {
+			width: 100%;
+		}
+	.kdc-img span.ayo {
+		margin-top: 25px;
+		flex: 1;
+		text-align: center;
+		font-size: 25px;
+		letter-spacing: 1px;
+		font-weight: 800;
+		font-style: italic;
+		color: white;
+		display: block;
+	}
+	.kdc-img span.ayo-2 {
+		font-family: "Fira Sans";
+		font-size: 50px;
 	}
 	.kdc-p {
-		flex: 2;
+		flex: 1.4;
+		border: 5px dashed white;
+		margin: 15px;
+		padding: 10px 30px;
+		margin-top: 80px;
+		position: relative;
 	}
+		.kdc-p p {
+			text-align: justify;
+		}
+		span.kdcp-tentang {
+			font-family: "Acme";
+			position: absolute;
+			color: white;
+			top: -47px;
+			right: 10px;
+			padding: 0 10px;
+			font-weight: 800px;
+			font-size: 45px;
+		}
+		span.kdcp-syarat {
+			font-family: "Acme";
+			position: absolute;
+			color: white;
+			top: -75px;
+			left: -45px;
+			padding: 0 10px;
+			font-weight: 800px;
+			font-size: 45px;
+		}
 .kursus-kanan-head {
 	font-size: 30px;
 	font-weight: 300;
@@ -891,8 +1031,97 @@ ul.pagination {
 	margin-bottom: 15px;
 }
 
+.keunggulan-container {
+	position: relative;
+	/*overflow: hidden;*/
+}
+.keunggulan-container > .row {
+	z-index: 4;
+}
+.k-bg-miring {
+	position: absolute;
+	top: 15vw;
+	left: -20vw;
+	transform: rotate(-15deg);
+	height: 500px;
+	width: 150vw;
+	background-color: white;
+	z-index: 4;
+}
+.ku-row {
+	position: relative;
+	border-top: 3px dashed white;
+}
+	.ku-row > .col {
+		margin-top: -33px;
+	}
+	.apa-title {
+		margin-left: 15px;
+		padding: 0 10px;
+		font-weight: 600;
+		font-size: 40px;
+		color: white;
+	}
+.kdvc {
+	display: flex;
+	flex-direction: column;
+	margin-top: -30px;
+}
+	.kdv-img-title {
+		flex: 1;
+		display: flex;
+	}
+		.kdvi-left {
+			flex: 2;
+			font-size: 36px;
+			font-weight: 300;
+			text-align: right;
+			padding-right: 15px;
+		}
+		.kdvi-left span {
+			font-size: 60px;
+			font-family: "Fira Sans";
+		}
+		.kdvi-right {
+			flex: 1;
+			padding-left: 15px;
+			line-height: 180px;
+			font-size: 200px;
+			font-weight: 900;
+			font-family: "Roboto";
+			text-align: left;
+		}
+.kdv-imgc {
+	flex-grow: 0;
+	width: 300px;
+	height: 300px;
+	/*padding: 10px;*/
+	margin: auto;
+	overflow: hidden;
+	background-color: rgb(46,46,46);
+	border: 10px solid white;
+}
+	.kdv-imgc img {
+		width: 100%;
+		margin-top: 45px;
+	}
 .kursus-kanan-content {
-
+	border: 5px dashed white;
+	padding: 15px 20px!important;
+}
+.det-bot {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 30px;
+	border: 1px solid rgb(65,65,65);
+	font-weight: 200px;
+	color: rgb(88,88,88)
+}
+.border-dk-row {
+	background-image: url('/img/web/detail_kursus/border.png');
+	background-size: cover;
+	background-position: top center;
+	height: 200px;
 }
 
 .dvd-kursus {
@@ -914,8 +1143,8 @@ ul.pagination {
 }
 
 .kursus-title {
-	margin-top: 10px;
-	height: 50px;
+	/*margin-top: 10px;
+	height: 50px;*/
 	/*border: 1px solid;*/
 }
 
@@ -934,15 +1163,31 @@ ul.pagination {
 }
 
 .kursus-materi-header {
-	font-size: 35px;
-	font-weight: 300;
+	font-size: 65px;
 	text-align: center;
-	margin-bottom: 25px;
+	margin-bottom: 5px;
+	font-family: "Acme";
+	color: white;
 }
 
 .mt-items {
 	width: 310px!important;
 	margin: 0 10px;
+}
+
+.syarat-container {
+	border: 4px dashed;
+}
+
+.materi-container {
+	position: relative;
+	z-index: 4;
+	border-bottom: 5px dashed white;
+}
+.mlc {
+	border: 5px solid white;
+	padding-top: 15px;
+	padding-bottom: 15px;
 }
 
 .card-materi {
@@ -1044,10 +1289,36 @@ ul.pagination {
 .kursus-icon {
 	font-size: 20px;
 }
-
-/*
+/* ==========================
+	CHECKOUT
+============================= */
+.chk-wrapper {
+	position: relative;
+}
+.checkout-nav {
+	height: 85px;
+	background-color: black;
+	margin-bottom: 50px;
+}
+.checkout-container {
+	/*height: 100vh;*/
+}
+.chi-1 {
+	position: absolute;
+	top: 1;
+	width: 100%;
+	height: 300px;
+	z-index: -1;
+	text-align: center;
+}
+.chi-1 img {
+	margin-top: 90px;
+	width: 80%;
+	opacity: .3;
+}
+/* ===========================
 	BOOKMARK
-*/
+============================== */
 .bookmark-page-header {
 	font-size: 30px;
 }
@@ -1518,7 +1789,7 @@ ul.pagination {
 	margin-right: 15px!important;
 }
 .button-main-header {
-	border: 2px solid #ef6c00;
+	border: 2px solid white;
 	padding: 7px 20px;
 	font-size: 1.2em;
 	background-color: transparent;
@@ -1528,8 +1799,8 @@ ul.pagination {
 }
 
 .button-main-header:hover {
-	background-color: #ef6c00;
-	color: white;
+	background-color: white;
+	color: black;
 }
 
 .button-ku2 {
@@ -1601,6 +1872,10 @@ ul.pagination {
 /*--- End Content Border ---*/
 /*--------------------------*/
 
+/* ==========================
+	MEDIA SCREEN
+============================ */
+
 @media only screen and (max-width: 600px) {
     #count {
         font-size: 18px;
@@ -1638,5 +1913,12 @@ ul.pagination {
 @media only screen and (max-width: 870px) {
 	.section-tugas-head {
 		font-size: 20px;
+	}
+}
+
+@media only screen and (max-width: 1280px) {
+	.nav-header-title {
+		font-size: 3.4em;
+		line-height: 60px;
 	}
 }

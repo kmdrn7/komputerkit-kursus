@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Contracts\Validation\Validator as V2;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -52,12 +53,17 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:tbl_user',
-            'password' => 'required|string|min:6|confirmed',
+            'name' => 'required|string|max:200',
+            'email_regis' => 'required|string|email|max:255|unique:tbl_user,email',
+            'password_regis' => 'required|string|min:6|confirmed',
 			'g-recaptcha-response' => 'required'
         ]);
     }
+
+	// protected function formatValidationErrors(V2 $validator)
+    // {
+    //     return [$validator->errors()->all(), $activated_tab => 'register'];
+    // }
 
     /**
      * Create a new user instance after a valid registration.
@@ -69,8 +75,8 @@ class RegisterController extends Controller
     {
         $user = User::create([
             'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'email' => $data['email_regis'],
+            'password' => bcrypt($data['password_regis']),
 			'token' => str_random(60),
         ]);
 
@@ -87,7 +93,7 @@ class RegisterController extends Controller
 		//
         // return $this->registered($request, $user)
         //                 ?: redirect($this->redirectPath());
-		return redirect('/login');
+		return redirect('/login')->with('success', TRUE);
     }
 
 	protected function registered(Request $request, $user)

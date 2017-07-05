@@ -16,7 +16,7 @@ class HistoriController extends Controller
 		$id_user = Auth::id();
 		$data['now'] = Carbon::now();
 		$data['histori'] = QDetailKursus::where('id_user', $id_user)->get();
-		$data['month'] = QDetailKursus::select("created_month")->where('id_user', $id_user)->distinct()->get();
+		// $data['month'] = QDetailKursus::select("created_month")->where('id_user', $id_user)->distinct()->get();
 		// dd($data['month']);
         return view('user.histori.histori', $data);
     }

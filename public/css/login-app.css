@@ -1,0 +1,73 @@
+.no-margin-bottom {
+	margin-bottom: 0px!important;
+}
+.no-margin-top {
+	margin-top: 0px!important;
+}
+.fh {
+	height: 100%!important;
+}
+/* ======================
+	LOGIN
+========================= */
+.login-container {
+	background-image: url('/img/web/login/bg.png');
+	background-size: cover;
+	background-position: center;
+	height: 100vh;
+	width: 100%;
+	padding: 50px;
+}
+.success-panel {
+
+}
+.login-panel {
+	height: 80%;
+	width: 100%;
+	position: relative;
+	/*overflow: scroll;*/
+}
+.llc,
+.lrc {
+	height: 100%;
+}
+.llc {
+	border-right: 5px solid rgba(79,79,79,.74);
+	border-right-style: dashed;
+}
+.lrc {
+	overflow-y: scroll;
+}
+	.llc-c {
+		width: 100%;
+	}
+	.llc-c img,
+	.llc-c span {
+		display: block;
+		margin: auto;
+		text-align: center;
+	}
+	.llc-c span {
+		line-height: 45px;
+		margin-top: 20px;
+		font-weight: 900;
+		font-size: 30px;
+	}
+	.llc-c span span {
+		font-size: 55px;
+	}
+.tab-col {
+	padding: 20px!important;
+}
+/*======================
+	TABS
+========================*/
+.tabs .tab a:hover, .tabs .tab a.active {
+	color: ;
+}
+/* =====================
+	MODAL
+====================== */
+.modal-content {
+	padding-bottom: 5px!important;
+}

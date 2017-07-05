@@ -1,7 +1,7 @@
 @extends('user.layouts.app')
 
 @section('content')
-	<div class="list-container" style="margin-top: 85px">
+	<div class="list-container">
 
 	<div class="container">
 		<div class="row">

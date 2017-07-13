@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use DB;
 use View;
 use Response;
 use Carbon\Carbon;
@@ -26,7 +27,7 @@ class ExpertController extends Controller
     public function index()
     {
 		$data['active'] = 'expert';
-		$data['keahlian'] = Expert::all();
+		$data['keahlian'] = Expert::all();		
         return view('admin.expert.expert', $data);
     }
 

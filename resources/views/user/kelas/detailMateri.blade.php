@@ -2,11 +2,15 @@
 
 @section('content')
 
+	<div class="detail-materi-container">
+
+	</div>
+
 	<div class="container">
 		<div class="row">
 			<div class="col m12">
-				<div class="card-panel teal">
-					<h4 class="center-align">{{ $materi->materi }}</h4>
+				<div class="card-panel white">
+					<h4 class="center-align det-materi-head">{{ $materi->materi }}</h4>
 					<div class="iWrapper">
 						<iframe src="{{ $materi->yt_embed }}" frameborder="0" allowfullscreen >
 						</iframe>

@@ -2,27 +2,40 @@
 
 @section('content')
 
-	<div class="row white no-margin-bottom" style="padding: 5% 0;">
+	<div class="row expert-nav valign-wrapper">
 		<div class="container">
-			<div class="col m12">
+			<div class="bnsp-book">Keahlian? apa itu?</div>
+			<div class="xsp-lihat white-text">
+				Keahlian di komputerkit akan memudahkan kalian untuk menjadi ahli dalam suatu bidang yang kalian sukai.
+				Kursus akan kami kelompokkan berdasarkan keahlian yang ada.
+			</div>
+			<div class="hnsp-member"></div>
+		</div>
+	</div>
+
+	<div class="row no-margin-bottom" style="margin-top: 60px;">
+		<div class="container expert-container">
+			{{-- Daftar Keahlian --}}
+			<div class="row no-margin-bottom no-margin-top">
+				<div class="col m12">
+					<div class="kotak-daftar">
+					</div>
+				</div>
+			</div>
+			{{-- Row Keahlian --}}
+			<div class="container">
 				@foreach ($expert as $e)
-					<div class="row">
+					<div class="row no-margin-bottom">
 						<div class="col s12 m12">
 							<div class="card-panel white">
-								<div class="expert-head">
-									Expert
-								</div>
-								<div class="expert-title">
+								<div class="ex-title">
 									{{ $e->keahlian }}
 								</div>
-								<div class="expert-content">
+								<div class="ex-content">
 									{{ $e->desc_keahlian }}
 								</div>
-								<div class="expert-left">
-
-								</div>
-								<div class="expert-right">
-									<a href="{{ url('/expert/'. $e->id_keahlian) }}" class="button-ku2 waves-effect waves-light">
+								<div class="ex-right">
+									<a href="{{ url('/expert/'. $e->id_keahlian) }}" class="btn-custom-revert waves-effect waves-light">
 										<i class="material-icons right">send</i>
 										Lihat keahlian
 									</a>
@@ -30,22 +43,10 @@
 							</div>
 						</div>
 					</div>
-					<div class="row white no-margin-bottom no-margin-top white-text" style="border-radius: 0px; margin-top: 0;">
-						<div class="col-md-12">
-							<div class="col s12" style="padding: 12px;">
-								<div class="icon-block" style="background-color: #43496D; border: 1px solid #43496D">
-									<div class="content-border">
-										<h5 style="padding: 0 15px;">Ruang Kelas</h5>
-										<p class="" style="font-family: 'Lato', sans-serif; font-weight:300; font-size: 17px; padding: 0 15px 10px 15px;">
-											{{ $e->desc_keahlian }} <br> <br>
-											<a style="font-family: 'Spectral', serif;" href="{{ route('kelas') }}" class="button-ku">Masuk Kelas</a>
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				@endforeach
+			</div>
+			<div class="row no-margin-top no-margin-bottom">
+				<div class="kotak-end"></div>
 			</div>
 		</div>
 	</div>

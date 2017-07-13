@@ -16,14 +16,16 @@ class ExpertController extends Controller
     public function index()
     {
 		$data['expert'] = Expert::all();
-        return view('user.expert.main', $data);
+        // return view('user.expert.main', $data);
+		return view('user.expert.maaf', $data);
     }
 
 	public function detail($id)
 	{
 		if ( $this->isExists($id) ) {
 
-			$data['detail'] = QDetailKeahlian::where('id_detail_keahlian', $id)->get();
+			$data['x'] = Expert::find($id);
+			$data['detail'] = QDetailKeahlian::where('id_keahlian', $id)->get();
 			return view('user.expert.detail', $data);
 		}
 

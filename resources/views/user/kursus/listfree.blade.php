@@ -1,21 +1,25 @@
 @extends('user.layouts.app')
 
 @section('content')
+	<div class="list-container">
+
+	<div class="list-nav"></div>
+
 	<div class="container">
-		<div class="row" style="background-color: #F5F6F7; margin-bottom: 0;">
-            <div class="col s12">
+		<div class="row">
+            <div class="col s12 m12">
 				{{-- ROW HEADER CONTENT --}}
-                <div class="row" style="margin-bottom: 0; padding: 40px 6%;">
+                <div class="row" style="margin-bottom: 0; padding: 40px 6%">
 					{{-- LEFT PANEL --}}
-                    <div class="col l3 m12 s12" style="">
+                    <div class="col l3 m12 s12 hide-on-med-and-down">
 						{{-- KATEGORI KURSUS --}}
-						<div class="row no-margin-bottom">
-							<div class="col s12 m12 l12">
-								<div class="card-panel">
+						<div class="row no-margin-bottom" style="flex; 1; display: flex">
+							<div class="col s12 m12 l12" style="flex: 1; display: flex">
+								<div class="card-panel" style="flex: 1">
 									<div class="collection" style="border: 0;">
-										<h6 id="label-kategori-2">Kategori Kursus</h6>
+										<h5 id="label-kategori-2">Kategori Kursus</h5>
 										<div class="divider"></div>
-										<a style="border: 0; padding: 10px 25px;" href="{{ url('/kursus/all') }}" class="collection-item">Semua</a>
+										<a style="border: 0; padding: 10px 25px;" href="{{ url('/kursus/free/all') }}" class="collection-item">Semua</a>
 										@foreach ($kategori as $k)
 											<a style="border: 0; padding: 10px 25px;" href="{{ url('/kursus/free/' . $k->slug) }}" class="collection-item">{{ $k->kategori }}</a>
 										@endforeach
@@ -78,9 +82,51 @@
 							@include('user.kursus.kursusfree')
 						</div>
                     </div>
+					<div class="col l3 m12 s12 hide-on-large-only">
+						{{-- KATEGORI KURSUS --}}
+						<div class="row no-margin-bottom" style="flex; 1; display: flex">
+							<div class="col s12 m12 l12" style="flex: 1; display: flex">
+								<div class="card-panel" style="flex: 1">
+									<div class="collection" style="border: 0;">
+										<h6 id="label-kategori-2">Kategori Kursus</h6>
+										<div class="divider"></div>
+										<a style="border: 0; padding: 10px 25px;" href="{{ url('/kursus/free/all') }}" class="collection-item">Semua</a>
+										@foreach ($kategori as $k)
+											<a style="border: 0; padding: 10px 25px;" href="{{ url('/kursus/free/' . $k->slug) }}" class="collection-item">{{ $k->kategori }}</a>
+										@endforeach
+									</div>
+								</div>
+							</div>
+						</div>
+						{{-- TINGKATAN KURSUS --}}
+						{{-- Just in order to show --}}
+						{{-- <div class="row">
+							<div class="col s12 m12 l12">
+								<div class="card-panel">
+									<div class="collection" style="border: 0;">
+										<h6 id="label-kategori-2">Tingkatan Kursus</h6>
+	                                    <div class="divider"></div>
+										  <p>
+										  	<input type="checkbox" id="mudah" />
+										  	<label for="mudah">Mudah</label>
+										  </p>
+										  <p>
+										  	<input type="checkbox" id="sedang" />
+										  	<label for="sedang">Sedang</label>
+										  </p>
+										  <p>
+										  	<input type="checkbox" id="susah" />
+										  	<label for="susah">Sulit</label>
+										  </p>
+									</div>
+								</div>
+							</div>
+						</div> --}}
+                    </div>
                 </div>
             </div>
         </div>
+	</div>
 
 	</div>
 @endsection
@@ -102,10 +148,13 @@
 		$(document).ready(function() {
 
 			$(document).on('click', '.pagination a', function (e) {
+				$('html, body').animate({
+					scrollTop: 100
+				}, 300)
+
 				getPosts($(this).attr('href').split('page=')[1]);
 				e.preventDefault();
 			});
-			$('')
 			ch.keyup(function(e) {
 				e.preventDefault();
 				if(e.which == 13) {
@@ -132,10 +181,13 @@
 			var st = '/kursus/free/' + window.location.href.split('/').pop() + '?page=' + page + '&kursus=' + ch.val();
 
 			console.log(st);
+			$('.kursus').html('');
+			$('#loading').show();
 			axios.get(st)
 				.then(function (response) {
 					console.log(response);
 					$('.kursus').html(response.data);
+					$('#loading').hide();
 				})
 				.catch(function (error) {
 					console.log(error);

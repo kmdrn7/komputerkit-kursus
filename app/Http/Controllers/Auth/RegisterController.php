@@ -57,7 +57,11 @@ class RegisterController extends Controller
             'email_regis' => 'required|string|email|max:255|unique:tbl_user,email',
             'password_regis' => 'required|string|min:6|confirmed',
 			'g-recaptcha-response' => 'required'
-        ]);
+        ], [
+			'g-recaptcha-response.required' => 'Konfirmasikan bahwa anda bukan robot',
+			'password_regis.min' => 'Password anda setidaknya harus mengandung :value karakter',
+			'password_regis.confirmed' => 'Konfirmasi password anda tidak sama',
+		]);
     }
 
 	// protected function formatValidationErrors(V2 $validator)
@@ -109,7 +113,7 @@ class RegisterController extends Controller
 				$user->status = 1;
 				$user->save();
 				$this->guard()->login($user);
-				return redirect('/me');
+				return redirect('/profil')->with('first_login', '1');
 			}
 			return redirect('/login')->with('token_fail', 'Token missmatch');
 		}

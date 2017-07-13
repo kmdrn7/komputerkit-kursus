@@ -1,157 +1,358 @@
 @extends('user.layouts.app')
 
+@section('custom--css')
+	<link href="https://fonts.googleapis.com/css?family=Acme|Fira+Sans:900" rel="stylesheet">
+	<link rel="stylesheet" href="{{ asset('css/slick.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/slick-theme.css') }}">
+	<style>
+		.youtube-player {
+		   position: relative;
+		   padding-bottom: 56.23%;
+		   /* Use 75% for 4:3 videos */
+		   height: 0;
+		   overflow: hidden;
+		   max-width: 100%;
+		   background: #000;
+		}
+
+		.youtube-player iframe {
+		   position: absolute;
+		   top: 0;
+		   left: 0;
+		   width: 100%;
+		   height: 100%;
+		   z-index: 100;
+		   background: transparent;
+		}
+
+		.youtube-player img {
+		   bottom: 0;
+		   display: block;
+		   left: 0;
+		   margin: auto;
+		   max-width: 100%;
+		   width: 100%;
+		   position: absolute;
+		   right: 0;
+		   top: 0;
+		   border: none;
+		   height: auto;
+		   cursor: pointer;
+		   -webkit-transition: .4s all;
+		   -moz-transition: .4s all;
+		   transition: .4s all;
+		}
+
+		.youtube-player img:hover {
+		   -webkit-filter: brightness(75%);
+		}
+
+		.youtube-player .play {
+		   height: 72px;
+		   width: 72px;
+		   left: 50%;
+		   top: 50%;
+		   margin-left: -36px;
+		   margin-top: -36px;
+		   position: absolute;
+		   background: url("//i.imgur.com/TxzC70f.png") no-repeat;
+		   cursor: pointer;
+		}
+	</style>
+@endsection
+
 @section('content')
+	<div class="DKC" style="position: relative; background-color: {{ $kursus->warna }}">
+	<a href="javascript:void(back)" class="btn-custom left" style="position: absolute; left: 80px; top: 75px; z-index: 15; border-radius: 4px" onclick="back()">
+		<i class="fa fa-chevron-left"></i>&nbsp; Kembali
+	</a>
 
-	<div class="row top-container white no-margin-bottom" style="padding: 50px 0;">
-		<div class="container">
+	<div class="row detail-kursus-container no-margin-bottom">
+		<div class="dk-bg-miring z-depth-1"></div>
+		<div class="dk-bg-miring-2" style="background-color: {{ $kursus->warna }}"></div>
+		<div class="container-kursus container valign-wrapper">
 			{{-- TOP ROW ->> Sekilas Tentang Kursus --}}
-			<div class="row no-margin-bottom">
-				<div class="col l7 m12 s12" style="padding: 10% 20px;">
-					<div class="kursus-kursus">
-						Kursus
-						<div id="border-bottom">&nbsp;</div>
-					</div>
-					<div class="kursus-title valign-wrapper">
-						{{ $kursus->kursus }}
-					</div>
-					<div class="kursus-mini-detail">
-						<small style="font-weight: 300; font-size: 13px">{{ $kursus->waktu }} hari</small>
-					</div>
-					<div class="kursus-button">
-						<a style="margin: 10px 0;" href="#tutorial" class="button-ku2 waves-effect waves-light">Lihat Tutorial Gratis</a>
+			<div class="row main-det-kursus-row" style="width: 100%">
+				<div class="col s12 m5 l6">
+					<div class="dk-main-lk valign-wrapper">
+						<div class="dk-img-container">
+							<img src="{{ asset('img/kursus/'. $kursus->gambar) }}" class="dk-img" alt="{{ $kursus->gambar }}">
+						</div>
 					</div>
 				</div>
-				<div class="col l5 m12 s12">
-					<div class="col s12" style="margin: 20px 0;">
-						<img src="{{ asset('img/'. $kursus->gambar) }}" class="materialboxed responsive-img" style="border-radius: 5px;" alt="js">
+				<div class="col s12 m7 l6">
+					<div class="dk-main-rk valign-wrapper">
+						<div class="valign-container">
+							<div class="kursus-kursus">
+								Tutorial
+								{{-- <div id="border-bottom">&nbsp;</div> --}}
+							</div>
+							<div class="kursus-title valign-wrapper">
+								{{ $kursus->kursus }}
+							</div>
+							<div class="kursus-button">
+								<a style="margin: 10px 2px;" href="javascript:void(0)" class="btn-custom-revert waves-effect waves-light" id="btn-mulai-tutorial">Mulai Tutorial</a>
+								<a style="margin: 10px 2px;" href="{{ route('kursus.id', ['id' => $kursus->slug]) }}" class="btn-custom-revert waves-effect waves-light">Lihat Kursus</a>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="row white no-margin-bottom" style="padding: 50px 0;">
+	<div class="row" style="z-index: 3; display: block; position: relative">
 		<div class="container">
-			<div class="col l8 m12 s12" style="padding: 0 2%;">
-				<h5>Tentang kursus ini</h5>
-				<div class="row" style="margin-bottom: 50px;"><div class="garis" style="margin-left: 10px;"></div></div>
-				<p>{{ $kursus->ket_kursus }}</p>
-				<div class="row">
-					<div class="col l6 m12 s12" style="margin: 10px 0;">
-						<div class="center-align" style="background: linear-gradient(-4deg, #8bc6e7, #8d8bf2); padding: 1px 20px 30px 20px;">
-							<p class="white-text" style="font-size: 18px; font-weight: 600;">Biaya Kursus</p>
-							<a class="button-ku">Rp{{ number_format($kursus->harga,0,",",".") }}</a>
+			<div class="row center-align">
+				<div class="col m12 l5">
+					<div class="kdc-img center-align">
+						<div class="kdc-imgc circle">
+							<img class="" src="{{ asset('img/web/detail_kursus/pc1.png') }}" alt="">
 						</div>
-					</div>
-					<div class="col l6 m12 s12" style="margin: 10px 0;">
-						<div class="center-align" style="background: linear-gradient(-4deg, #8bc6e7, #8d8bf2); padding: 1px 20px 30px 20px;">
-							<p class="white-text" style="font-size: 18px; font-weight: 600;">Lama Kursus</p>
-							<a class="button-ku">{{ $kursus->waktu }} Hari</a>
-						</div>
+						<span class="ayo">Ayo belajar <br><span class="ayo-2">{{ $kursus->kursus }}</span></span>
 					</div>
 				</div>
-			</div>
-			<div class="col l4 m12 s12" style="padding: 0 2%;">
-				<h5>Apa yang anda dapatkan</h5>
-				<div class="row" style="margin-bottom: 50px;"><div class="garis" style="margin-left: 10px;"></div></div>
-				<div class="kursus-kanan-content" style="padding: 0 20px;">
-					<div class="row">
-						<div class="col s12">
-							<div class="row">
-								<div class="col m12 valign-wrapper apa-yang-anda">
-									<img class="circle" src="{{ asset('img/web/video-player.png') }}" alt="">
-									<span style="font-weight: bold; margin: 5px 10px;">Video Tutorial</span>
-									<i class="green-text material-icons right">check</i>
-								</div>
-								<div class="col m12 valign-wrapper apa-yang-anda">
-									<img class="circle" src="{{ asset('img/web/books.png') }}" alt="">
-									<span style="font-weight: bold; margin: 5px 10px;">Materi Pembelajaran</span>
-									<i class="green-text material-icons right">check</i>
-								</div>
-								<div class="col m12 valign-wrapper apa-yang-anda">
-									<img class="circle" src="{{ asset('img/web/list.png') }}" alt="">
-									<span style="font-weight: bold; margin: 5px 10px;">Tugas</span>
-									<i class="green-text material-icons right">check</i>
-								</div>
-								<div class="col m12 valign-wrapper apa-yang-anda">
-									<img class="circle" src="{{ asset('img/web/clipboard.png') }}" alt="">
-									<span style="font-weight: bold; margin: 5px 10px;">Contoh Pekerjaan</span>
-									<i class="green-text material-icons right">check</i>
-								</div>
-								<div class="col m12 valign-wrapper apa-yang-anda">
-									<img class="circle" src="{{ asset('img/web/chat.png') }}" alt="">
-									<span style="font-weight: bold; margin: 5px 10px;">Diskusi dengan ahli</span>
-									<i class="green-text material-icons right">check</i>
-								</div>
-							</div>
-						</div>
+				<div class="col m12 l7">
+					<div class="kdc-p flow-text">
+						<span class="kdcp-tentang" style="background-color: {{ $kursus->warna }}">Tentang</span>
+						@php
+						$array_p = preg_split('/(?<=[.?!;:])\s+/', $kursus->ket_kursus, -1, PREG_SPLIT_NO_EMPTY);
+						$count_p = count($array_p);
+						$p_1 = round($count_p / 2);
+						$p_2 = $count_p - 1;
+						@endphp
+						<p class="white-text">
+							@for ($i=0; $i < $p_1; $i++)
+								{{ $array_p[$i] }}
+							@endfor
+						</p>
+						<p class="white-text" style="">
+							@for ($i=$p_1; $i <= $p_2; $i++)
+								{{ $array_p[$i] }}
+							@endfor
+						</p>
+						<p class="kdcp-syarat" style="background-color: {{ $kursus->warna }}">Syarat Ikut Kursus</p>
+						<p class="white-text" style="margin-top: 20px;">
+							{{ $kursus->syarat }}
+						</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="row white top-container" style="margin-bottom: 0; padding: 50px 0;">
-		{{-- FOURTH ROWS ->> Materi Dalam Kursus --}}
-		<div class="row" id="tutorial">
-			<div class="col s12 l10 offset-l1">
-				<div class="row">
-					<div class="col s12 center-align">
-						<h5 style="color: #333;">Rekomendasi Kursus</h5>
-						<div class="row"><div class="garis"></div></div>
+	<div class="row no-margin-bottom" style="margin-top: 30px; padding-top: 40px; overflow: hidden">
+		<div class="container keunggulan-container">
+			<div class="k-bg-miring"></div>
+			<div class="row" style="position: relative">
+				<div class="col l7 m12 s12 hide-on-small-only kursus-kanan-content">
+					<div class="row">
+						<div class="col s6">
+							<div class="card-panel white z-depth-3 hoverable">
+								<div class="row">
+									<div class="col m12 valign-wrapper apa-yang-anda">
+										<img class="circle" src="{{ asset('img/web/video-player.png') }}" alt="">
+										<span style="font-weight: bold; margin: 5px 10px;">Video Tutorial</span>
+										<i class="green-text material-icons right">check</i>
+									</div>
+									<div class="col m12 valign-wrapper apa-yang-anda">
+										<img class="circle" src="{{ asset('img/web/books.png') }}" alt="">
+										<span style="font-weight: bold; margin: 5px 10px;">Materi Pembelajaran</span>
+										<i class="green-text material-icons right">check</i>
+									</div>
+									<div class="col m12 valign-wrapper apa-yang-anda">
+										<img class="circle" src="{{ asset('img/web/list.png') }}" alt="">
+										<span style="font-weight: bold; margin: 5px 10px;">Tugas</span>
+										<i class="green-text material-icons right">check</i>
+									</div>
+									<div class="col m12 valign-wrapper apa-yang-anda">
+										<img class="circle" src="{{ asset('img/web/clipboard.png') }}" alt="">
+										<span style="font-weight: bold; margin: 5px 10px;">Contoh Pekerjaan</span>
+										<i class="green-text material-icons right">check</i>
+									</div>
+									<div class="col m12 valign-wrapper apa-yang-anda">
+										<img class="circle" src="{{ asset('img/web/chat.png') }}" alt="">
+										<span style="font-weight: bold; margin: 5px 10px;">Diskusi dengan ahli</span>
+										<i class="green-text material-icons right">check</i>
+									</div>
+								</div>
+								<div class="center-align det-bot">
+									Kursus
+								</div>
+							</div>
+						</div>
+						<div class="col s6">
+							<div class="card-panel white z-depth-3 hoverable">
+								<div class="row">
+									<div class="col m12 valign-wrapper apa-yang-anda">
+										<img class="circle" src="{{ asset('img/web/video-player.png') }}" alt="">
+										<span style="font-weight: bold; margin: 5px 10px;">Video Tutorial</span>
+										<i class="green-text material-icons right">check</i>
+									</div>
+									<div class="col m12 valign-wrapper apa-yang-anda">
+										<img class="circle" src="{{ asset('img/web/books.png') }}" alt="">
+										<span style="font-weight: bold; margin: 5px 10px;">Materi Pembelajaran</span>
+										<i class="red-text material-icons right">close</i>
+									</div>
+									<div class="col m12 valign-wrapper apa-yang-anda">
+										<img class="circle" src="{{ asset('img/web/list.png') }}" alt="">
+										<span style="font-weight: bold; margin: 5px 10px;">Tugas</span>
+										<i class="red-text material-icons right">close</i>
+									</div>
+									<div class="col m12 valign-wrapper apa-yang-anda">
+										<img class="circle" src="{{ asset('img/web/clipboard.png') }}" alt="">
+										<span style="font-weight: bold; margin: 5px 10px;">Contoh Pekerjaan</span>
+										<i class="red-text material-icons right">close</i>
+									</div>
+									<div class="col m12 valign-wrapper apa-yang-anda">
+										<img class="circle" src="{{ asset('img/web/chat.png') }}" alt="">
+										<span style="font-weight: bold; margin: 5px 10px;">Diskusi dengan ahli</span>
+										<i class="red-text material-icons right">close</i>
+									</div>
+								</div>
+								<div class="center-align det-bot">
+									Tutorial
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-				<ul class="collapsible popout" data-collapsible="accordion">
-					@php
-						$num = 0;
-					@endphp
-					@foreach ($materi as $m)
-						@php
-							$num++;
-						@endphp
-						<li data-id-materi="{{ $m->id_materi }}">
-							<div class="collapsible-header">
-								<span>{{ $num }}.</span> {{ $m->materi }}
+				<div class="col l5 m12 s12 kdvc">
+					<div class="row">
+						<div class="col s12 m6 l12">
+							<div class="kdv-imgc circle">
+								<img class="" src="{{ asset('img/web/detail_kursus/vs.png') }}" alt="">
 							</div>
-							<div class="collapsible-body" style="position: relative; padding: 20px!important; height: 300px;">
-								<div class="bdMateri" style="top: 20px"></div>
-								{{-- <div class="card-sub-materi"> --}}
-									<div class="materi-header">
-										Penjelasan
-									</div>
-									<div class="materi-title">
-										{{ $m->materi }}
-									</div>
-									<div class="iWrapper">
-										<iframe src="{{ $m->yt_embed }}" frameborder="0" allowfullscreen>
-										</iframe>
-									</div>
-									<div class="materi-content center-align" style="margin-top: 15px;">
-										{{ $m->ket_materi }}
-									</div>
-								{{-- </div> --}}
-								<button type="button" class="waves-effect waves-light btn-floating closeMateri" id-materi="{{ $m->id_materi }}">
-									<i class="material-icons right">close</i>
-								</button>
+						</div>
+						<div class="col s12 m6 l12 valign-wrapper">
+							<div class="kdv-img-title center-align">
+								<div class="kdvi-left">
+									pilih <span>Kursus</span><br> atau <span>Tutorial</span>
+								</div>
+								<div class="kdvi-right">
+									?
+								</div>
 							</div>
-						</li>
-					@endforeach
-				</ul>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+	<div class="row border-dk-row no-margin-top">
+
+	</div>
+
+	<div class="row top-container materi-container no-margin-bottom container" style="max-width: 980px">
+		<div class="col m12 l12">
+			{{-- FOURTH ROWS ->> Materi Dalam Kursus --}}
+			<div class="row">
+				<div class="col s12 m12 l12">
+					<div class="kursus-materi-header">
+						Materi Tutorial
+					</div>
+					<div class="mlfc">
+						<ul class="collapsible popout" data-collapsible="accordion">
+							@foreach ($materi as $m)
+								<li class="materi-col-li">
+									<div class="collapsible-header"><i class="fa fa-chevron-right" style="font-size: 15px"><strong>_</strong></i>{{ $m->no_urut }}. {{ $m->materi }}</div>
+									<div class="collapsible-body white">
+										<div class="row no-margin-bottom">
+											<div class="col m12">
+												<div class="clps-c">
+													<div class="clp-vid">
+														<div class="youtube-player z-depth-1" data-id="{{ $m->yt_id }}"></div>
+													</div>
+													<div class="clp-cnt">
+														{{ $m->ket_materi }}
+													</div>
+													<div class="clp-cnt-a">
+														{{ $m->ket_materi_adv }}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+							@endforeach
+							<li class="materi-col-li">
+								<div class="collapsible-header center-align"><span style="font-size: 20px; font-weight: 300">Ingin ambil kursus secara lengkap? <strong><small>klik disini</small></strong></span></div>
+								<div class="collapsible-body white">
+									<div class="row no-margin-bottom">
+										<div class="col m12">
+											<div class="clps-c center-align">
+												Ikuti kursus ini secara lengkap dan dapatkan banyak fitur yang tidak bisa kalian dapatkan disini.
+												<div class="clpsc-btn">
+													<a href="{{ url('kursus/'. $kursus->slug) }}" class="btn-custom-revert">Lihat Kursus</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	</div>
+@endsection
+
+@section('custom--js')
+	<script src="{{ asset('js/slick.js') }}" charset="utf-8"></script>
 @endsection
 
 @section('content-js')
 	<script type="text/javascript">
+		document.addEventListener("DOMContentLoaded",
+		function() {
+			var div, n,
+				v = document.getElementsByClassName("youtube-player");
+			for (n = 0; n < v.length; n++) {
+				div = document.createElement("div");
+				div.setAttribute("data-id", v[n].dataset.id);
+				div.innerHTML = labnolThumb(v[n].dataset.id);
+				div.onclick = labnolIframe;
+				v[n].appendChild(div);
+			}
+		});
+
+		function labnolThumb(id) {
+			var thumb = '<img src="https://i.ytimg.com/vi/ID/hqdefault.jpg">',
+				play = '<div class="play"></div>';
+			return thumb.replace("ID", id) + play;
+		}
+
+		function labnolIframe() {
+			var iframe = document.createElement("iframe");
+			var embed = "https://www.youtube.com/embed/ID?autoplay=1";
+			iframe.setAttribute("src", embed.replace("ID", this.dataset.id));
+			iframe.setAttribute("frameborder", "0");
+			iframe.setAttribute("allowfullscreen", "1");
+			this.parentNode.replaceChild(iframe, this);
+		}
+
+		function back() {
+			window.history.back();
+		}
+
 		$(document).ready(function() {
-			$('.closeMateri').click(function(event) {
-				event.preventDefault();
-				var id = $(this).attr('id-materi');
-				$('li[data-id-materi="'+ id +'"]').removeClass('active');
-				$('li[data-id-materi="'+ id +'"]>.collapsible-header').removeClass('active');
-				// $('li[data-id-materi="'+ id +'"]>.collapsible-body').css('display', 'none');
-				$('li[data-id-materi="'+ id +'"]>.collapsible-body').hide('300');
+			$('.slick--carousel').slick({
+				centerMode: true,
+				accessibility: false,
+				variableWidth: true,
+				slidesToShow: 3,
+				autoplay: true,
+ 				autoplaySpeed: 5000,
+				lazyLoad: 'ondemand',
+			});
+
+			$('#btn-mulai-tutorial').click(function(event) {
+				$('html,body').animate({
+					scrollTop: $('.materi-container')[0].offsetTop
+				}, 2000);
 			});
 		});
 	</script>

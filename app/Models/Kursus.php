@@ -20,6 +20,7 @@ class Kursus extends Model
 		'ket_kursus',
 		'harga',
 		'gambar',
+		'pembimbing',
 	];
 
 	protected $guarded = [];

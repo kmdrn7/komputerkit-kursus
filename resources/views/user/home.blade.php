@@ -12,7 +12,7 @@
 @section('content')
 
 	<div class="row main-header no-margin-bottom" style="z-index: 11">
-		<div id="header-main-panel" class="col l5 m8 s12 valign-wrapper" style="height: 100%; position: relative">
+		<div id="header-main-panel" class="col l6 m9 s12 valign-wrapper" style="height: 100%; position: relative">
 			<div class="valign-container" style="padding-left: 20px;">
 				<h3 class="nav-header-title">Belajar koding mulai dari sekarang juga!!!</h3>
 				<p class="nav-header-p">
@@ -21,12 +21,12 @@
 					Dibantu oleh para pembimbing yang telah ahli dan materi dalam bentuk video tutorial untuk memudahkan anda.
 				</p>
 				<div class="button-collection center-align">
-					<a href="{{ url('/kursus') }}" class="btn-custom btn-custom-large waves-effect waves-light">
+					<a href="{{ url('/kursus/all') }}" class="btn-custom btn-custom-large waves-effect waves-light">
 						Mulai Kursus
 						<i class="material-icons">code</i>
 					</a>
-					<a href="#lihat_kursus" class="btn-custom btn-custom-large waves-effect waves-light">
-						Lihat Kursus
+					<a id="lihat_kursus" href="javascript:void(0)" class="btn-custom btn-custom-large waves-effect waves-light">
+						Kursus Anda
 						<i class="material-icons">assignment</i>
 					</a>
 				</div>
@@ -34,13 +34,13 @@
 		</div>
 		<div id="header-second-panel" class="col l5 m8 s12 valign-wrapper" style="height: 100%; display: none; position: relative">
 			<div class="header-navigation-back">
-				<a href="#kembali" class="btn-custom">
+				<a id="kembali" href="javascript:void(0)" class="btn-custom">
 					Kembali
 					<i class="material-icons">arrow_back</i>
 				</a>
 			</div>
 			<div class="valign-container" style="padding-left: 20px;">
-				<h4 class="white-text">Kursus Anda</h4>
+				<h4 class="white-text">Kursus Aktif</h4>
 				<div class="nav-header-item">
 					<ul class="collapsible cl-no-mt" data-collapsible="accordion">
 						@foreach ($kursus_anda as $ka)
@@ -50,12 +50,12 @@
 									{{ $ka->kursus }}
 								</div>
 								<div class="collapsible-body white">
-									<table class="striped bordered highlight responsive-table">
+									<table class="striped bordered highlight">
 										<tbody class="centered">
 											<tr>
 												<th class="center-align">Tgl. Selesai</th>
 												<td>{{ $ka->tgl_selesai->formatLocalized('%A, %e %B %Y') }}</td>
-												<td class="center-align"><a class="btn btn-info" style="margin-top: -3px" href="{{ url('kelas') }}">Masuk</a></td>
+												<td class="center-align"><a class="btn btn-info" style="margin-top: -3px" href="{{ url('kelas/kursus/'. $ka->id_kursus .'--'. $ka->id_detail_kursus. '/materi') }}">Masuk</a></td>
 											</tr>
 											<tr>
 												<th class="center-align">Sisa Hari</th>
@@ -66,11 +66,6 @@
 													@endif
 												</td>
 											</tr>
-											{{-- <tr>
-												<td colspan="3" class="center-align">
-
-												</td>
-											</tr> --}}
 										</tbody>
 									</table>
 								</div>
@@ -78,7 +73,7 @@
 						@endforeach
 					</ul>
 				</div>
-				<h4 class="white-text">Pembayaran Pending</h4>
+				<h4 class="white-text">Kursus Pending</h4>
 				<div class="nav-header-item">
 					<ul class="collapsible cl-no-mt" data-collapsible="accordion">
 						@foreach ($kursus_tunggakan as $kt)
@@ -96,7 +91,7 @@
 													@if ( $kt->flag_kursus == 2 )
 														Sedang di proses, menunggu konfirmasi
 													@elseif ( $kt->flag_kursus == 0 )
-														<a href="" class="btn-custom-revert">Konfirmasi Pembayaran</a>
+														<a href="{{ url('konfirmasi/'. $kt->id_kursus . '--' . $kt->id_detail_kursus) }}" class="btn-custom-revert right">Konfirmasi Pembayaran</a>
 													@endif
 												</td>
 											</tr>
@@ -110,7 +105,7 @@
 			</div>
 		</div>
 		<div class="btn-penawaran-container">
-			<a class="btn-custom" id="btn_penawaran" href="#">
+			<a class="btn-custom" data-target="mdl_penawaran" href="javascript:void(0)">
 				<i class="material-icons">keyboard_arrow_up</i>
 				Penawaran
 			</a>
@@ -120,22 +115,22 @@
 	<div class="no-margin-bottom main-kursus">
 		<div class="container">
 			<div class="row no-margin-bottom white-text">
-				<div class="col m12 center-align" style="margin-top: 30px;">
-					<h3 class="main-kursus-title">Sudah lebih dari {{ rand(0,100) }} kursus tersedia di <a class="mkt-a" href="http://kursus.komputerkit.com">kursus.Komputerkit.com</a></h3>
-					<h5 class="main-kursus-subtitle">Ayo cari kursus favoritmu disini!!!</h5>
+				<div class="col s12 m12 center-align" style="margin-top: 30px;">
+					<h3 class="main-kursus-title">Sudah lebih dari {{ $kursus_total }} kursus tersedia di <br> <a class="mkt-a" href="http://kursus.komputerkit.com">kursus.Komputerkit.com</a></h3>
+					<h5 class="main-kursus-subtitle">Beberapa kursus yang mungkin menarik untuk anda</h5>
 				</div>
 			</div>
 		</div>
 		<div class="row no-margin-top no-margin-bottom" style="flex: none!important">
-			<div class="col m12 hide-on-med-and-down">
+			<div class="col m12 s12 hide-on-med-and-down">
 				<div class="floating-img-1">
 					{{-- <img src="{{ asset('img/web/text-editor.png') }}" alt=""> --}}
 				</div>
 			</div>
 		</div>
-		<div class="container" style="flex: 3; max-width: 860px!important">
+		<div class="container" style="flex: 3; max-width: 860px!important; padding: 0 35px;">
 			<div class="row kursus-3-container">
-				<div class="col m12" style="padding: 0">
+				<div class="col m12 s12" style="padding: 0">
 					<div class="slick--carousel">
 						@foreach ($kursus as $k)
 							<div class="s-items">
@@ -180,24 +175,24 @@
 					<div class="col m12 s12">
 						<div class="expert-content">
 							<div class="ec-image">
-								<div class="ec-img-pensil">
+								<div class="ec-img-pensil hide-on-med-and-down">
 									<img src="{{ asset('img/web/expert/pensil.png') }}" alt="">
 								</div>
 								<div class="ec-img-laptop">
 									<img src="{{ asset('img/web/expert/laptop.png') }}" alt="">
 								</div>
-								<div class="ec-img-kopi">
+								<div class="ec-img-kopi hide-on-med-and-down">
 									<img src="{{ asset('img/web/expert/kopi.png') }}" alt="">
 								</div>
 							</div>
 							<div style="max-width: 800px; margin: auto">
 								<div class="ec-text">
-									Dengan bantuan kami kalian bisa dengan mudah menguasai apa yang kalian suka. <br>
+									Dengan bantuan kami kalian bisa dengan mudah menguasai apa yang kalian suka.
 									Kami akan membuatkan urutan pembelajaran untuk kalian yang ingin menguasai suatu hal.
 								</div>
 								<div class="ec-button">
-									<a href="{{ route('expert') }}" class="btn-custom btn-custom-large">Lihat Keahlian</a>
-							</div>
+									<a href="javascript:void(0)" class="btn-custom btn-custom-large" onclick="Materialize.toast('Fitur keahlian masih belum bisa diakses', 4000)">Lihat Keahlian</a>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -210,15 +205,15 @@
 	</div>
 
 	<div class="main-kelas-container">
-		<div class="container main-kelas" style="padding-bottom: 0">
+		<div class="container main-kelas">
 			<div class="row no-margin-bottom">
-				<div class="col m4 s12">
+				<div class="col l4 m4 s12 hide-on-med-and-down">
 					<div class="mk-img-container">
 						{{-- Gambar Kelas --}}
-						<img src="{{ asset('img/web/kelas/bg.png') }}" alt="">
+						<img src="{{ asset('img/web/kelas/bg3.png') }}" alt="">
 					</div>
 				</div>
-				<div class="col m8 s12">
+				<div class="col l8 m12 s12">
 					<div class="mk-content-container">
 						<div class="mkc-header">
 							Kelas
@@ -228,7 +223,7 @@
 							dan juga lihat beberapa penawaran khusus hanya untuk anda.
 						</div>
 						<div class="mkc-action">
-							<a href="{{ route('kelas') }}" class="btn-custom">Masuk Kelas</a>
+							<a href="{{ route('kelas') }}" class="btn-custom-revert">Masuk Kelas</a>
 						</div>
 					</div>
 				</div>
@@ -242,7 +237,7 @@
 				<div class="mt-floating-img"></div>
 				<div class="col m12 s12">
 					<div class="mt-top">
-						<h3>Kursus -- Tutorial</h3>
+						<h3>Kursus <span style="font-family: exo; font-size: 50px">atau</span> Tutorial?</h3>
 					</div>
 					<div class="mt-bottom">
 						<div class="row">
@@ -263,7 +258,7 @@
 								<div class="tabs-item" id="tab-tutor" class="col s12">
 									<p>
 										<i class="material-icons tabs-icon">play_circle_filled</i> <br>
-										Ikuti tutorial
+										Ikuti tutorial untuk sekilas mengenal mengenal tentang kursus kami
 									</p>
 									<p>
 										<a class="btn-custom" href="{{ url('/kursus/free/all') }}">Lihat Tutorial</a>
@@ -277,6 +272,22 @@
 		</div>
 	</div>
 
+	{{-- Modal Penawaran --}}
+	<div class="modal" id="mdl_penawaran">
+		<div class="modal-content" style="padding-bottom: 0">
+			<div class="row">
+				<div class="col m12 s12 center-align">
+					<h4>{{ $promosi->promosi }}</h4>
+					<img src="{{ asset('img/promosi/'. $promosi->gambar) }}" alt="" style="margin-bottom: 10px"> <br>
+					{{ $promosi->ket_promosi }}
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="javascript:void(0)" class="modal-action modal-close waves-effect waves-light btn-flat">Tutup</a>
+		</div>
+	</div>
+
 @endsection
 
 @section('custom--js')
@@ -287,25 +298,32 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 
+			$('.modal').modal({
+				opacity: .8
+			});
+
 			$('ul.tabs').tabs();
 
 			$('.slick--carousel').slick({
-				autoplay: false,
- 				autoplaySpeed: 5000,
+				autoplay: true,
+				autoplaySpeed: 2000,
 				lazyLoad: 'ondemand',
+				accessibility: false,
 			});
 
-			$('a[href="#lihat_kursus"]').click(function(event) {
-				event.preventDefault();
-				$('#header-main-panel').hide();
-				$('#header-second-panel').show();
+			$('#lihat_kursus').click(function(event) {
+				$('#header-main-panel').hide('400');
+				$('#header-second-panel').show('400');
 			});
 
-			$('a[href="#kembali"]').click(function(event) {
-				event.preventDefault();
-				$('#header-second-panel').hide();
-				$('#header-main-panel').show();
+			$('#kembali').click(function(event) {
+				$('#header-second-panel').hide('500');
+				$('#header-main-panel').show('100');
 			});
+
+			// $('#btn_penawaran').click(function(event) {
+			// 	$('#mdl_penawaran').modal('open');
+			// });
 		});
 	</script>
 @endsection

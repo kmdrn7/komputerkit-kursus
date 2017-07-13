@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use View;
+use DB;
 // use Request;
 use Response;
 use App\Models\Materi;
@@ -26,6 +27,10 @@ class KursusController extends Controller
 
 	public function index(Request $request, $id)
 	{
+
+		$bookmark = DB::table('tbl_bookmark')->where('id_user', Auth::id())->get();
+		$data['bookmark'] = $bookmark;
+
 		if ( $id == 'all' ) {
 
 			// Ajax Request
@@ -34,16 +39,17 @@ class KursusController extends Controller
 
 				if ( isset($req['kursus']) ) {
 
-					$data['kursus'] = Kursus::where('kursus', 'like', "%".$req['kursus']."%")->paginate(3);
+					$data['kursus'] = Kursus::where('kursus', 'like', "%".$req['kursus']."%")->paginate(6);
 					return Response::json(View::make('user.kursus.kursus', $data)->render());
 				}
 
-				$data['kursus'] = Kursus::paginate(3);
+				$data['kursus'] = Kursus::paginate(6);
 				return Response::json(View::make('user.kursus.kursus', $data)->render());
 			}
 
-			$data['kursus'] = Kursus::paginate(3);
+			$data['kursus'] = Kursus::paginate(6);
 			$data['kategori'] = Kategori::all();
+			$data['selected'] = 'all';
 			return view('user.kursus.list', $data);
 		}
 
@@ -55,16 +61,17 @@ class KursusController extends Controller
 
 				if ( isset($req['kursus']) ) {
 
-					$data['kursus'] = Kursus::where('kursus', 'like', "%".$req['kursus']."%")->where('kategori', $id)->paginate(3);
+					$data['kursus'] = Kursus::where('kursus', 'like', "%".$req['kursus']."%")->where('kategori', $id)->paginate(6);
 					return Response::json(View::make('user.kursus.kursus', $data)->render());
 				}
 
-				$data['kursus'] = Kursus::where('kategori', $id)->paginate(3);
+				$data['kursus'] = Kursus::where('kategori', $id)->paginate(6);
 				return Response::json(View::make('user.kursus.kursus', $data)->render());
 			}
 
-			$data['kursus'] = Kursus::where('kategori', $id)->paginate(3);
+			$data['kursus'] = Kursus::where('kategori', $id)->paginate(6);
 			$data['kategori'] = Kategori::all();
+			$data['selected'] = $id;
 			return view('user.kursus.list', $data);
 		}
 
@@ -97,16 +104,17 @@ class KursusController extends Controller
 
 				if ( isset($req['kursus']) ) {
 
-					$data['kursus'] = Kursus::where('kursus', 'like', "%".$req['kursus']."%")->paginate(3);
+					$data['kursus'] = DB::table('q_kursus')->where('kursus', 'like', "%".$req['kursus']."%")->paginate(8);
 					return Response::json(View::make('user.kursus.kursusfree', $data)->render());
 				}
 
-				$data['kursus'] = Kursus::paginate(3);
+				$data['kursus'] = DB::table('q_kursus')->paginate(8);
 				return Response::json(View::make('user.kursus.kursusfree', $data)->render());
 			}
 
-			$data['kursus'] = Kursus::paginate(3);
+			$data['kursus'] = DB::table('q_kursus')->paginate(8);
 			$data['kategori'] = Kategori::all();
+			$data['selected'] = 'all';
 			return view('user.kursus.listfree', $data);
 		}
 
@@ -118,16 +126,17 @@ class KursusController extends Controller
 
 				if ( isset($req['kursus']) ) {
 
-					$data['kursus'] = Kursus::where('kursus', 'like', "%".$req['kursus']."%")->where('kategori', $id)->paginate(3);
+					$data['kursus'] = Kursus::where('kursus', 'like', "%".$req['kursus']."%")->where('kategori', $id)->paginate(10);
 					return Response::json(View::make('user.kursus.kursusfree', $data)->render());
 				}
 
-				$data['kursus'] = Kursus::where('kategori', $id)->paginate(3);
+				$data['kursus'] = Kursus::where('kategori', $id)->paginate(10);
 				return Response::json(View::make('user.kursus.kursusfree', $data)->render());
 			}
 
-			$data['kursus'] = Kursus::where('kategori', $id)->paginate(3);
+			$data['kursus'] = Kursus::where('kategori', $id)->paginate(10);
 			$data['kategori'] = Kategori::all();
+			$data['selected'] = $id;
 			return view('user.kursus.listfree', $data);
 		}
 
@@ -139,7 +148,7 @@ class KursusController extends Controller
 			} else {
 				$idKursus = explode('--', $id)[1];
 				$data['kursus'] = Kursus::where('slug', $id)->first();
-				$data['materi'] = Materi::where('id_kursus', $idKursus)->get();
+				$data['materi'] = Materi::where('id_kursus', $idKursus)->orderBy('no_urut', 'asc')->get();
 			}
 
 			return view('user.kursus.detailfree', $data);
@@ -178,6 +187,7 @@ class KursusController extends Controller
 	{
 		if ( $this->isExists($id) ) {
 			$kursus = Kursus::where('slug', $id)->first();
+			$data['bank'] = DB::table('tbl_bank')->get();
 			$data['kursus'] = $kursus;
 			$data['kursus_lain'] = Kursus::where('kursus', 'like', '%'.$kursus->kursus.'%')->get();
 			return view('user.kursus.checkout', $data);
@@ -194,7 +204,7 @@ class KursusController extends Controller
 			DetailKursus::create([
 				'id_kursus' => $request->id_kursus,
 				'id_user' => Auth::guard()->user()->id_user,
-				'bayar' => 0,
+				'bayar' => $request->bayar,
 				'flag_kursus' => 0,
 			]);
 

@@ -53,6 +53,22 @@ Route::group(['middleware' => 'auth'], function ()
 		'as' => 'home'
 	]);
 
+	// Profil Route
+	Route::get('/profil', [
+		'uses' => 'ProfilController@index',
+		'as' => 'profil',
+	]);
+
+	Route::post('/profil', [
+		'uses' => 'ProfilController@postProfil',
+		'as' => 'post.profil'
+	]);
+
+	Route::post('/profil/update_password', [
+		'uses' => 'ProfilController@postPassword',
+		'as' => 'profil.password',
+	]);
+
 	Route::get('/notifikasi', [
 		'uses' => 'NotifikasiController@index',
 		'as' => 'notifikasi',
@@ -63,6 +79,15 @@ Route::group(['middleware' => 'auth'], function ()
 		'as' => 'histori',
 	]);
 
+	Route::get('/histori/show/{id}', [
+		'uses' => 'HistoriController@show',
+		'as' => 'histori.show'
+	]);
+
+	Route::post('/histori/fetchData', [
+		'uses' => 'HistoriController@getHistori',
+	]);
+
 	Route::get('/bookmark', [
 		'uses' => 'BookmarkController@index',
 		'as' => 'bookmark',
@@ -71,6 +96,11 @@ Route::group(['middleware' => 'auth'], function ()
 	Route::post('/bookmark/delete', [
 		'uses' => 'BookmarkController@postDelete',
 		'as' => 'bookmark.delete',
+	]);
+
+	Route::post('/bookmark/add', [
+		'uses' => 'BookmarkController@store',
+		'as' => 'bookmark.add'
 	]);
 
 	Route::get('/konfirmasi', function ()
@@ -236,6 +266,37 @@ Route::group(['middleware' => 'auth'], function ()
 			// return "ini admin";
 		});
 
+		// ROUTE UNTUK API ADMIN
+		Route::group(['prefix' => '/api'], function ()
+		{
+			// Main api request
+			Route::get('/', [
+				'uses' => 'Admin\ApiController@index',
+				'as' => 'api',
+			]);
+
+			// API PESAN
+			Route::get('/pesan/all/{id}', [
+				'uses' => 'Admin\ApiController@semuaPesan',
+				'as' => 'api.pesan',
+			]);
+
+			Route::get('/pesan/{id}', [
+				'uses' => 'Admin\ApiController@detPesan',
+				'as' => 'api.pesan.id',
+			]);
+
+			Route::post('/pesan', [
+				'uses' => 'Admin\ApiController@postPesan',
+				'as' => 'api.pesan.post',
+			]);
+
+			Route::post('/pesan/setFalse', [
+				'uses' => 'Admin\ApiController@setFalse',
+				'as' => 'api.pesan.setfalse',
+			]);
+		});
+
 		Route::get('/login', [
 			'uses' => 'AdminLoginController@showLoginForm',
 			'as' => 'admin.login',
@@ -271,6 +332,44 @@ Route::group(['middleware' => 'auth'], function ()
 			'uses' => 'AdminController@index',
 			'as' => 'admin.dashboard',
 		]);
+
+		Route::group(['prefix' => '/messanger'], function ()
+		{
+			// Pesan
+			Route::get('/', [
+				'uses' => 'Admin\MessangerController@index',
+				'as' => 'admin.messa'
+			]);
+			Route::get('/{id}', [
+				'uses' => 'Admin\MessangerController@detail',
+				'as' => 'a.messa.d'
+			]);
+			// Ajax Pesan
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\MessangerController@ajax_fetch_all',
+				'as' => 'ajax.messa'
+			]);
+			// Tambah Pesan
+			Route::post('/add', [
+				'uses' => 'Admin\MessangerController@store',
+				'as' => 'a.messa.a'
+			]);
+			// Ubah Pesan
+			Route::post('/update', [
+				'uses' => 'Admin\MessangerController@update',
+				'as' => 'a.messa.u'
+			]);
+			// Hapus Pesan
+			Route::post('/delete', [
+				'uses' => 'Admin\MessangerController@destroy',
+				'as' => 'a.messa.d'
+			]);
+			// Show Detail per Pesan
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\MessangerController@show',
+				'as' => 'a.messa.s'
+			]);
+		});
 
 		Route::group(['prefix' => '/kursus'], function ()
 		{
@@ -595,6 +694,74 @@ Route::group(['middleware' => 'auth'], function ()
 			Route::get('/show/{id}', [
 				'uses' => 'Admin\UserController@show',
 				'as' => 'a.user.s'
+			]);
+		});
+
+		Route::group(['prefix' => '/konfirmasi'], function()
+		{
+			// Konfirmasi Bayar
+			Route::get('/', [
+				'uses' => 'Admin\KonfirmasiController@index',
+				'as' => 'admin.konf'
+			]);
+			// Ajax Konfirmasi Bayar
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\KonfirmasiController@ajax_fetch_all',
+				'as' => 'ajax.konf'
+			]);
+			// Tambah Konfirmasi Bayar
+			Route::post('/add', [
+				'uses' => 'Admin\KonfirmasiController@store',
+				'as' => 'a.konf.a'
+			]);
+			// Ubah Konfirmasi Bayar
+			Route::post('/update', [
+				'uses' => 'Admin\KonfirmasiController@update',
+				'as' => 'a.konf.u'
+			]);
+			// Hapus Konfirmasi Bayar
+			Route::post('/delete', [
+				'uses' => 'Admin\KonfirmasiController@destroy',
+				'as' => 'a.konf.d'
+			]);
+			// Show Detail per Konfirmasi Bayar
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\KonfirmasiController@show',
+				'as' => 'a.konf.s'
+			]);
+		});
+
+		Route::group(['prefix' => '/daftar_keahlian'], function()
+		{
+			// Buat Daftar Keahlian
+			Route::get('/', [
+				'uses' => 'Admin\DaftarKeahlianController@index',
+				'as' => 'admin.buatk'
+			]);
+			// Buat Daftar Keahlian
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\DaftarKeahlianController@ajax_fetch_all',
+				'as' => 'ajax.buatk'
+			]);
+			// Buat Daftar Keahlian
+			Route::post('/add', [
+				'uses' => 'Admin\DaftarKeahlianController@store',
+				'as' => 'a.buatk.a'
+			]);
+			// Buat Daftar Keahlian
+			Route::post('/update', [
+				'uses' => 'Admin\DaftarKeahlianController@update',
+				'as' => 'a.buatk.u'
+			]);
+			// Buat Daftar Keahlian
+			Route::post('/delete', [
+				'uses' => 'Admin\DaftarKeahlianController@destroy',
+				'as' => 'a.buatk.d'
+			]);
+			// Buat Daftar Keahlian
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\DaftarKeahlianController@show',
+				'as' => 'a.buatk.s'
 			]);
 		});
 

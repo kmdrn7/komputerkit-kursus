@@ -1,4 +1,4 @@
-<div class="row" style="padding: 10px 0px">
+<div class="row no-margin-bottom">
 	@if ( count($kursus) > 0 )
 		@foreach ($kursus as $ku)
 			<a href="{{ url('/kursus/free/'. $ku->slug) }}" style="text-decoration: none; color: inherit">
@@ -7,7 +7,7 @@
 						<div class="row no-margin-bottom">
 				            <div class="col s12 m5 center-align" style="padding: 0;">
 								<div class="kursus-free-img">
-									<img src="{{ asset('img/'. $ku->gambar) }}" class="responsive-img" alt="">
+									<img src="{{ asset('img/kursus/'. $ku->gambar) }}" class="responsive-img" alt="">
 								</div>
 				            </div>
 				            <div class="col s12 m7 left-align">
@@ -21,7 +21,7 @@
 				        </div>
 						<div class="row no-margin-bottom no-margin-top kursus-slider valign-wrapper">
 							<div class="col m12">
-								<i class="material-icons kursus-icon">search</i>
+								<i class="material-icons kursus-icon white-text" style="font-size: 45px">search</i>
 							</div>
 						</div>
 					</div>
@@ -29,17 +29,24 @@
 			</a>
 		@endforeach
 	@else
-		<div class="col s12">
+		<div class="col s12 m12 l12">
 			<div class="center-align">
-				Kategori yang anda inginkan tidak ada.
+				<div class="kursus-link-container z-depth-1">
+					Kategori yang anda inginkan tidak ada.
+				</div>
 			</div>
 		</div>
 	@endif
 </div>
 @if ( count($kursus) > 0 )
-	<div class="row">
-		<div class="col s12 center-align">
-			{{ $kursus->links() }}
+	<div class="row no-margin-bottom">
+		<div class="col l12 s12 center-align">
+			<div class="card-panel kursus-link-container">
+				<div class="kursus-link-header">
+					Menampilkan {{ $kursus->firstItem() }} s/d {{ $kursus->lastItem() }} dari {{ $kursus->total() }} Kursus.
+				</div>
+				{{ $kursus->links() }}
+			</div>
 		</div>
 	</div>
 @endif

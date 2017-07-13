@@ -18,6 +18,12 @@ window.moment = require('moment');
 
 moment.locale("id");
 
+window.Vue = require('vue');
+
+Vue.component('chat-message', require('./components/ChatMessage.vue'));
+Vue.component('chat-log', require('./components/ChatLog.vue'));
+Vue.component('chat-composer', require('./components/ChatComposer.vue'));
+
 // window.DataTable = require('./dt.min');
 
 // $('#DT').DataTable();

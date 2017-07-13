@@ -86,7 +86,6 @@
 											@endforeach
 										</select>
 									<span class="material-input"></span></div>
-
 		                        </div>
 		                        <div class="col-md-6">
 									<div class="form-group label-floating is-empty">
@@ -110,6 +109,20 @@
 									<span class="material-input"></span></div>
 		                        </div>
 		                    </div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group label-floating is-empty">
+										<label class="">Pembimbing</label>
+										<select class="form-control" name="pembimbing">
+											<option value="" disabled selected>Pilih pembimbing</option>
+											@foreach ($pembimbing as $p)
+												<option value="{{ $p->pembimbing }}">{{ $p->pembimbing }}</option>
+											@endforeach
+										</select>
+									<span class="material-input"></span></div>
+		                        </div>
+							</div>
 
 		                    <div class="row">
 		                        <div class="col-md-12">
@@ -202,6 +215,20 @@
 								<span class="material-input"></span></div>
 	                        </div>
 	                    </div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group label-floating is-empty">
+									<label class="">Pembimbing</label>
+									<select class="form-control" name="pembimbing_u">
+										<option value="" disabled>Pilih pembimbing</option>
+										@foreach ($pembimbing as $p)
+											<option value="{{ $p->pembimbing }}">{{ $p->pembimbing }}</option>
+										@endforeach
+									</select>
+								<span class="material-input"></span></div>
+							</div>
+						</div>
 
 						<div class="row">
 	                        <div class="col-md-12">
@@ -316,6 +343,7 @@
 				$('textarea[name="keterangan_u"]').html(data.ket_kursus);
 				$('textarea[name="syarat_u"]').html(data.syarat);
 				$('select[name="kategori_u"] option[value="'+data.kategori+'"]').attr('selected','selected');
+				$('select[name="pembimbing_u"] option[value="'+data.pembimbing+'"]').attr('selected','selected');
 				$('#gambar_lama').attr('src', '/img/kursus/'+data.gambar);
 				$('input[name="gambar_u_lama"]').val(data.gambar);
 				$('#modalLoading').modal('hide');
@@ -353,7 +381,9 @@
 								if ( form[0][4].value !== '' ) {
 									if ( form[0][5].value !== '' ) {
 										if ( form[0][6].value !== '' ) {
-											return true;
+											if ( form[0][7].value !== '' ) {
+												return true;
+											}
 										}
 									}
 								}
@@ -418,6 +448,7 @@
 					var kursus = $('input[name="kursus"]').val();
 					var waktu = $('input[name="waktu"]').val();
 					var kategori = $('select[name="kategori"]').find(":selected").val();
+					var pembimbing = $('select[name="pembimbing"]').find(":selected").val();
 					var harga = $('input[name="harga"]').val();
 					var ket = $('textarea[name="keterangan"]').val();
 					var syarat = $('textarea[name="syarat"]').val();
@@ -427,6 +458,7 @@
 					form.append('waktu', waktu);
 					form.append('gambar', gambar);
 					form.append('kategori', kategori);
+					form.append('pembimbing', pembimbing);
 					form.append('harga', harga);
 					form.append('keterangan', ket);
 					form.append('syarat', syarat);
@@ -459,6 +491,7 @@
 					var kursus = $('input[name="kursus_u"]').val();
 					var waktu = $('input[name="waktu_u"]').val();
 					var kategori = $('select[name="kategori_u"]').find(":selected").val();
+					var pembimbing = $('select[name="pembimbing_u"]').find(":selected").val();
 					var harga = $('input[name="harga_u"]').val();
 					var ket = $('textarea[name="keterangan_u"]').val();
 					var syarat = $('textarea[name="syarat_u"]').val();
@@ -475,6 +508,7 @@
 					form.append('kursus', kursus);
 					form.append('waktu', waktu);
 					form.append('kategori', kategori);
+					form.append('pembimbing', pembimbing);
 					form.append('harga', harga);
 					form.append('keterangan', ket);
 					form.append('syarat', syarat);

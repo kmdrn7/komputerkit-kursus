@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
+use Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +17,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+		// Default length untuk database
 		Schema::defaultStringLength(150);
+		// Extend validator untuk cek password lama
+		Validator::extend('old_password', function ($attribute, $value, $parameters, $validator)
+		{
+			return Hash::check($value, current($parameters));
+		});
+
     }
 
     /**

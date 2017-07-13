@@ -2,10 +2,6 @@ $(document).ready(function() {
 
     $('select').material_select();
 
-    $('.scrollspy--tugas').scrollSpy({
-        'scrollOffset': 0,
-    });
-
 	$('.button-collapse').sideNav({
 		menuWidth: 300, // Default is 300
 		edge: 'left', // Choose the horizontal origin

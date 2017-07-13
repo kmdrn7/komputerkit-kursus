@@ -25,7 +25,7 @@
                 @foreach ($element as $page => $url)
                     @if ($page == $paginator->currentPage())
                         {{-- <li class="active"><span>{{ $page }}</span></li> --}}
-						<li class="active"><a href="#!">{{ $page }}</a></li>
+						<li class="active"><a href="{{ $url }}">{{ $page }}</a></li>
                     @else
                         {{-- <li><a href="{{ $url }}">{{ $page }}</a></li> --}}
 						<li class="waves-effect"><a href="{{ $url }}">{{ $page }}</a></li>

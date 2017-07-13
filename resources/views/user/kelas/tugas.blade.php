@@ -2,37 +2,25 @@
 
 @section('content')
 
-	<div class="row teal no-margin-bottom">
-		<div class="container">
-			<div class="row">
-				<div class="col l3">
-					<img class="img-responsive" src="{{ asset('img/'. $kursus->gambar) }}" alt="{{ $kursus->gambar }}" style="width:100%">
-				</div>
-				<div class="col l5">
-					<div class="materi-kursus-title">
-						{{ $kursus->kursus }}
-					</div>
-					<div class="materi-kursus-detail">
-						{{ $kursus->ket_kursus }}
-					</div>
-				</div>
-				<div class="col l4">
-					<div class="tgl-mulai-head">
-						Tanggal Mulai
-					</div>
-					<div class="tgl-mulai-content">
-						{{  $kursus->tgl_mulai->formatLocalized('%A, %d %B %Y') }}
-					</div>
-					<div class="tgl-selesai-head">
-						Tanggal Selesai
-					</div>
-					<div class="tgl-selesai-content">
-						{{ $kursus->tgl_selesai->formatLocalized('%A, %d %B %Y') }}
-					</div>
-				</div>
+	<div class="kelas--nav valign-wrapper">
+		<div class="bnav-container container">
+			<div class="bnsp-book center-align">
+				<span class="left">
+					<a href="{{ url('/kelas') }}" class="white-text waves-effect waves-light">
+						<i class="fa fa-chevron-left"></i>
+					</a>
+				</span>
+				{{ $kursus->kursus }}
+				<br class="hide-on-med-and-up">
+				<small style="font-size: 30px">({{ $kursus->waktu }} Hari)</small>
+			</div>
+			<div class="knsp-det center-align">
+				Tanggal mulai : {{  $kursus->tgl_mulai->formatLocalized('%A, %d %B %Y') }} <br>
+				Tanggal selesai : {{ $kursus->tgl_selesai->formatLocalized('%A, %d %B %Y') }}
 			</div>
 		</div>
 	</div>
+
 	<div class="row white" style="margin-bottom: 30px">
 		<div class="col l12 s12 m12">
 			{{-- <div class="container"> --}}
@@ -83,9 +71,6 @@
 											Upload file anda menggunakan fasilitas google drive dalam bentuk archieve .zip, kemudian salin link berbagi file di bawah ini.
 											Klik <a href="http://youtube.com" target="_blank">disini</a> untuk tutorial upload jawaban anda.
 										</span>
-										@php
-											print_r($errors)
-										@endphp
 										<form action="{{ route('kelas.tugas.post') }}" method="POST">
 											<div class="input-field">
 												<div class="form-group">
@@ -131,6 +116,65 @@
 		</div>
 	</div>
 
+	{{-- MODAL LOADING --}}
+	<div class="modal histori-loading" id="hlm">
+		<div class="modal-content">
+			<a href="javascript:void(0)" class="modal-action modal-close waves-effect waves-light right tooltipped" data-position="left" data-delay="50" data-tooltip="Batalkan proses"><i class="fa fa-close" style="font-size: 20px"></i></a>
+			<div class="loading-wrapper-h">
+				Memproses permintaan anda...
+			</div>
+			<div class="preloader-wrapper plwp-h active">
+				<div class="spinner-layer spinner-blue">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+
+				<div class="spinner-layer spinner-red">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+
+				<div class="spinner-layer spinner-yellow">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+
+				<div class="spinner-layer spinner-green">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 @endsection
 
 @section('custom--js')
@@ -141,8 +185,20 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#stickySection').stick_in_parent();
+			$('.scrollspy--tugas').scrollSpy({
+		        // 'scrollOffset': 350,
+		    });
+			$('#hlm').modal({
+				dismissible: false,
+				opacity: .8,
+				inDuration: 350,
+				outDuration: 200,
+			});
+
+
 			$('.amtr').click(function(event) {
 				event.preventDefault();
+				$('#hlm').modal('open');
 				window.location.href = $(this).attr('href');
 			});
 			$('.toggle-tugas').click(function(e) {

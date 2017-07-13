@@ -9,7 +9,7 @@
 
 	{{-- MESSANGER --}}
 	<li class="{{ $active==='messanger'?'active':'' }}">
-		<a href="{{ route('admin.dashboard') }}">
+		<a href="{{ route('admin.messa') }}">
 			<i class="material-icons">message</i>
 			<p>Messanger</p>
 		</a>
@@ -84,24 +84,24 @@
 			<p>Transaksi</p>
 		</a>
 	</li>
-	<li class="li--main-child">
-		<a href="">
+	<li class="li--main-child {{ $active==='konf_bayar'?'active':'' }}">
+		<a href="{{ route('admin.konf') }}">
 			<i class="material-icons">add_shopping_cart</i>
-			<p>Konfirmasi Bayar</p>
+			<p>Konfirmasi Pembayaran</p>
 		</a>
 	</li>
-	<li class="li--main-child">
-		<a href="">
+	<li class="li--main-child {{ $active==='buat_keahlian'?'active':'' }}">
+		<a href="{{ route('admin.buatk') }}">
 			<i class="material-icons">person</i>
-			<p>Keahlian</p>
+			<p>Buat Daftar Keahlian</p>
 		</a>
 	</li>
-	<li class="li--main-child">
+	{{-- <li class="li--main-child">
 		<a href="">
 			<i class="material-icons">supervisor_account</i>
 			<p>Bagi Pembimbing</p>
 		</a>
-	</li>
+	</li> --}}
 
 	{{-- LAPORAN --}}
 	<li class="li--main">

@@ -46,9 +46,16 @@ class KonfirmasiController extends Controller
 			'bank_asal' => 'required',
 			'bank_tujuan' => 'required',
 			'tgl_bayar' => 'required'
+		], [
+			'atas_nama.required' => 'Kolom :attribute dibutuhkan untuk konfirmasi',
+			'bank_asal.required' => 'Kolom :attribute dibutuhkan untuk konfirmasi',
+			'bank_tujuan.required' => 'Kolom :attribute dibutuhkan untuk konfirmasi',
+			'tgl_bayar.required' => 'Kolom :attribute dibutuhkan untuk konfirmasi',
 		]);
 
 		$detail = explode('/', $request->detail_materi);
+		$date = str_replace('/', '-', $request->tgl_bayar);
+		$tgl_bayar = date('Y-m-d', strtotime($date));
 
 		Bayar::create([
 			'id_user' => Auth::id(),
@@ -58,7 +65,7 @@ class KonfirmasiController extends Controller
 			'nama_bank' => $request->bank_asal,
 			'bank_tujuan' => $request->bank_tujuan,
 			'ket_bayar' => $request->ket_bayar,
-			'tgl_bayar' => $request->tgl_bayar,
+			'tgl_bayar' => $tgl_bayar,
 			'status' => 0,
 		]);
 

@@ -2,6 +2,19 @@
 
 @section('content')
 
+	<div class="kelas-nav valign-wrapper">
+		<div class="bnav-container container">
+			<div class="bnsp-book center-align">
+				<span class="left">
+					<a href="{{ url('') }}" class="white-text waves-effect waves-light">
+						<i class="fa fa-chevron-left"></i>
+					</a>
+				</span>
+				Kelas
+			</div>
+		</div>
+	</div>
+
 	<div class="container" style="max-width: 960px!important; padding: 60px 0;">
 
 		<div class="row no-margin-bottom">
@@ -50,7 +63,7 @@
 									</div>
 									<div class="col m4">
 										<div class="latest-btn">
-											<a href="{{ url('/kelas/kursus/'. $latest->id_kursus .'--'. $latest->id_detail_kursus . '/materi') }}" class="btn btn-large btn-primary orange">Lanjutkan Belajar</a>
+											<a href="{{ url('/kelas/kursus/'. $latest->id_kursus .'--'. $latest->id_detail_kursus . '/materi/'. $latest->id_materi) }}" class="btn btn-large btn-primary orange">Lanjutkan Belajar</a>
 										</div>
 									</div>
 								@else
@@ -72,7 +85,7 @@
 				<div class="row no-margin-bottom">
 					@foreach ($qkursus as $qk)
 						<div class="col s12 m6 l6">
-							<div class="card-panel white z-depth-2" style="position: relative; border-radius: 6px">
+							<div class="card-panel kelas-kursus-panel white z-depth-2" style="position: relative; border-radius: 6px">
 								@if ($qk->flag_kursus == 1)
 									<a href="{{ url('/kelas/kursus/'. $qk->id_kursus .'--'. $qk->id_detail_kursus . '/materi') }}" style="position:relative; text-decoration: none; color: black; display: block">
 								@elseif ( $qk->flag_kursus == 2 )
@@ -80,7 +93,7 @@
 								@else
 									<a href="{{ url('/konfirmasi/'. $qk->id_kursus .'--'.$qk->id_detail_kursus) }}" style="position:relative; text-decoration: none; color: black; display: block">
 								@endif
-									<div class="row">
+									<div class="row kk-content-wrapper">
 										<div class="col m12">
 											<div class="kursus-kursus" style="font-size: 14px; color: rgb(99,99,99)">
 												Kursus
@@ -89,10 +102,10 @@
 												{{ $qk->kursus }}
 											</div>
 											<div class="kelas-kursus-detail">
-												@if ( strlen($qk->ket_kursus) > 200 )
-													{{ substr($qk->ket_kursus, 0, 200) }}...
+												@if ( strlen($qk->ket_kursus) > 150 )
+													{{ substr($qk->ket_kursus, 0, 150) }}...
 												@else
-													{{ substr($qk->ket_kursus, 0, 200) }}
+													{{ substr($qk->ket_kursus, 0, 150) }}
 												@endif
 											</div>
 										</div>
@@ -113,7 +126,7 @@
 
 								<div class="divider"></div>
 								<div class="row no-margin-bottom" style="margin-top: 15px;">
-									<div class="col m12">
+									<div class="col m12 s12">
 										@if ($qk->flag_kursus == 1)
 											<span class="left" style="margin-top: 7px; font-weight: 300">Sisa {{ $qk->tgl_selesai->diffInDays($now) }} hari</span>
 											<a href="{{ url('/kelas/kursus/'. $qk->id_kursus .'--'. $qk->id_detail_kursus . '/materi') }}" class="waves-effect waves btn-flat-custom btn-blue right">Lihat Kursus</a>

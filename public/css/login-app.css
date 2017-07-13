@@ -7,6 +7,9 @@
 .fh {
 	height: 100%!important;
 }
+.bd {
+	border: 1px solid black;
+}
 /* ======================
 	LOGIN
 ========================= */
@@ -16,7 +19,9 @@
 	background-position: center;
 	height: 100vh;
 	width: 100%;
-	padding: 50px;
+	/*padding: 50px;*/
+	display: flex;
+	overflow-y: scroll;
 }
 .success-panel {
 
@@ -32,14 +37,17 @@
 	height: 100%;
 }
 .llc {
-	border-right: 5px solid rgba(79,79,79,.74);
-	border-right-style: dashed;
+	flex: 2;
 }
 .lrc {
-	overflow-y: scroll;
+	flex: 1;
+	margin: auto;
+	max-width: 450px;
 }
 	.llc-c {
-		width: 100%;
+		/*width: 100%;*/
+		margin: auto;
+		border-radius: 20px;
 	}
 	.llc-c img,
 	.llc-c span {
@@ -58,6 +66,7 @@
 	}
 .tab-col {
 	padding: 20px!important;
+	overflow-y: auto;
 }
 /*======================
 	TABS

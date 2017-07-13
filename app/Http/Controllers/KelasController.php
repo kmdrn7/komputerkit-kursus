@@ -18,15 +18,23 @@ use Illuminate\Support\Facades\Auth;
 
 class KelasController extends Controller
 {
+
+	protected $id_user;
+
+	public function __construct()
+	{
+		$this->id_user = Auth::id();
+	}
+
     public function index()
     {
 		$data['promosi'] = Promosi::limit(1)->first();
 		$data['now'] = Carbon::now();
-		$data['kursus'] = Kursus::all();
-		// $data['qkursus'] = User::find(Auth::id())->detailkursus()->where('flag_kursus', 1)->get();
 		$data['qkursus'] = User::find(Auth::id())->detailkursus()->orderBy('id_detail_kursus', 'asc')->get();
-		// $data['qbookmark'] = User::find(Auth::id())->bookmark;
-		$data['latest'] = QDetailMateri::where('flag_terbaru', 1)->first();
+		$data['latest'] = QDetailMateri::where([
+				'flag_terbaru'=> 1,
+				'id_user' => $this->id_user,
+			])->first();
     	return view('user.kelas.kelas',$data);
     }
 
@@ -68,10 +76,10 @@ class KelasController extends Controller
 								->update(['flag_terbaru' => 0]);
 					DetailMateri::where('id_user', Auth::user()->id_user)
 								->where('id_detail_materi', $id_materi)
-								->update(['flag_terbaru' => 1]);
-					DetailMateri::where('id_user', Auth::user()->id_user)
-								->where('id_detail_materi', $id_materi)
-								->update(['flag_materi' => 1]);
+								->update([
+									'flag_terbaru' => 1,
+									'flag_materi' => 1
+								]);
 
 					$materi = QDetailMateri::find($id_materi);
 					$no_urut = $materi->no_urut;

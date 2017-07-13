@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use DB;
 use Auth;
 use View;
 use Response;
@@ -29,6 +29,7 @@ class KursusController extends Controller
 		$data['active'] = 'kursus';
 		$data['kursus'] = Kursus::all();
 		$data['kategori'] = Kategori::all();
+		$data['pembimbing'] = DB::table('tbl_pembimbing')->get();
         return view('admin.kursus.kursus', $data);
     }
 
@@ -67,6 +68,7 @@ class KursusController extends Controller
 			'harga' => 'required',
 			'waktu' => 'required',
 			'kategori' => 'required',
+			'pembimbing' => 'required',
 			'keterangan' => 'required',
 			'syarat' => 'required',
 			'gambar' => 'required',
@@ -92,6 +94,7 @@ class KursusController extends Controller
 				'harga' => $request->harga,
 				'gambar' => $gambar_name,
 				'syarat' => $request->syarat,
+				'pembimbing' => $request->pembimbing,
 			]);
 
 			return response(['status' => 'Data berhasil masuk']);
@@ -141,6 +144,7 @@ class KursusController extends Controller
 			'harga' => 'required',
 			'waktu' => 'required',
 			'kategori' => 'required',
+			'pembimbing' => 'required',
 			'keterangan' => 'required',
 			'syarat' => 'required',
 		]);
@@ -164,6 +168,7 @@ class KursusController extends Controller
 				'harga' => $request->harga,
 				'gambar' => $gambar_name,
 				'syarat' => $request->syarat,
+				'pembimbing' => $request->pembimbing,
 			]);
 
 			return response(['status' => 'Data berhasil diubah beserta gambar']);
@@ -178,6 +183,7 @@ class KursusController extends Controller
 				'ket_kursus' => $request->keterangan,
 				'harga' => $request->harga,
 				'syarat' => $request->syarat,
+				'pembimbing' => $request->pembimbing,
 			]);
 
 			return response(['status' => 'Data berhasil diubah tanpa gambar']);

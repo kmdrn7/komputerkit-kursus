@@ -19,60 +19,66 @@
 	@yield('custom--css')
 </head>
 <body>
-    {{-- <div id="app"> --}}
-		<ul id="slide-out" class="side-nav">
-            <li>
-				<div class="userView">
-		            <div class="background teal" style=""></div>
-		            <img class="circle" src="{{ asset('img/com.jpg') }}" style="background-color: whitesmoke; padding: 2px;">
-		            <span class="white-text name">{{ Auth::user()->name }}</span>
-		            <span class="white-text email">{{ Auth::user()->email }}</span>
-	            </div>
-			</li>
-			@isset( $id_detail_kursus )
-				<input type="hidden" name="KJashkjasdb" id="KJashkjasdb" value="{{ $id_detail_kursus }}">
-				<input type="hidden" name="aASDbjkbasd" id="aASDbjkbasd" value="{{ Auth::user()->name }}">
-			@endisset
-            <li><a href="{{ url('/me') }}">Dashboard</a></li>
-            <li><a href="{{ url('/kursus/all') }}">Semua Kursus</a></li>
-			<li><a href="{{ url('/histori') }}">Histori Kursus</a></li>
-            <li><a href="{{ url('/bookmark') }}">Bookmark</a></li>
+	<ul id="slide-out" class="side-nav">
+        <li>
+			<div class="userView">
+	            <div class="background" style="background-color: rgb(19,44,68)"></div>
+	            <img class="circle" src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim(Auth::user()->email))) }}?d=retro&s=512" style="background-color: whitesmoke; padding: 2px;">
+	            <span class="white-text name">{{ Auth::user()->name }}</span>
+	            <span class="white-text email">{{ Auth::user()->email }}</span>
+            </div>
+		</li>
+		@isset( $id_detail_kursus )
+			<input type="hidden" name="KJashkjasdb" id="KJashkjasdb" value="{{ $id_detail_kursus }}">
+			<input type="hidden" name="aASDbjkbasd" id="aASDbjkbasd" value="{{ Auth::user()->name }}">
+		@endisset
+        <li><a href="{{ url('/me') }}"><i class="fa fa-home"></i>Dashboard</a></li>
+		<li><a href="{{ url('/profil') }}"><i class="fa fa-user"></i>Profil</a></li>
+		<li><a href="{{ url('/histori') }}"><i class="fa fa-history"></i>Histori Kursus</a></li>
+        <li><a href="{{ url('/bookmark') }}"><i class="fa fa-bookmark"></i>Bookmark</a></li>
+		<li><a href="{{ url('/kursus/all') }}"><i class="fa fa-book"></i>Semua Kursus</a></li>
+		<li><a href="{{ url('/kursus/free/all') }}"><i class="fa fa-book"></i>Semua Tutorial</a></li>
 
-			<li><div class="divider" style="margin-bottom: 8px;"></div></li>
-			<li><a href="{{ url('/kelas') }}">Kelas</a></li>
-			<li><div class="divider" style="margin-bottom: 8px;"></div></li>
+		<li><div class="divider" style="margin-bottom: 8px;"></div></li>
+		<li><a href="{{ url('/kelas') }}"><i class="fa fa-desktop"></i>Kelas</a></li>
+		<li><div class="divider" style="margin-bottom: 8px;"></div></li>
 
-			<li><a href="{{ url('/notifikasi') }}">Notifikasi</a></li>
-            <li><a href="{{ url('/user/logout') }}">Log Out</a></li>
-        </ul>
+		{{-- <li><a href="{{ url('/notifikasi') }}"><i class="fa fa-bell"></i>Notifikasi</a></li> --}}
+        <li><a href="{{ url('/user/logout') }}"><i class="fa fa-sign-out"></i>Log Out</a></li>
+    </ul>
 
-		<div class="row row-header">
-			<div class="col s12">
-				<div class="row" style="padding: 20px 20px 0 20px; margin-bottom: 0;">
-					<a href="#" data-activates="slide-out" class="button-collapse button-nav-left">
-						<i class="material-icons left white-text" style="font-size: 40px;">menu</i>
-					</a>
-					<a href="{{ url('/') }}" class="button-nav left hide-on-small-only">
-						<strong>KomputerKit</strong><small>.com</small>
-					</a>
-					<a href="{{ url('kursus/free/all') }}" class="button-nav left">
-						Tutorial
-					</a>
-					<a href="{{ url('kursus/all') }}" class="button-nav left">
-						Kursus
-					</a>
-					{{-- <a class='right button-collapse button-main-header hide-on-small-only' href='#' data-activates='slide-out'> --}}
-					<a class='right button-main-header hide-on-small-only' href='#'>
-						{{ Auth::user()->name }}
-					</a>
-				</div>
+	<div class="row row-header">
+		<div class="col s12">
+			<div class="row" style="padding: 20px 20px 0 20px; margin-bottom: 0;">
+				<a href="#" data-activates="slide-out" class="button-collapse button-nav-left">
+					<i class="material-icons left white-text" style="font-size: 40px;">menu</i>
+				</a>
+				<a href="{{ url('/') }}" class="button-nav left ">
+					{{-- <strong>KomputerKit</strong><small>.com</small> --}}
+					Beranda
+				</a>
+				<a href="{{ url('/kelas') }}" class="button-nav left hide-on-small-only">
+					Masuk Kelas
+				</a>
+				{{-- <a href="{{ url('kursus/free/all') }}" class="button-nav left">
+					Tutorial
+				</a>
+				<a href="{{ url('kursus/all') }}" class="button-nav left">
+					Kursus
+				</a> --}}
+				{{-- <a class='right button-collapse button-main-header hide-on-small-only' href='#' data-activates='slide-out'> --}}
+				<a class='right button-main-header hide-on-small-only' href='javascript:void(0)'>
+					{{ Auth::user()->name }}
+				</a>
 			</div>
 		</div>
+	</div>
 
-        @yield('content')
-    {{-- </div> --}}
+	<div id="this--is--main--wrap">
+		@yield('content')
+	</div>
 
-	<footer class="page-footer ft-top">
+	<footer class="page-footer ft-top" id="this--is--main--footer">
 		<div class="container">
 			<div class="row ft-top">
 				<div class="col l6 s12">
@@ -92,7 +98,7 @@
 		<div class="row no-margin-bottom ft-bot">
 			<div class="col m12 s12">
 				<div class="ft-copyright">
-					Kursus KomputerKit &copy; 2016 - {{ date('Y') }} <span style="margin: 0 5px;">||</span> {!! e('</>'); !!} dengan &nbsp;❤&nbsp; di Buduran.
+					<strong>Kursus KomputerKit</strong> &copy; 2016 - {{ date('Y') }} <span style="margin: 0 5px;">||</span> <i class="fa fa-code"></i>&nbsp; dengan &nbsp;❤&nbsp; di <strong>Buduran-Sidoarjo.</strong>
 				</div>
 			</div>
 		</div>
@@ -103,7 +109,6 @@
 	<script src="{{ asset('js/main_app.js') }}"></script>
 	<script type="text/javascript">
 		$('.button-main-header').click(function(event) {
-			event.preventDefault();
 			$('.button-collapse').sideNav('show');
 		});
 	</script>

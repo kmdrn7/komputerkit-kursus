@@ -20,5 +20,6 @@ class Pesan extends Model
 		'dari',
 		'pesan',
 		'flag_pesan',
+		'flag_terkirim'
 	];
 }

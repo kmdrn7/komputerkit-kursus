@@ -141,6 +141,11 @@
 					$('#admin--jam-c').html(moment().format('D MMMM YYYY H:mm:ss'));
 				}
 				setInterval(timer, 1000);
+
+				$('.sidebar-wrapper--custom').animate({
+			        scrollTop: $(".active").offset().top - 300
+			    }, 1000);
+
 			});
 		</script>
 

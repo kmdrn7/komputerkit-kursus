@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use DB;
+use Hash;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -62,11 +64,21 @@ class LoginController extends Controller
 			return $this->sendLockoutResponse($request);
 		}
 
+		// dd($request);
+		$status = DB::table('tbl_user')->where(['email' => $request->email])->first();
+
+		if ( isset($status) ) {
+			if ( $status->status === 0 ) {
+
+				return redirect('/login')->with('status_login', 'Akun anda belum aktif, silahkan aktivasi melalui email yang kami kirim');
+			}
+		}
+
 		if ($this->attemptLogin($request)) {
 
 			if ( Auth::user()->status == 0 ) {
 				Auth::logout();
-				return redirect('/login')->with('status', 'Akun anda belum aktif');
+				// return redirect('/login')->with('status', 'Akun anda belum aktif, silahkan aktivasi melalui email yang kami kirim');
 			}
 
 			return $this->sendLoginResponse($request);
@@ -86,6 +98,22 @@ class LoginController extends Controller
             $this->username() => 'required|email|string',
             'password' => 'required|string',
 			'g-recaptcha-response' => 'required'
-        ]);
+        ], [
+			'g-recaptcha-response.required' => 'Konfirmasikan bahwa anda bukan robot',
+		]);
+    }
+
+	protected function sendFailedLoginResponse(Request $request)
+    {
+        // $errors = [$this->username() => trans('auth.failed')];
+		$errors = [$this->username() => 'Identitas yang anda gunakan tidak terdaftar dalam sistem kami'];
+
+        if ($request->expectsJson()) {
+            return response()->json($errors, 422);
+        }
+
+        return redirect()->back()
+            ->withInput($request->only($this->username(), 'remember'))
+            ->withErrors($errors);
     }
 }

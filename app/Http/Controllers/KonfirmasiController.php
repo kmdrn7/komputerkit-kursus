@@ -23,7 +23,7 @@ class KonfirmasiController extends Controller
 			return view('user.histori.konfirmasi', $data);
 		}
 
-		return "redirect ke halaman 404";
+		App::abort(404, 'Halaman yang anda minta sudah dimakan oleh si pacman :()');
     }
 
 	public function isExists($id='')

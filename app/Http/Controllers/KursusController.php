@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Auth;
 use View;
-use DB;
+use App;
 // use Request;
 use Response;
 use App\Models\Materi;
@@ -89,7 +90,7 @@ class KursusController extends Controller
 			return view('user.kursus.detail', $data);
 
 		} else {
-			echo "redirect ke halaman 404";
+			App::abort(404, 'Halaman yang anda minta sudah dimakan oleh si pacman :()');
 		}
 	}
 
@@ -154,7 +155,7 @@ class KursusController extends Controller
 			return view('user.kursus.detailfree', $data);
 
 		} else {
-			echo "redirect ke halaman 404";
+			App::abort(404, 'Halaman yang anda minta sudah dimakan oleh si pacman :()');
 		}
 	}
 

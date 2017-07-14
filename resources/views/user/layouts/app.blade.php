@@ -23,7 +23,7 @@
         <li>
 			<div class="userView">
 	            <div class="background" style="background-color: rgb(19,44,68)"></div>
-	            <img class="circle" src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim(Auth::user()->email))) }}?d=retro&s=512" style="background-color: whitesmoke; padding: 2px;">
+	            {{-- <img class="circle" src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim(Auth::user()->email))) }}?d=retro&s=512" style="background-color: whitesmoke; padding: 2px;"> --}}
 	            <span class="white-text name">{{ Auth::user()->name }}</span>
 	            <span class="white-text email">{{ Auth::user()->email }}</span>
             </div>

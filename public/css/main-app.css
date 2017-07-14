@@ -1433,6 +1433,24 @@ ul.pagination {
 .kursus-icon {
 	font-size: 20px;
 }
+.penawaran-modal {
+    width: 90%;
+}
+    .pimg-c {
+        overflow: hidden;
+        height: 300px;
+        width: 100%;
+        text-align: center;
+    }
+    .pnw-left-img {
+        width: 100%;
+        /*object-fit: cover;*/
+        margin-top: -50px;
+    }
+.penawaran-p {
+    font-weight: 300;
+    font-size: 16px;
+}
 /* ==========================
 	CHECKOUT
 ============================= */
@@ -2203,6 +2221,24 @@ ul.pagination {
 /*--- End Content Border ---*/
 /*--------------------------*/
 
+/*--------------------------*/
+/*-------- ERROR VIEW ------*/
+/*--------------------------*/
+.error-nav {
+    height: 85px;
+    background-color: #2C3D55;
+}
+.error-container {
+    min-height: calc(100vh - 85px);
+    background-color: #FFFFFF;
+    overflow: hidden;
+    padding-bottom: 70px;
+}
+.error-p {
+    font-weight: 300;
+    font-size: 30px;
+    margin-top: 0px;
+}
 /* ==========================
 	MEDIA SCREEN
 ============================ */

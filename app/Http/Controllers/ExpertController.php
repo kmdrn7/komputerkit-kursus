@@ -29,7 +29,7 @@ class ExpertController extends Controller
 			return view('user.expert.detail', $data);
 		}
 
-		return "masuk ke halaman 404";
+		App::abort(404, 'Halaman yang anda minta sudah dimakan oleh si pacman :()');
 	}
 
 	public function isExists($id='')

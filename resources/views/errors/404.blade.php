@@ -1,1 +1,28 @@
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+@extends('user.layouts.app')
+
+@section('content')
+
+    <div class="error-nav z-depth-1"></div>
+
+    <div class="error-container z-depth-1">
+        <div class="container">
+            <div class="row no-margin-bottom valign-wrapper" style="height: 100%">
+                <div class="valign-container">
+                    <div class="col m12 s12 l12 center-align">
+                        <img src="{{ asset('img/web/pacman.png') }}" alt="">
+                    </div>
+                    <div class="col m12 s12 l12 center-align">
+                        <p class="error-p">
+                            Oops!!! Sepertinya si pacman udah makan halaman yang kamu cari :(
+                        </p>
+                        <p class="error-small">
+                            kembali ke halaman utama
+                            <a href="{{ url('me') }}" class="btn-custom-revert"><i class="fa fa-reply"></i>&nbsp; Kembali</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection

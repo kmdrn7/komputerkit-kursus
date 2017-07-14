@@ -23,7 +23,7 @@
 							<img src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($user->email))) }}?d=retro&s=512" alt="profil_picture" class="img-top-profil">
 						</div>
 						<p class="profil-warn">
-							Masuk ke <a href="http://gravatar.com">Gravatar</a> untuk mengubah foto profil anda
+							Masuk ke <strong><a target="_blank" href="http://gravatar.com">Gravatar</a></strong> untuk mengubah foto profil anda
 						</p>
 					</div>
 					<div class="profil-bottom-panel white">
@@ -170,7 +170,9 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('.datepicker').pickadate({
-				format : 'dd-mm-yyyy',
+				selectMonths: true,
+    			selectYears: 100,
+				format : 'yyyy-mm-dd',
 				onSet: function( arg ){
 					if ( 'select' in arg ){ //prevent closing on selecting month/year
 						this.close();

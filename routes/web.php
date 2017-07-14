@@ -20,6 +20,7 @@ Route::get('/test', [
 Route::get('/', function () {
     return redirect('/login');
 })->name('kk');
+
 // Login route
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');

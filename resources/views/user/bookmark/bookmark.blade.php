@@ -14,7 +14,7 @@
 		</div>
 	</div>
 
-	<div class="container">
+	<div class="container bookmark-container">
 		<div class="card-panel bookmark-main-cp">
 			<div class="container" style="max-width: 1020px!important">
 				<div class="row bmcpr no-margin-bottom">
@@ -67,20 +67,7 @@
 @section('content-js')
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('.btn-delete-bookmark').click(function(event) {
-				event.preventDefault();
-				var id = $(this).attr('id-bookmark');
-				var bookmark = {
-					id_bookmark: id
-				}
-				$('.col-bookmark[data-bookmark="'+ id +'"]').hide(500, function() {
-					axios.post('bookmark/delete', bookmark);
-					$('.col-bookmark[data-bookmark="'+ id +'"]').remove();
-				});
-				// axios.post('bookmark/delete', bookmark).then(response => {
-				// 	console.log(response);
-				// });
-			});
+			$('.btn-delete-bookmark').click(function(a){a.preventDefault();var b=$(this).attr('id-bookmark'),c={id_bookmark:b};$('.col-bookmark[data-bookmark="'+b+'"]').hide(500,function(){axios.post('bookmark/delete',c),$('.col-bookmark[data-bookmark="'+b+'"]').remove()})});
 		});
 	</script>
 @endsection

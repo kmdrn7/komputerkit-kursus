@@ -5,7 +5,7 @@
 
 	<div class="list-nav"></div>
 
-	<div class="container">
+	<div class="container" style="min-height: calc(100vh - 85px)">
 		<div class="row">
             <div class="col s12 m12">
 				{{-- ROW HEADER CONTENT --}}
@@ -133,65 +133,6 @@
 
 @section('content-js')
 	<script type="text/javascript">
-		var ch = $('#search');
-
-		$(window).on('hashchange', function() {
-			if (window.location.hash) {
-				var page = window.location.hash.replace('#', '');
-				if (page == Number.NaN || page <= 0) {
-					return false;
-				} else {
-					getPosts(page);
-				}
-			}
-		});
-		$(document).ready(function() {
-
-			$(document).on('click', '.pagination a', function (e) {
-				$('html, body').animate({
-					scrollTop: 100
-				}, 300)
-
-				getPosts($(this).attr('href').split('page=')[1]);
-				e.preventDefault();
-			});
-			ch.keyup(function(e) {
-				e.preventDefault();
-				if(e.which == 13) {
-					$('.kursus').html('');
-					$('#loading').show();
-					var req = '/kursus/free/' + window.location.href.split('/').pop() + '?kursus=' + ch.val();
-					console.log(req);
-					axios.get(req)
-						.then(function (response) {
-							$('#loading').hide();
-							$('.kursus').html(response.data);
-						})
-						.catch(function (error) {
-							console.log(error);
-					});
-			    }
-			});
-			$('#clear').click(function(event) {
-				ch.text('');
-				ch.val('');
-			});
-		});
-		function getPosts(page) {
-			var st = '/kursus/free/' + window.location.href.split('/').pop() + '?page=' + page + '&kursus=' + ch.val();
-
-			console.log(st);
-			$('.kursus').html('');
-			$('#loading').show();
-			axios.get(st)
-				.then(function (response) {
-					console.log(response);
-					$('.kursus').html(response.data);
-					$('#loading').hide();
-				})
-				.catch(function (error) {
-					console.log(error);
-			});
-		}
+		var ch=$('#search');$(window).on('hashchange',function(){if(window.location.hash){var a=window.location.hash.replace('#','');if(a==Number.NaN||0>=a)return!1;getPosts(a)}}),$(document).ready(function(){$(document).on('click','.pagination a',function(a){$('html, body').animate({scrollTop:100},300),getPosts($(this).attr('href').split('page=')[1]),a.preventDefault()}),ch.keyup(function(a){if(a.preventDefault(),13==a.which){$('.kursus').html(''),$('#loading').show();var b='/kursus/free/'+window.location.href.split('/').pop()+'?kursus='+ch.val();console.log(b),axios.get(b).then(function(c){$('#loading').hide(),$('.kursus').html(c.data)}).catch(function(c){console.log(c)})}}),$('#clear').click(function(){ch.text(''),ch.val('')})});function getPosts(a){var b='/kursus/free/'+window.location.href.split('/').pop()+'?page='+a+'&kursus='+ch.val();console.log(b),$('.kursus').html(''),$('#loading').show(),axios.get(b).then(function(c){console.log(c),$('.kursus').html(c.data),$('#loading').hide()}).catch(function(c){console.log(c)})}
 	</script>
 @endsection

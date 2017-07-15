@@ -27,12 +27,7 @@ class ProfilController extends Controller
 	public function postProfil(Request $request)
 	{
 		$this->validate($request, [
-			'name' => 'required',
-			'nickname' => 'required',
-			'email' => 'required',
-			'tgl_lahir'=> 'required',
-			'alamat' => 'required',
-			'sekolah' => 'required',
+			'name' => 'required',			
 		], [
 			'nama.required' => 'Nama harus diisi',
 		]);
@@ -42,7 +37,6 @@ class ProfilController extends Controller
 			->update([
 				'name' => $request->name,
 				'nickname' => $request->nickname,
-				'email' => $request->email,
 				'tgl_lahir' => $request->tgl_lahir,
 				'alamat' => $request->alamat,
 				'sekolah' => $request->sekolah,

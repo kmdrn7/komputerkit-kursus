@@ -115,6 +115,7 @@ class RegisterController extends Controller
 				$this->guard()->login($user);
 				return redirect('/profil')->with('first_login', '1');
 			}
+			
 			return redirect('/login')->with('token_fail', 'Token missmatch');
 		}
 	}

@@ -33,7 +33,7 @@
 			</div>
 		</div>
 
-		<div class="container" style="max-width: 600px!important">
+		<div class="container" style="max-width: 600px!important; min-height: calc(100vh - 85px); margin-bottom: 40px">
 			<div class="row no-margin-bottom">
 				<div class="col s12 m12">
 					<div class="card-panel white">
@@ -126,87 +126,6 @@
 @section('content-js')
 	<script type="text/javascript">
 
-	$(document).ready(function() {
-		$('#hlm').modal({
-			dismissible: false,
-			opacity: .8,
-			inDuration: 350,
-			outDuration: 200,
-		});
-
-		$(window).load(function() {
-			$("html, body").animate({ scrollTop: 300 }, 1500);
-		});
-
-		$('.amtr').click(function(event) {
-			event.preventDefault();
-			$('#hlm').modal('open');
-			window.location.href = $(this).attr('href');
-		});
-	});
-
-	const app = new Vue({
-		el: '#app',
-		data: {
-			messages : [],
-			messagesAdmin : [],
-		},
-		methods: {
-			getAll() {
-				axios.get('/api/pesan/all/' + $('#KJashkjasdb').val()).then(response => {
-					this.messages = response.data;
-				});
-			},
-			addMessage(message) {
-				this.messages.push(message);
-				axios.post('/api/pesan', message).then(response => {
-					console.log(response);
-				});
-			},
-			pullFromServer(idDetailKursus) {
-				axios.get('/api/pesan/' + idDetailKursus).then(response => {
-
-					if ( response.data.length > 0 ) {
-
-						this.messages.push(response.data[0]);
-
-						var res = {
-							'id_detail_kursus' : response.data[0].id_detail_kursus,
-							'id_pesan' : response.data[0].id_pesan
-						};
-
-						axios.post('/api/pesan/setFalse', res).then(response => {							
-							$(".chat-log").animate({ scrollTop: $('.chat-log')[0].scrollHeight}, 1000);
-						});
-					}
-				})
-				.catch(function (error){
-					console.log(error);
-				});
-
-				// console.log('selesai pull dari server');
-			},
-			userIsTyping(bool) {
-
-				switch (bool) {
-					case true:
-
-						break;
-					case false:
-
-						break;
-					default:
-
-				}
-			},
-		},
-		mounted() {
-			this.getAll();
-
-			setInterval(function () {
-				this.pullFromServer($('#KJashkjasdb').val());
-			}.bind(this), 1000);
-		}
-	});
+		$(document).ready(function(){$('#hlm').modal({dismissible:!1,opacity:.8,inDuration:350,outDuration:200}),$(window).load(function(){$('html, body').animate({scrollTop:300},1500)}),$('.amtr').click(function(a){a.preventDefault(),$('#hlm').modal('open'),window.location.href=$(this).attr('href')})});const app=new Vue({el:'#app',data:{messages:[],messagesAdmin:[]},methods:{getAll(){axios.get('/api/pesan/all/'+$('#KJashkjasdb').val()).then(a=>{this.messages=a.data})},addMessage(a){this.messages.push(a),axios.post('/api/pesan',a).then(()=>{})},pullFromServer(a){axios.get('/api/pesan/'+a).then(b=>{if(0<b.data.length){this.messages.push(b.data[0]);var c={id_detail_kursus:b.data[0].id_detail_kursus,id_pesan:b.data[0].id_pesan};axios.post('/api/pesan/setFalse',c).then(()=>{$('.chat-log').animate({scrollTop:$('.chat-log')[0].scrollHeight},1e3)})}}).catch(function(b){console.log(b)})},userIsTyping(a){switch(a){case!0:break;case!1:break;default:}}},mounted(){this.getAll(),setInterval(function(){this.pullFromServer($('#KJashkjasdb').val())}.bind(this),1e3)}});
 	</script>
 @endsection

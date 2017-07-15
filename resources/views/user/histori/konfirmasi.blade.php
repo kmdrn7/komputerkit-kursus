@@ -102,21 +102,6 @@
 
 @section('content-js')
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$('.a-back').click(function(event) {
-				setTimeout(function() {
-					window.history.back();
-				}, 1000);
-			});
-
-			$('.datepicker').pickadate({
-				format : 'dd/mm/yyyy',
-				onSet: function( arg ){
-			        if ( 'select' in arg ){ //prevent closing on selecting month/year
-			            this.close();
-			        }
-			    }
-		    });
-		});
+		$(document).ready(function(){$('.a-back').click(function(){setTimeout(function(){window.history.back()},1e3)}),$('.datepicker').pickadate({format:'dd/mm/yyyy',onSet:function(a){'select'in a&&this.close()}})});
 	</script>
 @endsection

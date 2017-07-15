@@ -5,7 +5,7 @@
 
 	<div class="list-nav"></div>
 
-	<div class="container">
+	<div class="container" style="min-height: calc(100vh - 85px)">
 		<div class="row">
             <div class="col s12 m12">
 				{{-- ROW HEADER CONTENT --}}
@@ -139,117 +139,6 @@
 
 @section('content-js')
 	<script type="text/javascript">
-		var ch = $('#search');
-
-		function initialize() {
-			$('.add_to_bookmark').click(function(event) {
-				var id_kursus = $(this).attr('data-id-kursus');
-				var text = $(this).text();
-
-				if ( text == '+ Bookmark' ) {
-
-					$(this).css('transition', 'all .3 ease');
-					$(this).removeClass('white');
-					$(this).addClass('orange white-text');
-					$(this).text('- Bookmark');
-
-					axios.post('/bookmark/add', {id_kursus: id_kursus})
-						.then(function(res) {
-							console.log(res.data);
-							Materialize.toast('Berhasil ditambahkan ke bookmark', 2500);
-						}, function(res) {
-							console.log(res.data);
-							Materialize.toast('Gagal ditambahkan ke bookmark', 2500);
-						});
-
-				} else if ( text == '- Bookmark' ) {
-
-					$(this).css('transition', 'all .3 ease');
-					$(this).removeClass('orange white-text');
-					$(this).addClass('white');
-					$(this).text('+ Bookmark');
-					var id_bookmark = $(this).attr('data-id-bookmark');
-					var id_kursus = $(this).attr('data-id-kursus');
-
-					axios.post('/bookmark/delete',
-						{
-							id_bookmark: id_bookmark,
-							id_kursus: id_kursus,
-						})
-						.then(function(res) {
-							console.log(res.data);
-							Materialize.toast('Berhasil hapus dari bookmark', 2500);
-						}, function(res) {
-							console.log(res.data);
-							Materialize.toast('Gagal hapus dari bookmark', 2500);
-						});
-				}
-			});
-		}
-
-		$(window).on('hashchange', function() {
-			if (window.location.hash) {
-				var page = window.location.hash.replace('#', '');
-				if (page == Number.NaN || page <= 0) {
-					return false;
-				} else {
-					getPosts(page);
-				}
-			}
-		});
-		$(document).ready(function() {
-
-			$(document).on('click', '.pagination a', function (e) {
-				$('html, body').animate({
-					scrollTop: 100
-				}, 300)
-
-				getPosts($(this).attr('href').split('page=')[1]);
-				e.preventDefault();
-			});
-
-			initialize();
-
-			ch.keyup(function(e) {
-				e.preventDefault();
-				if(e.which == 13) {
-					$('.kursus').html('');
-					$('#loading').show();
-					var req = '/kursus/' + window.location.href.split('/').pop() + '?kursus=' + ch.val();
-					axios.get(req)
-						.then(function (response) {
-							$('#loading').hide();
-							$('.kursus').html(response.data);
-							initialize();
-						})
-						.catch(function (error) {
-							console.log(error);
-						});
-			    }
-			});
-
-			$('#clear').click(function(event) {
-				ch.text('');
-				ch.val('');
-			});
-		});
-
-		function getPosts(page) {
-			var st = '/kursus/' + window.location.href.split('/').pop() + '?page=' + page + '&kursus=' + ch.val();
-
-			console.log(st);
-
-			$('.kursus').html('');
-			$('#loading').show();
-			axios.get(st)
-				.then(function (response) {
-					$('#loading').hide();
-					$('.kursus').html(response.data);
-					initialize();
-				})
-				.catch(function (error) {
-					console.log(error);
-			});
-		}
+		var ch=$('#search');function initialize(){$('.add_to_bookmark').click(function(){var b=$(this).attr('data-id-kursus'),c=$(this).text();if('+ Bookmark'==c)$(this).css('transition','all .3 ease'),$(this).removeClass('white'),$(this).addClass('orange white-text'),$(this).text('- Bookmark'),axios.post('/bookmark/add',{id_kursus:b}).then(function(f){console.log(f.data),Materialize.toast('Berhasil ditambahkan ke bookmark',2500)},function(f){console.log(f.data),Materialize.toast('Gagal ditambahkan ke bookmark',2500)});else if('- Bookmark'==c){$(this).css('transition','all .3 ease'),$(this).removeClass('orange white-text'),$(this).addClass('white'),$(this).text('+ Bookmark');var d=$(this).attr('data-id-bookmark'),b=$(this).attr('data-id-kursus');axios.post('/bookmark/delete',{id_bookmark:d,id_kursus:b}).then(function(f){console.log(f.data),Materialize.toast('Berhasil hapus dari bookmark',2500)},function(f){console.log(f.data),Materialize.toast('Gagal hapus dari bookmark',2500)})}})}$(window).on('hashchange',function(){if(window.location.hash){var a=window.location.hash.replace('#','');if(a==Number.NaN||0>=a)return!1;getPosts(a)}}),$(document).ready(function(){$(document).on('click','.pagination a',function(a){$('html, body').animate({scrollTop:100},300),getPosts($(this).attr('href').split('page=')[1]),a.preventDefault()}),initialize(),ch.keyup(function(a){if(a.preventDefault(),13==a.which){$('.kursus').html(''),$('#loading').show();var b='/kursus/'+window.location.href.split('/').pop()+'?kursus='+ch.val();axios.get(b).then(function(c){$('#loading').hide(),$('.kursus').html(c.data),initialize()}).catch(function(c){console.log(c)})}}),$('#clear').click(function(){ch.text(''),ch.val('')})});function getPosts(a){var b='/kursus/'+window.location.href.split('/').pop()+'?page='+a+'&kursus='+ch.val();console.log(b),$('.kursus').html(''),$('#loading').show(),axios.get(b).then(function(c){$('#loading').hide(),$('.kursus').html(c.data),initialize()}).catch(function(c){console.log(c)})}
 	</script>
 @endsection

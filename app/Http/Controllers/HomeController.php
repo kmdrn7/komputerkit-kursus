@@ -24,7 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-		$data['user'] = Auth::user();
 		$data['kursus_total'] = DB::table('tbl_kursus')->count();
 		$data['kursus'] = Kursus::inRandomOrder()->take(3)->get();
 		$data['kursus_anda'] = QDetailKursus::where(['id_user'=> Auth::id(), 'flag_kursus' => 1,])->get();

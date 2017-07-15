@@ -210,7 +210,7 @@
 				<div class="col l4 m4 s12 hide-on-med-and-down">
 					<div class="mk-img-container">
 						{{-- Gambar Kelas --}}
-						<img src="{{ asset('img/web/kelas/bg3.png') }}" alt="">
+						<img src="{{ asset('img/web/kelas/bg.png') }}" alt="">
 					</div>
 				</div>
 				<div class="col l8 m12 s12">

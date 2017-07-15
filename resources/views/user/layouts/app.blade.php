@@ -13,8 +13,8 @@
     <!-- Styles -->
 	<link href="https://fonts.googleapis.com/css?family=Spectral:200,300,400,500,600,700,800" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-	<link href="{{ asset('css/main-app.css?v=' . uniqid() ) }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css?v=1.0') }}" rel="stylesheet">
+	<link href="{{ asset('css/main-app.css?v=1.0') }}" rel="stylesheet">
 	<script src="https://use.fontawesome.com/d8b86d541f.js"></script>
 	@yield('custom--css')
 </head>
@@ -23,7 +23,7 @@
         <li>
 			<div class="userView">
 	            <div class="background" style="background-color: rgb(19,44,68)"></div>
-	            {{-- <img class="circle" src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim(Auth::user()->email))) }}?d=retro&s=512" style="background-color: whitesmoke; padding: 2px;"> --}}
+	            <img class="circle" src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim(Auth::user()->email))) }}?d=retro&s=512" style="background-color: whitesmoke; padding: 2px;">
 	            <span class="white-text name">{{ Auth::user()->name }}</span>
 	            <span class="white-text email">{{ Auth::user()->email }}</span>
             </div>

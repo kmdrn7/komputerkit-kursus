@@ -55,7 +55,7 @@
 									</div>
 									<div class="row">
 										<div class="input-field col s12 m6">
-											<input value="{{ $user->email }}" id="email" type="email" class="validate" name="email">
+											<input value="{{ $user->email }}" id="email" type="email" class="validate" name="email" readonly disabled>
 											<label class="active" for="email">Email</label>
 											@if ($errors->has('email'))
 												<div class="help-block red-text">
@@ -168,40 +168,6 @@
 
 @section('content-js')
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$('.datepicker').pickadate({
-				selectMonths: true,
-    			selectYears: 100,
-				format : 'yyyy-mm-dd',
-				onSet: function( arg ){
-					if ( 'select' in arg ){ //prevent closing on selecting month/year
-						this.close();
-					}
-				}
-			});
-
-			$('.modal').modal({
-				complete: function() {
-					reset_form();
-				}
-			});
-
-			if ( $('input[name="cache_pass_succ"]').val() == '1' ) {
-				Materialize.toast('Update password telah berhasil', 5000, 'rounded profil-toast-top');
-			}
-
-			if ( $('input[name="first_login"]').val() == '1' ) {
-				Materialize.toast('Lengkapi data diri anda untuk memulai semua hal yang menyenangkan disini', 5000, 'rounded profil-toast-top');
-			}
-
-			if ( $('input[name="cache_modal_password"]').val() == 1 ) {
-				$('#ubah_password').modal('open');
-			}
-
-		});
-
-		function reset_form() {
-			$('input[name="reset_form"]').click();
-		}
+		$(document).ready(function(){$('.datepicker').pickadate({selectMonths:!0,selectYears:100,format:'yyyy-mm-dd',onSet:function(a){'select'in a&&this.close()}}),$('.modal').modal({complete:function(){reset_form()}}),'1'==$('input[name="cache_pass_succ"]').val()&&Materialize.toast('Update password telah berhasil',5e3,'rounded profil-toast-top'),'1'==$('input[name="first_login"]').val()&&Materialize.toast('Lengkapi data diri anda untuk memulai semua hal yang menyenangkan disini',5e3,'rounded profil-toast-top'),1==$('input[name="cache_modal_password"]').val()&&$('#ubah_password').modal('open')});function reset_form(){$('input[name="reset_form"]').click()}
 	</script>
 @endsection

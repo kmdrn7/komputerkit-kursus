@@ -1,4 +1,4 @@
-@extends('user.layouts.app')
+@extends('errors.main')
 
 @section('content')
 
@@ -16,7 +16,11 @@
                             Oops!!! Sepertinya si pacman udah makan halaman yang kamu cari :(
                         </p>
                         <p class="error-small">
-                            kembali ke halaman utama
+							kembali ke halaman sebelumnya
+                            <a href="javascript:void(0)" onclick="window.history.back()" class="btn-custom-revert"><i class="fa fa-reply"></i>&nbsp; Kembali</a>
+                        </p>
+						<p class="error-small" style="margin-top: 35px;">
+							kembali ke halaman utama
                             <a href="{{ url('me') }}" class="btn-custom-revert"><i class="fa fa-reply"></i>&nbsp; Kembali</a>
                         </p>
                     </div>

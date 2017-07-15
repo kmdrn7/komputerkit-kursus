@@ -68,18 +68,13 @@ class LoginController extends Controller
 		$status = DB::table('tbl_user')->where(['email' => $request->email])->first();
 
 		if ( isset($status) ) {
-			if ( $status->status === 0 ) {
+			if ( $status->status == 0 ) {
 
-				return redirect('/login')->with('status_login', 'Akun anda belum aktif, silahkan aktivasi melalui email yang kami kirim');
+				return redirect('/login')->with('aktivasi', 'Akun anda belum aktif, silahkan aktivasi melalui email yang kami kirim');
 			}
 		}
 
 		if ($this->attemptLogin($request)) {
-
-			if ( Auth::user()->status == 0 ) {
-				Auth::logout();
-				// return redirect('/login')->with('status', 'Akun anda belum aktif, silahkan aktivasi melalui email yang kami kirim');
-			}
 
 			return $this->sendLoginResponse($request);
 		}
@@ -115,5 +110,22 @@ class LoginController extends Controller
         return redirect()->back()
             ->withInput($request->only($this->username(), 'remember'))
             ->withErrors($errors);
+    }
+
+	protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+		$auth = Auth::user();
+
+		if ( $auth->nickname != '' && $auth->tgl_lahir != '' && $auth->alamat != '' && $auth->sekolah != '' ) { } else {
+
+			return redirect('/profil')->with('first_login', '1');
+		}
+
+        return $this->authenticated($request, $this->guard()->user())
+                ?: redirect()->intended($this->redirectPath());
     }
 }

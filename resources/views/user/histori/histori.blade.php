@@ -67,10 +67,13 @@
 						</div>
 					</div>
 
-					<div class="" style="border: 1px solid; width: 750px; overflow: hidden">
+					<div class="tbl-histori-container" style="max-width: 100%; overflow: hidden">
 						<tbl-histori-container>
 							@include('user.histori.tbl_histori')
 						</tbl-histori-container>
+						<div class="histori-scroll-info">
+							Geser kiri dan kanan untuk melihat semua data
+						</div>
 					</div>
 				</div>
 			</div>
@@ -184,111 +187,6 @@
 
 @section('content-js')
 	<script type="text/javascript">
-
-		function showDataDetail(id) {
-			$('#hlm').modal('open');
-			axios.get('/histori/show/' + id).then(function(res) {
-				$('#hlm').modal('close');
-				var data = res.data[0];
-				console.log(data);
-				$('#kursus').val(data.kursus);
-				$('#waktu').val(data.waktu);
-				$('#harga').val(data.harga);
-				$('#tgl_mulai').val(data.tgl_mulai.split(" ")[0]);
-				$('#tgl_selesai').val(data.tgl_selesai.split(" ")[0]);
-				$('#link-kelas').attr('href', '/kelas/kursus/'+data.id_kursus+'--'+data.id_detail_kursus+'/materi');
-				$('.histori-detail-img').prop('src', '/img/kursus/' + data.gambar);
-				$('#hisDetail').modal('open');
-				$('#hisDetail').css({
-					'display': 'flex',
-					'flex-direction' : 'column',
-				});
-			});
-		}
-
-		function fetchData(params = null) {
-			if ( params === null ) {
-				$('#hlm').modal('open');
-				axios.post(
-					'/histori/fetchData'
-				).then(function(res) {
-					$('tbl-histori-container').html(res.data);
-					console.log(res.data);
-					$('#hlm').modal('close');
-				});
-			} else {
-				$('#hlm').modal('open');
-				axios.post(
-					'/histori/fetchData',
-					params
-				).then(function(res) {
-					$('tbl-histori-container').html(res.data);
-					// console.log(res.data);
-					$('#hlm').modal('close');
-				});
-			}
-		}
-
-		function setSearch(con) {
-			if ( con == true ) {
-				$('filter-container').hide('300');
-				fetchData();
-			} else {
-				$('filter-container').show('300');
-			}
-		}
-
-		$(document).ready(function() {
-			$('.datepicker').pickadate({
-				selectMonths: true,
-				selectYears: 15,
-				format : 'yyyy-mm-dd',
-				onSet: function( arg ){
-			        if ( 'select' in arg ){ //prevent closing on selecting month/year
-			            this.close();
-			        }
-			    }
-			});
-
-			$('.modal').modal({
-				opacity: .8,
-			});
-
-			$('#hlm').modal({
-				dismissible: false,
-				opacity: .8,
-				inDuration: 350,
-				outDuration: 200,
-			});
-
-			$('filter-container').css('display', 'none');
-
-			$('#chk_all').change(function(event) {
-				if ( $(this).is(':checked') ) {
-					setSearch(true);
-				} else {
-					setSearch(false);
-				}
-			});
-
-			$('.btn-cari-histori').click(function(event) {
-				var a, b;
-				a = $('input[name="tgl_dari"]').val();
-				b = $('input[name="tgl_sampai"]').val();
-
-				if ( $('#chk_all').is(':checked') ) {
-					fetchData();
-				} else {
-					if ( a !== "" && b !== "" ) {
-						fetchData({
-							tgl_dari: a,
-							tgl_sampai: b,
-						});
-					} else {
-						alert('Lengkapi kembali kolom pencarian tanggal');
-					}
-				}
-			});
-		});
+		function showDataDetail(c){$('#hlm').modal('open'),axios.get('/histori/show/'+c).then(function(d){$('#hlm').modal('close');var e=d.data[0];$('#kursus').val(e.kursus),$('#waktu').val(e.waktu),$('#harga').val(e.harga),$('#tgl_mulai').val(e.tgl_mulai.split(' ')[0]),$('#tgl_selesai').val(e.tgl_selesai.split(' ')[0]),$('#link-kelas').attr('href','/kelas/kursus/'+e.id_kursus+'--'+e.id_detail_kursus+'/materi'),$('.histori-detail-img').prop('src','/img/kursus/'+e.gambar),$('#hisDetail').modal('open'),$('#hisDetail').css({display:'flex','flex-direction':'column'})})}function fetchData(c=null){null===c?($('#hlm').modal('open'),axios.post('/histori/fetchData').then(function(d){$('tbl-histori-container').html(d.data),$('#hlm').modal('close')})):($('#hlm').modal('open'),axios.post('/histori/fetchData',c).then(function(d){$('tbl-histori-container').html(d.data),$('#hlm').modal('close')}))}function setSearch(c){!0==c?($('filter-container').hide('300'),fetchData()):$('filter-container').show('300')}$(document).ready(function(){$('.datepicker').pickadate({selectMonths:!0,selectYears:15,format:'yyyy-mm-dd',onSet:function(c){'select'in c&&this.close()}}),$('.modal').modal({opacity:.8}),$('#hlm').modal({dismissible:!1,opacity:.8,inDuration:350,outDuration:200}),$('filter-container').css('display','none'),$('#chk_all').change(function(){$(this).is(':checked')?setSearch(!0):setSearch(!1)}),$('.btn-cari-histori').click(function(){var d,e;d=$('input[name="tgl_dari"]').val(),e=$('input[name="tgl_sampai"]').val(),$('#chk_all').is(':checked')?fetchData():''!==d&&''!==e?fetchData({tgl_dari:d,tgl_sampai:e}):alert('Lengkapi kembali kolom pencarian tanggal')})});
 	</script>
 @endsection

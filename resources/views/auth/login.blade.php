@@ -31,9 +31,9 @@
 							<form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
 								{{ csrf_field() }}
 
-								@if ( session('status_login') )
+								@if ( session('aktivasi') )
 									<span class="help-block red-text">
-										<strong>{{ session('status_login') }}</strong>
+										<strong>{{ session('aktivasi') }}</strong>
 									</span>
 								@endif
 

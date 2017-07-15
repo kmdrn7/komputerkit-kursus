@@ -33,7 +33,7 @@
 		</div>
 	</div>
 
-	<div class="container" style="max-width: 820px!important">
+	<div class="container" style="max-width: 820px!important; min-height: calc(100vh - 85px); margin-bottom: 40px">
 		<div class="row">
 			@foreach ($materi as $m)
 				<div class="col m12 s12">

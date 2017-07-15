@@ -33,7 +33,7 @@
 		</div>
 	</div>
 
-	<div class="container" style="max-width: 860px!important">
+	<div class="container" style="max-width: 860px!important; min-height: calc(100vh - 85px); margin-bottom: 40px">
 		<div class="row" style="display:flex">
 			<div class="col s12 m9 l9">
 				<div class="row">
@@ -82,7 +82,7 @@
 												</div>
 											</div>
 
-											<button type="submit" class="btn">Kirim</button>
+											<button type="submit" class="btn"><i class="fa fa-send"></i>&nbsp; Kirim</button>
 										</form>
 									@endif
 								</div>
@@ -205,7 +205,7 @@
 				e.preventDefault();
 				var id = $(this).attr('data-tugas');
 				$('div[id-tugas="' + id + '"]').toggle('300');
-				// console.log($(this).);
+
 				if ( $(this).html().includes('arrow_down') ) {
 					$(this).html('<i class="material-icons tugas-drop">keyboard_arrow_up</i>');
 				} else {

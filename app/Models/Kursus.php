@@ -21,6 +21,7 @@ class Kursus extends Model
 		'harga',
 		'gambar',
 		'pembimbing',
+		'warna',
 	];
 
 	protected $guarded = [];

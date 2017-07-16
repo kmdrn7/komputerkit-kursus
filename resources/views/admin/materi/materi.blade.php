@@ -127,7 +127,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group label-floating is-empty">
-									<label class="control-label">Deskripsi Tambahan Materi</label>
+									<label class="control-label">Deskripsi Tambahan Materi (boleh kosong)</label>
 									<textarea class="form-control" name="ket_materi_adv" rows="3" cols="80"></textarea>
 								<span class="material-input"></span></div>
 	                        </div>
@@ -259,7 +259,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group label-floating is-empty">
-									<label class="">Deskripsi Tambahan Materi</label>
+									<label class="">Deskripsi Tambahan Materi (boleh kosong)</label>
 									<textarea class="form-control" name="ket_materi_adv_u" rows="3" cols="80"></textarea>
 								<span class="material-input"></span></div>
 	                        </div>
@@ -457,13 +457,11 @@
 					if ( form[0][1].value !== '' ) {
 						if ( form[0][2].value !== '' ) {
 							if ( form[0][3].value !== '' ) {
-								if ( form[0][4].value !== '' ) {
-									if ( form[0][5].value !== '' ) {
-										if ( form[0][6].value !== '' ) {
-											if ( form[0][7].value !== '' ) {
-												if ( form[0][8].value !== '' ) {
-													return true;
-												}
+								if ( form[0][5].value !== '' ) {
+									if ( form[0][6].value !== '' ) {
+										if ( form[0][7].value !== '' ) {
+											if ( form[0][8].value !== '' ) {
+												return true;
 											}
 										}
 									}
@@ -477,13 +475,11 @@
 				if ( form[0][0].value !== '' ) {
 					if ( form[0][1].value !== '' ) {
 						if ( form[0][2].value !== '' ) {
-							if ( form[0][3].value !== '' ) {
-								if ( form[0][4].value !== '' ) {
-									if ( form[0][5].value !== '' ) {
-										if ( form[0][6].value !== '' ) {
-											if ( form[0][7].value !== '' ) {
-												return true;
-											}
+							if ( form[0][4].value !== '' ) {
+								if ( form[0][5].value !== '' ) {
+									if ( form[0][6].value !== '' ) {
+										if ( form[0][7].value !== '' ) {
+											return true;
 										}
 									}
 								}

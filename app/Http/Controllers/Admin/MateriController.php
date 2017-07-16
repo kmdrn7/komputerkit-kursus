@@ -61,7 +61,7 @@ class MateriController extends Controller
 				return response(['no_urut' => $data->no_urut + 1]);
 			}
 
-			return response(['no_urut' => 11]);
+			return response(['no_urut' => 1]);
 		}
 	}
 
@@ -89,7 +89,6 @@ class MateriController extends Controller
 			'no_urut' => 'required',
 			'materi' => 'required',
 			'ket_materi' => 'required',
-			'ket_materi_adv' => 'required',
 			'target_kursus' => 'required',
 			'contoh_pekerjaan' => 'required',
 			'yt_embed' => 'required',
@@ -179,7 +178,6 @@ class MateriController extends Controller
 			'no_urut' => 'required',
 			'materi' => 'required',
 			'ket_materi' => 'required',
-			'ket_materi_adv' => 'required',
 			'target_kursus' => 'required',
 			'contoh_pekerjaan' => 'required',
 			'yt_embed' => 'required',

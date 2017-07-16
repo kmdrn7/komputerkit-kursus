@@ -72,6 +72,7 @@ class KursusController extends Controller
 			'keterangan' => 'required',
 			'syarat' => 'required',
 			'gambar' => 'required',
+			'warna' => 'required',
 		]);
 
 		if ( $request->hasFile('gambar') ) {
@@ -95,6 +96,7 @@ class KursusController extends Controller
 				'gambar' => $gambar_name,
 				'syarat' => $request->syarat,
 				'pembimbing' => $request->pembimbing,
+				'warna' => $request->warna,
 			]);
 
 			return response(['status' => 'Data berhasil masuk']);
@@ -147,6 +149,7 @@ class KursusController extends Controller
 			'pembimbing' => 'required',
 			'keterangan' => 'required',
 			'syarat' => 'required',
+			'warna' => 'required',
 		]);
 
 		if ( $request->hasFile('gambar') ) {
@@ -169,6 +172,7 @@ class KursusController extends Controller
 				'gambar' => $gambar_name,
 				'syarat' => $request->syarat,
 				'pembimbing' => $request->pembimbing,
+				'warna' => $request->warna,
 			]);
 
 			return response(['status' => 'Data berhasil diubah beserta gambar']);
@@ -184,6 +188,7 @@ class KursusController extends Controller
 				'harga' => $request->harga,
 				'syarat' => $request->syarat,
 				'pembimbing' => $request->pembimbing,
+				'warna' => $request->warna,
 			]);
 
 			return response(['status' => 'Data berhasil diubah tanpa gambar']);

@@ -128,8 +128,19 @@
 		                        <div class="col-md-12">
 									<div class="form-group label-floating is-empty">
 										<label class="">Gambar</label>
-										<input name="gambar" type="file" class="dropify form-control" data-max-file-size="2M" data-allowed-file-extensions="jpg JPEG png PNG jpeg bmp BMP"/>
+										<input name="gambar" type="file" class="dropify form-control" data-max-file-size="2M" data-allowed-file-extensions="jpg JPEG png PNG jpeg bmp BMP svg SVG"/>
 									<span class="material-input"></span></div>
+		                        </div>
+		                    </div>
+
+							<div class="row">
+		                        <div class="col-md-12">
+									<div class="form-group label-floating is-empty">
+										<div class="form-group label-floating is-empty">
+											<label class="">Warna (Background CSS)</label>
+											<input  name="warna" type="text" class="form-control" value="">
+										</div>
+									</div>
 		                        </div>
 		                    </div>
 					</div>
@@ -243,9 +254,20 @@
 	                        <div class="col-md-12">
 								<div class="form-group label-floating is-empty">
 									<label class="">Gambar Baru</label>
-									<input name="gambar_u" type="file" class="dropify form-control" data-max-file-size="2M" data-allowed-file-extensions="jpg JPEG png PNG jpeg bmp BMP"/>
+									<input name="gambar_u" type="file" class="dropify form-control" data-max-file-size="2M" data-allowed-file-extensions="jpg JPEG png PNG jpeg bmp BMP svg SVG"/>
 									<input type="hidden" name="gambar_u_lama" type="text" value="" />
 								<span class="material-input"></span></div>
+	                        </div>
+	                    </div>
+
+						<div class="row">
+	                        <div class="col-md-12">
+								<div class="form-group label-floating is-empty">
+									<div class="form-group label-floating is-empty">
+										<label class="">Warna (Background CSS)</label>
+										<input  name="warna_u" type="text" class="form-control" value="">
+									</div>
+								</div>
 	                        </div>
 	                    </div>
 					</div>
@@ -346,6 +368,7 @@
 				$('select[name="pembimbing_u"] option[value="'+data.pembimbing+'"]').attr('selected','selected');
 				$('#gambar_lama').attr('src', '/img/kursus/'+data.gambar);
 				$('input[name="gambar_u_lama"]').val(data.gambar);
+				$('input[name="warna_u"]').val(data.warna);
 				$('#modalLoading').modal('hide');
 				$('#updateModal').modal('show');
 			}).catch(function (ex) {
@@ -382,7 +405,9 @@
 									if ( form[0][5].value !== '' ) {
 										if ( form[0][6].value !== '' ) {
 											if ( form[0][7].value !== '' ) {
-												return true;
+												if ( form[0][11].value !== '' ) {
+													return true;
+												}
 											}
 										}
 									}
@@ -400,7 +425,11 @@
 								if ( form[0][4].value !== '' ) {
 									if ( form[0][5].value !== '' ) {
 										if ( form[0][6].value !== '' ) {
-											return true;
+											if ( form[0][7].value !== '' ) {
+												if ( form[0][11].value !== '' ) {
+													return true;
+												}
+											}
 										}
 									}
 								}
@@ -453,6 +482,7 @@
 					var ket = $('textarea[name="keterangan"]').val();
 					var syarat = $('textarea[name="syarat"]').val();
 					var gambar = $('input[name="gambar"]')[0].files[0];
+					var warna = $('input[name="warna"]').val();
 					var form = new FormData();
 					form.append('kursus', kursus);
 					form.append('waktu', waktu);
@@ -460,6 +490,7 @@
 					form.append('kategori', kategori);
 					form.append('pembimbing', pembimbing);
 					form.append('harga', harga);
+					form.append('warna', warna);
 					form.append('keterangan', ket);
 					form.append('syarat', syarat);
 					// Send post request
@@ -496,6 +527,7 @@
 					var ket = $('textarea[name="keterangan_u"]').val();
 					var syarat = $('textarea[name="syarat_u"]').val();
 					var gambar_lama = $('input[name="gambar_u_lama"]').val();
+					var warna = $('input[name="warna_u"]').val();
 
 					if ( $('input[name="gambar_u"]')[0].files[0] !== '' ) {
 						var gambar = $('input[name="gambar_u"]')[0].files[0];
@@ -510,6 +542,7 @@
 					form.append('kategori', kategori);
 					form.append('pembimbing', pembimbing);
 					form.append('harga', harga);
+					form.append('warna', warna);
 					form.append('keterangan', ket);
 					form.append('syarat', syarat);
 					form.append('gambar', gambar);

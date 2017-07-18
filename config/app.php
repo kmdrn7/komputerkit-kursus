@@ -180,8 +180,13 @@ return [
 		/*
 		 * Package untuk reCaptcha
 		 */
-		 Collective\Html\HtmlServiceProvider::class,
-		 Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+		Collective\Html\HtmlServiceProvider::class,
+		Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+
+		/*
+		* Package monitoring error [ Sentry ]
+		*/
+		
 
     ],
 

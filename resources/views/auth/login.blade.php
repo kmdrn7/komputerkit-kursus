@@ -117,7 +117,7 @@
 										<input id="email_regis" type="email" class="form-control" name="email_regis" value="{{ old('email_regis') }}" required>
 										<label for="email_regis" class="control-label">Email</label>
 
-										@if ($errors->has('email'))
+										@if ($errors->has('email_regis'))
 											<span class="help-block">
 												<strong>{{ $errors->first('email_regis') }}</strong>
 											</span>
@@ -177,8 +177,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Tutup</a>
+			<div class="modal-footer center-align">
+				<a href="javascript:void(0)" class="modal-action modal-close waves-effect waves-light btn" style="float: none">Tutup</a>
 			</div>
 		</div>
 	</div>
@@ -188,7 +188,10 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 
-			$('.modal').modal();
+			$('.modal').modal({
+				dismissible: false,
+			    opacity: .9,
+			});
 
 			var i = $('#status').html();
 			if ( i == 1 ) {

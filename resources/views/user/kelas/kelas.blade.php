@@ -90,7 +90,7 @@
 									@php
 										$sisa = $qk->tgl_selesai->diffInDays($now);
 									@endphp
-									@if ( $sisa <= 0 )
+									@if ( $sisa < 1 )
 										<a href="{{ url('/kursus/checkout/'. $qk->slug) }}" style="position:relative; text-decoration: none; color: black; display: block">
 									@else
 										<a href="{{ url('/kelas/kursus/'. $qk->id_kursus .'--'. $qk->id_detail_kursus . '/materi') }}" style="position:relative; text-decoration: none; color: black; display: block">
@@ -125,11 +125,11 @@
 									</a>
 								@endif
 
-								@if ($qk->flag_kursus === 1)
+								@if ($qk->flag_kursus == 1)
 									@php
 										$sisa = $qk->tgl_selesai->diffInDays($now);
 									@endphp
-									@if ( $sisa <= 0 )
+									@if ( $sisa < 1 )
 										<div class="leftKursusRed"></div>
 									@else
 										<div class="leftKursusGreen"></div>

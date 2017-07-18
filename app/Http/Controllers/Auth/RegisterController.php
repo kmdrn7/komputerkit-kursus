@@ -58,8 +58,11 @@ class RegisterController extends Controller
             'password_regis' => 'required|string|min:6|confirmed',
 			'g-recaptcha-response' => 'required'
         ], [
-			'g-recaptcha-response.required' => 'Konfirmasikan bahwa anda bukan robot',
-			'password_regis.min' => 'Password anda setidaknya harus mengandung :value karakter',
+			'name.required' => 'Nama harus diisi',
+			'name.max' => 'Nama maksimal memiliki :max karakter',
+			'email_regis.unique' => 'Email yang anda gunakan sudah terdaftar',
+			'g-recaptcha-response.required' => 'Konfirmasikan bahwa anda bukan robot, jika konfirmasi tidak muncul gunakan PC',
+			'password_regis.min' => 'Password anda setidaknya harus mengandung :min karakter',
 			'password_regis.confirmed' => 'Konfirmasi password anda tidak sama',
 		]);
     }
@@ -115,7 +118,7 @@ class RegisterController extends Controller
 				$this->guard()->login($user);
 				return redirect('/profil')->with('first_login', '1');
 			}
-			
+
 			return redirect('/login')->with('token_fail', 'Token missmatch');
 		}
 	}

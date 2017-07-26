@@ -1,5 +1,9 @@
 @extends('user.layouts.app')
 
+@section('title')
+	Profil
+@endsection
+
 @section('content')
 	{{-- @if ( session('is_modal_password_opened') )
 		<input type="hidden" name="is_modal_password_opened" value="1">

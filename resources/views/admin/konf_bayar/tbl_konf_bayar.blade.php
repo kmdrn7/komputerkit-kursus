@@ -20,14 +20,14 @@
 				<td>{{ $k->kursus }}</td>
 				<td>{{ $k->tgl_bayar }}</td>
 				<td>
-					@if ( $k->status == 0 )
+					@if ( $k->status == 0 || $k->status == 2 )
 						<button type="button" class="btn btn-info btn-update" onclick="showUpdateForm('{{ $k->id_bayar }}')">
 							Konfirmasi
 						</button>
 					@else
-						<a class="btn btn-disabled">
-							Sudah Konfirmasi
-						</a>
+						<button type="button" class="btn btn-info btn-update" onclick="showUpdateForm('{{ $k->id_bayar }}')">
+							Sudah Konfirmasi/Lihat
+						</button>
 					@endif
 				</td>
 				<td>

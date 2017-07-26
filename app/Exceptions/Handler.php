@@ -42,26 +42,18 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
-
-		// dd($exception->getStatusCode());
-		// if ($this->isHttpException($exception))
-	    // {
-	    //     if($exception instanceof NotFoundHttpException)
-	    //     {
-	    //         return response()->view('front.missing', [], 404);
-	    //     }
-	    //     return $this->renderHttpException($exception);
-	    // }
-
-		// if($exception->getStatusCode()===404)
-        // {
-		// 	return parent::render($request, $exception);
-        //     // return view('errors.404', ['user' => Auth::user()]);
-        // }
-
-        return parent::render($request, $exception);
+		// Custom whoops page
+		if ($this->isHttpException($e)) {
+			return $this->toIlluminateResponse($this->renderHttpException($e), $e);
+		} elseif ( !config('app.debug') ) {
+			return response()->view('errors.500', [], 500);
+		} else {
+			return $this->toIlluminateResponse($this->convertExceptionToResponse($e), $e);
+		}
+		// Real whoops pages
+        // return parent::render($request, $e);
     }
 
     /**

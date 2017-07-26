@@ -21,7 +21,7 @@
 		<div class="row">
 			<div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-icon" data-background-color="yellow" style="display: flex">
+                    <div class="card-header card-header-icon" data-background-color="orange" style="display: flex">
 						<div class="header-left">
 							<i class="material-icons">assignment</i>
 							<h4 class="title">Data dari semua Materi</h4>
@@ -98,7 +98,13 @@
 				<form class="" action="{{ route('a.materi.a') }}" method="post" id="form">
 					<div class="modal-body">
 	                    <div class="row">
-	                        <div class="col-md-12">
+							<div class="col-md-6">
+								<div class="form-group label-floating is-empty">
+									<label class="">Paket</label>
+									<input name="paket" type="text" class="form-control" value="1">
+								<span class="material-input"></span></div>
+	                        </div>
+	                        <div class="col-md-6">
 								<div class="form-group label-floating is-empty">
 									<label class="">No. Urut</label>
 									<input name="no_urut" type="text" class="form-control" value="">
@@ -193,10 +199,19 @@
 									<option value="{{ $k->id_kursus }}">{{ $k->kursus }} - {{ $k->waktu }} Hari</option>
 								@endforeach
 							</select>
-							<div class="img-container">
-								<img id="loading--materi_lama" class="img-loading" src="{{ asset('img/web/loading.gif') }}" alt="">
-							</div>
 						</div>
+						<div class="col-md-4">
+							<div class="form-group label-floating is-empty">
+								<label class="">Paket</label>
+								<input name="paket_lama" type="text" class="form-control" value="1">
+							<span class="material-input"></span></div>
+						</div>
+						<div class="img-container">
+							<img id="loading--materi_lama" class="img-loading" src="{{ asset('img/web/loading.gif') }}" alt="">
+						</div>
+					</div>
+					<div class="row">
+
 					</div>
 					<div class="row" style="margin-top: 15px">
 						<div class="col-md-12">
@@ -224,16 +239,22 @@
 				<form class="form" id="updateForm" action="{{ route('a.pembimbing.u') }}" method="post">
 					<div class="modal-body">
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<div class="form-group label-floating is-empty">
 									<label class="">ID Materi</label>
 									<input name="id_materi_u" type="text" class="form-control" value="" readonly>
 								<span class="material-input"></span></div>
 	                        </div>
-	                        <div class="col-md-6">
+	                        <div class="col-md-4">
 								<div class="form-group label-floating is-empty">
 									<label class="">No. Urut</label>
 									<input name="no_urut_u" type="text" class="form-control" value="">
+								<span class="material-input"></span></div>
+	                        </div>
+							<div class="col-md-4">
+								<div class="form-group label-floating is-empty">
+									<label class="">Paket</label>
+									<input name="paket_u" type="text" class="form-control" value="">
 								<span class="material-input"></span></div>
 	                        </div>
 	                    </div>
@@ -424,6 +445,7 @@
 				$('input[name="contoh_pekerjaan_u"]').val(data.contoh_pekerjaan);
 				$('input[name="yt_embed_u"]').val(data.yt_embed);
 				$('input[name="yt_id_u"]').val(data.yt_id);
+				$('input[name="paket_u"]').val(data.paket);
 				$('#updateModal').modal('show');
 				$('#modalLoading').modal('hide');
 				$('.modal').css('overflow-y', 'auto');
@@ -457,10 +479,10 @@
 					if ( form[0][1].value !== '' ) {
 						if ( form[0][2].value !== '' ) {
 							if ( form[0][3].value !== '' ) {
-								if ( form[0][5].value !== '' ) {
-									if ( form[0][6].value !== '' ) {
-										if ( form[0][7].value !== '' ) {
-											if ( form[0][8].value !== '' ) {
+								if ( form[0][6].value !== '' ) {
+									if ( form[0][7].value !== '' ) {
+										if ( form[0][8].value !== '' ) {
+											if ( form[0][9].value !== '' ) {
 												return true;
 											}
 										}
@@ -475,11 +497,13 @@
 				if ( form[0][0].value !== '' ) {
 					if ( form[0][1].value !== '' ) {
 						if ( form[0][2].value !== '' ) {
-							if ( form[0][4].value !== '' ) {
+							if ( form[0][3].value !== '' ) {
 								if ( form[0][5].value !== '' ) {
 									if ( form[0][6].value !== '' ) {
 										if ( form[0][7].value !== '' ) {
-											return true;
+											if ( form[0][8].value !== '' ) {
+												return true;
+											}
 										}
 									}
 								}
@@ -574,6 +598,7 @@
 					$('#myModal').modal('hide');
 					$('#modalLoading').modal('show');
 					var id_kursus = $('select[name="kursus"]').val();
+					var paket = $('input[name="paket"]').val()
 					var no_urut = $('input[name="no_urut"]').val();
 					var materi = $('input[name="materi"]').val();
 					var ket_materi = $('textarea[name="ket_materi"]').val();
@@ -584,6 +609,7 @@
 					var yt_id = $('input[name="yt_id"]').val();
 					var form = new FormData();
 					form.append('id_kursus', id_kursus);
+					form.append('paket', paket);
 					form.append('no_urut', no_urut);
 					form.append('materi', materi);
 					form.append('ket_materi', ket_materi);
@@ -614,6 +640,7 @@
 
 			$('#save_lama').click(function(event) {
 				var checked = [];
+				var paket = $('input[name="paket_lama"]').val();
 				$('input[name="materiCheckBox"]:checked').each(function(index, el) {
 					checked.push(el.value);
 				});
@@ -622,6 +649,7 @@
 				$('#modalLoading').modal('show');
 				axios.post('{{ route('a.materiold.a') }}', {
 					chk: checked,
+					paket: paket,
 					id_kursus: $('select[name="kursus"]').val(),
 				}).then(function(res){
 					console.log(res.data);
@@ -640,6 +668,7 @@
 					$('#modalLoading').modal('show');
 					var id = $('input[name="id_materi_u"]').val();
 					var no_urut = $('input[name="no_urut_u"]').val();
+					var paket = $('input[name="paket_u"]').val();
 					var materi = $('input[name="materi_u"]').val();
 					var ket_materi = $('textarea[name="ket_materi_u"]').val();
 					var ket_materi_adv = $('textarea[name="ket_materi_adv_u"]').val();
@@ -650,6 +679,7 @@
 					var form = new FormData();
 					form.append('id', id);
 					form.append('no_urut', no_urut);
+					form.append('paket', paket);
 					form.append('materi', materi);
 					form.append('ket_materi', ket_materi);
 					form.append('ket_materi_adv', ket_materi_adv);

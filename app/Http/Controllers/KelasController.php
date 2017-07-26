@@ -136,17 +136,20 @@ class KelasController extends Controller
 
 	public function postTugas(Request $request)
 	{
-
 		$this->validate($request, [
 			'id' => 'required',
 			'id_detail_tugas' => 'required|integer',
-			'link_jawaban' => 'bail|required|url|active_url'
+			'link_jawaban' => 'required|url|active_url'
+		], [
+			'link_jawaban.url' => 'Link jawaban harus dalam bentuk url yang bisa di download',
+			'link_jawaban.required' => 'Link jawaban tidak boleh kosong',
+			'link_jawaban.active_url' => 'Link jawaban tidak boleh sembarangan',
 		]);
 
 		DetailTugas::where('id_detail_tugas', $request->id_detail_tugas)
 					->update([
 						'jawaban' => $request->link_jawaban,
-						'flag' => 1 	,
+						'flag' => 1,
 					]);
 
 		return back();

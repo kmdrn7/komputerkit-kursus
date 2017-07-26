@@ -1,5 +1,13 @@
 @extends('user.layouts.app')
 
+@php
+	$perpanjangan = count($detail_kursus);
+@endphp
+
+@section('title')
+	Checkout
+@endsection
+
 @section('content')
 	<div class="chk-wrapper">
 		{{-- Floating Image --}}
@@ -15,9 +23,17 @@
 				<div class="row">
 					<div class="col s12 m8 l6 offset-m2 offset-l3">
 						<div class="card-panel white z-depth-3">
-							<h4 style="font-weight: 300" class="center-align">Detail Pembelian Kursus</h4>
+							@if ( $perpanjangan > 0 )
+								<h4 style="font-weight: 300" class="center-align">Detail Perpanjangan Kursus</h4>
+							@else
+								<h4 style="font-weight: 300" class="center-align">Detail Pembelian Kursus</h4>
+							@endif
 							<p class="chc-mini-detail">
-								Detail tentang kursus tidak dapat diubah. Tapi kamu bisa mengubah berapa lama kursus yang akan diambil.
+								@if ( $perpanjangan  > 0 )
+									Detail tentang kursus tidak dapat diubah.
+								@else
+									Detail tentang kursus tidak dapat diubah. Tapi kamu bisa mengubah berapa lama kursus yang akan diambil.
+								@endif
 							</p>
 							<form class="" style="" method="POST" action="{{ url('kursus/checkout/'. $kursus->slug) }}">
 								{{ csrf_field() }}
@@ -40,14 +56,25 @@
 								</div>
 								<div class="row">
 									<div class="col s12">
-										<label for="radio">Lama Kursus (Pilih sesuai dengan keinginan)</label>
+										@if ( $perpanjangan > 0 )
+											<label for="radio">Lama Kursus</label>
+										@else
+											<label for="radio">Lama Kursus (Pilih sesuai dengan keinginan)</label>
+										@endif
 										<p id="radio">
-											@foreach ($kursus_lain as $kl)
-												<input class="waktu-kursus" data-link="{{ url('/kursus/checkout/'. $kl->slug) }}" name="waktu" type="radio" id="test{{$kl->id_kursus}}" {{ $kursus->waktu==$kl->waktu?'checked':'' }}/>
-												<label for="test{{$kl->id_kursus}}">
-													<a href="{{ url('/kursus/checkout/'. $kl->slug) }}" style="text-decoration: none; color: black">{{$kl->waktu}} Hari</a>
+											@if ( $perpanjangan > 0 )
+												<input class="waktu-kursus-perpanjangan" data-link="{{ url('/kursus/checkout/'. $detail_kursus->slug) }}" name="waktu" type="radio" id="test{{$detail_kursus->id_kursus}}" {{ $kursus->waktu==$detail_kursus->waktu?'checked':'' }}/>
+												<label for="test{{$detail_kursus->id_kursus}}">
+													<a href="javascript:void(0)" style="text-decoration: none; color: black">{{$detail_kursus->waktu}} Hari</a>
 												</label> <br>
-											@endforeach
+											@else
+												@foreach ($kursus_lain as $kl)
+													<input class="waktu-kursus" data-link="{{ url('/kursus/checkout/'. $kl->slug) }}" name="waktu" type="radio" id="test{{$kl->id_kursus}}" {{ $kursus->waktu==$kl->waktu?'checked':'' }}/>
+													<label for="test{{$kl->id_kursus}}">
+														<a href="{{ url('/kursus/checkout/'. $kl->slug) }}" style="text-decoration: none; color: black">{{$kl->waktu}} Hari</a>
+													</label> <br>
+												@endforeach
+											@endif
 										</p>
 									</div>
 								</div>
@@ -83,7 +110,11 @@
 									</a>
 									<button type="submit" class="waves-effect waves-light btn-custom-revert right" style="margin-left: 0;">
 										<i class="fa fa-send"></i> &nbsp;
-										Konfirmasi Beli
+										@if ( $perpanjangan > 0 )
+											Perpanjang Kursus
+										@else
+											Beli Kursus
+										@endif
 									</button>
 								</div>
 							</form>

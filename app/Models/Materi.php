@@ -19,6 +19,7 @@ class Materi extends Model
 		'target_kursus',
 		'contoh_pekerjaan',
 		'yt_embed',
-		'yt_id'
+		'yt_id',
+		'paket',
 	];
 }

@@ -7,6 +7,7 @@ use View;
 use Response;
 use Carbon\Carbon;
 use App\Models\Expert;
+use App\BaseGenerator as BG;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -27,7 +28,7 @@ class ExpertController extends Controller
     public function index()
     {
 		$data['active'] = 'expert';
-		$data['keahlian'] = Expert::all();		
+		$data['keahlian'] = Expert::all();
         return view('admin.expert.expert', $data);
     }
 
@@ -72,7 +73,8 @@ class ExpertController extends Controller
 			$gambar = $request->file('gambar');
 			$format = $request->gambar->getClientOriginalExtension();
 			$gambar_name = 'expert-'.Carbon::now()->timestamp.'.'.$format;
-			$gambar->move(public_path().'/img/keahlian/', $gambar_name);
+			// '../../public_html/kursus/img/kursus/'
+			$gambar->move(BG::public_path().'/img/keahlian/', $gambar_name);
 
 			Expert::create([
 				'keahlian' => $request->keahlian,
@@ -132,14 +134,14 @@ class ExpertController extends Controller
 
 			$gambar_lama = $request->gambar_lama;
 
-			if ( file_exists(public_path() . '/img/keahlian/' . $gambar_lama) ) {
-				unlink(public_path() . '/img/keahlian/' . $gambar_lama);
+			if ( file_exists(BG::public_path() . '/img/keahlian/' . $gambar_lama) ) {
+				unlink(BG::public_path() . '/img/keahlian/' . $gambar_lama);
 			}
 
 			$gambar = $request->file('gambar');
 			$format = $request->gambar->getClientOriginalExtension();
 			$gambar_name = 'expert-'.Carbon::now()->timestamp.'.'.$format;
-			$gambar->move(public_path().'/img/keahlian/', $gambar_name);
+			$gambar->move(BG::public_path().'/img/keahlian/', $gambar_name);
 
 			Expert::where('id_keahlian', $request->id)->update([
 				'keahlian' => $request->keahlian,
@@ -175,8 +177,8 @@ class ExpertController extends Controller
 			$gambar = Expert::where('id_keahlian', $req->id)->first();
 			$gambar_lama = $gambar->gambar;
 
-			if ( file_exists(public_path() . '/img/keahlian/' . $gambar_lama) ) {
-				unlink(public_path() . '/img/keahlian/' . $gambar_lama);
+			if ( file_exists(BG::public_path() . '/img/keahlian/' . $gambar_lama) ) {
+				unlink(BG::public_path() . '/img/keahlian/' . $gambar_lama);
 			}
 
 			Expert::destroy($req->id);

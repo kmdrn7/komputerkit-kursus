@@ -1,5 +1,9 @@
 @extends('user.layouts.app')
 
+@section('title')
+	Kelas
+@endsection
+
 @section('content')
 
 	<div class="kelas-nav valign-wrapper">
@@ -129,7 +133,7 @@
 									@php
 										$sisa = $qk->tgl_selesai->diffInDays($now);
 									@endphp
-									@if ( $sisa < 1 )
+									@if ( $sisa <= 2 )
 										<div class="leftKursusRed"></div>
 									@else
 										<div class="leftKursusGreen"></div>
@@ -143,7 +147,7 @@
 									<div class="col m12 s12">
 										@if ($qk->flag_kursus == 1)
 											@php
-												$sisa = $qk->tgl_selesai->diffInDays($now);
+												$sisa = $now->diffInDays($qk->tgl_selesai);
 											@endphp
 											@if ( $sisa <= 2 && $sisa > 0 )
 												<div class="kelas-card-bot-container" style="display:flex; flex-direction: row">
@@ -154,7 +158,7 @@
 														<a href="{{ url('/kelas/kursus/'. $qk->id_kursus .'--'. $qk->id_detail_kursus . '/materi') }}" class="waves-effect waves btn-flat-custom btn-blue">Lihat Kursus</a>
 													</div>
 												</div>
-											@elseif ( $sisa <= 0 )
+											@elseif ( $sisa <= 2 )
 												<div class="kelas-card-bot-container" style="display:flex; flex-direction: row">
 													<div class="kbc-l" style="flex=1">
 														<span class="" style="margin-top: 7px; font-weight: 300;">Lakukan perpanjangan untuk melanjutkan kursus ini.</span>

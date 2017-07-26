@@ -1,5 +1,9 @@
 @extends('user.layouts.app')
 
+@section('title')
+	Tugas
+@endsection
+
 @section('content')
 
 	<div class="kelas--nav valign-wrapper">
@@ -34,6 +38,26 @@
 	</div>
 
 	<div class="container" style="max-width: 860px!important; min-height: calc(100vh - 85px); margin-bottom: 40px">
+		@if ( $kursus->tgl_selesai->diffInDays(\Carbon\Carbon::now()) <= 5 )
+			<div class="row">
+				<div class="col s12">
+					<div class="card-panel">
+						<h4 class="no-margin-top center-align" style="font-weight: 400">Informasi</h4>
+						<div class="row">
+							<div class="col m12 s12">
+								<p class="center-align">
+									Segera lakukan perpanjangan kursus anda untuk bisa melanjutkan materi dan tugas yang anda dapatkan.
+									Data kursus anda tidak akan hilang, namun ketika waktu kursus berakhir anda tidak bisa membuka kursus anda.
+								</p>
+							</div>
+							<div class="col m12 s12 center-align">
+								<a href="{{ url('/kursus/checkout/'. $kursus->slug) }}" class="waves-effect waves btn-flat-custom btn-red">Perpanjang Kursus</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		@endif
 		<div class="row" style="display:flex">
 			<div class="col s12 m9 l9">
 				<div class="row">
@@ -62,23 +86,28 @@
 											Nilai anda : {{ $t->nilai_siswa }}/{{ $t->nilai_patokan }}
 										</div>
 										<div class="tugas-jawaban-benar">
-											Klik <a href="{{ $t->jawaban_benar }}">disini</a> untuk melihat jawaban yang sesuai
+											Klik <a href="{{ $t->jawaban_benar }}" target="_blank">disini</a> untuk melihat jawaban yang sesuai
 										</div>
 									@elseif ( $t->jawaban )
 										Tunggu jawaban di koreksi oleh pembimbing
 									@else
 										<span>
-											Upload file anda menggunakan fasilitas google drive dalam bentuk archieve .zip, kemudian salin link berbagi file di bawah ini.
+											Upload file anda menggunakan fasilitas google drive dalam bentuk archive .zip, kemudian salin link berbagi file di bawah ini.
 											Klik <a href="http://youtube.com" target="_blank">disini</a> untuk tutorial upload jawaban anda.
 										</span>
-										<form action="{{ route('kelas.tugas.post') }}" method="POST">
+										<form action="{{ url('kelas/kursus/tugas/upload_jawaban/'. $t->id_detail_tugas) }}" method="POST">
 											<div class="input-field">
-												<div class="form-group">
+												<div class="form-group" style="padding-bottom: 10px">
 													{{ csrf_field() }}
 													<input type="hidden" name="id" value="{{ $id }}">
 													<input type="hidden" name="id_detail_tugas" value="{{ $t->id_detail_tugas }}">
 													<label class="control-label" for="">Link Jawaban</label>
-													<input type="text" class="form-control" name="link_jawaban" id="" placeholder="http://drive.google.com/....">
+													<input type="text" class="form-control" name="link_jawaban" id="" placeholder="http://drive.google.com/...." style="margin-bottom: 5px">
+													<span class="help-block red-text">
+														@foreach ($errors->all() as $error)
+															{{ $error }} <br>
+														@endforeach
+													</span>
 												</div>
 											</div>
 

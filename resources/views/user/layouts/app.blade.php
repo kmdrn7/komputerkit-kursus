@@ -8,13 +8,13 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Kursus - KomputerKit.com</title>
+    <title>@yield('title') - Kursus KomputerKit</title>
 
     <!-- Styles -->
 	<link href="https://fonts.googleapis.com/css?family=Spectral:200,300,400,500,600,700,800" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
-    <link href="{{ asset('css/app.css?v=1.0') }}" rel="stylesheet">
-	<link href="{{ asset('css/main-app.css?v=1.0') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css?v='. rand(0,999)) }}" rel="stylesheet">
+	<link href="{{ asset('css/main-app.css?v=1.1.0') }}" rel="stylesheet">
 	<script src="https://use.fontawesome.com/d8b86d541f.js"></script>
 	@yield('custom--css')
 </head>
@@ -53,12 +53,18 @@
 				<a href="#" data-activates="slide-out" class="button-collapse button-nav-left">
 					<i class="material-icons left white-text" style="font-size: 40px;">menu</i>
 				</a>
-				<a href="{{ url('/') }}" class="button-nav left ">
+				<a href="{{ url('/') }}" class="button-nav left hide-on-small-only">
 					{{-- <strong>KomputerKit</strong><small>.com</small> --}}
 					Beranda
 				</a>
-				<a href="{{ url('/kelas') }}" class="button-nav left hide-on-small-only">
+				<a href="{{ url('/kelas') }}" class="button-nav left hide-on-med-and-down">
 					Masuk Kelas
+				</a>
+				<a href="{{ url('/kursus/all') }}" class="button-nav left hide-on-small-only">
+					Kursus
+				</a>
+				<a href="{{ url('/kursus/free/all') }}" class="button-nav left hide-on-med-and-down">
+					Tutorial
 				</a>
 				{{-- <a href="{{ url('kursus/free/all') }}" class="button-nav left">
 					Tutorial
@@ -67,7 +73,10 @@
 					Kursus
 				</a> --}}
 				{{-- <a class='right button-collapse button-main-header hide-on-small-only' href='#' data-activates='slide-out'> --}}
-				<a class='right button-main-header hide-on-small-only' href='javascript:void(0)'>
+				<a class='right button-main-header hide-on-small-only' href='{{ url('/user/logout') }}' style="margin-left: 10px">
+					Logout
+				</a>
+				<a class='right button-main-header bmh-clickable hide-on-small-only' href='javascript:void(0)'>
 					{{ Auth::user()->name }}
 				</a>
 			</div>
@@ -108,7 +117,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('js/main_app.js') }}"></script>
 	<script type="text/javascript">
-		$('.button-main-header').click(function(event) {
+		$('.bmh-clickable').click(function(event) {
 			$('.button-collapse').sideNav('show');
 		});
 	</script>

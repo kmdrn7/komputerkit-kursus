@@ -39,6 +39,12 @@ class User extends Authenticatable
 		'remember_token',
     ];
 
+	protected $dates = [
+		'created_at',
+		'updated_at',
+		'session_time',
+	];
+
 	public function detailkursus()
 	{
 		return $this->hasMany('App\Models\QDetailKursus', 'id_user');

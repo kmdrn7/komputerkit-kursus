@@ -3,6 +3,10 @@
 	$name = explode(" ", $user->name);
 @endphp
 
+@section('title')
+	Histori
+@endsection
+
 @extends('user/layouts/app')
 
 @section('content')
@@ -63,7 +67,7 @@
 				<div class="card-panel white" style="overflow-x: scroll">
 					<div class="row rw-his-top no-margin-top no-margin-bottom" style="margin-bottom: 20px">
 						<div class="col m12">
-							<span>Data Kursus</span>
+							<span>Data Histori Pembelian</span>
 						</div>
 					</div>
 
@@ -154,11 +158,11 @@
 				</div>
 				<div class="row no-margin-top no-margin-bottom">
 					<div class="col m6">
-						<label for="waktu">Waktu</label>
+						<label for="waktu">Waktu (Hari)</label>
 						<input id="waktu" type="text" name="waktu" readonly>
 					</div>
 					<div class="col m6">
-						<label for="harga">Harga Bayar</label>
+						<label for="harga">Harga Bayar (Rp)</label>
 						<input id="harga" type="text" name="harga" readonly>
 					</div>
 				</div>
@@ -172,7 +176,7 @@
 						<input id="tgl_selesai" type="text" name="tgl_selesai" readonly>
 					</div>
 				</div>
-				<div class="row no-margin-bottom">
+				<div class="row no-margin-bottom" style="margin-top: 10px;">
 					<div class="col m12 center-align">
 						<a id="link-kelas" href="" class="btn btn-large" style="display: block">Masuk ke kelas</a>
 					</div>

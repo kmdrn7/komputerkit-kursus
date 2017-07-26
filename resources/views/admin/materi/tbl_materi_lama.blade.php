@@ -10,6 +10,7 @@
 				</div>
 			</th>
 			<th class="text-center" width="60px">No.</th>
+			<th class="text-center">Paket</th>
 			<th class="text-center">Materi</th>
 		</tr>
 	</thead>
@@ -23,6 +24,7 @@
 						</label>
 					</div>
 				</td>
+				<td class="text-center">{{ $m->paket }}</td>
 				<td class="text-center">{{ $m->no_urut }}</td>
 				<td>{{ $m->materi }}</td>
 			</tr>

@@ -1,5 +1,9 @@
 @extends('user.layouts.app')
 
+@section('title')
+	Diskusi
+@endsection
+
 @section('content')
 	<div id="app">
 		<div class="kelas--nav valign-wrapper">
@@ -34,6 +38,29 @@
 		</div>
 
 		<div class="container" style="max-width: 600px!important; min-height: calc(100vh - 85px); margin-bottom: 40px">
+			@php
+				$sisa = $kursus->tgl_selesai->diffInDays(\Carbon\Carbon::now());				
+			@endphp
+			@if ( $sisa <= 5 )
+				<div class="row">
+					<div class="col s12">
+						<div class="card-panel">
+							<h4 class="no-margin-top center-align" style="font-weight: 400">Informasi</h4>
+							<div class="row">
+								<div class="col m12 s12">
+									<p class="center-align">
+										Segera lakukan perpanjangan kursus anda untuk bisa melanjutkan materi dan tugas yang anda dapatkan.
+										Data kursus anda tidak akan hilang, namun ketika waktu kursus berakhir anda tidak bisa membuka kursus anda. {{  $sisa }}
+									</p>
+								</div>
+								<div class="col m12 s12 center-align">
+									<a href="{{ url('/kursus/checkout/'. $kursus->slug) }}" class="waves-effect waves btn-flat-custom btn-red">Perpanjang Kursus</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			@endif
 			<div class="row no-margin-bottom">
 				<div class="col s12 m12">
 					<div class="card-panel white">

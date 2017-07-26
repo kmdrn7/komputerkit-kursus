@@ -22,8 +22,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(Request $request)
+    {		
 		$data['kursus_total'] = DB::table('tbl_kursus')->count();
 		$data['kursus'] = Kursus::inRandomOrder()->take(3)->get();
 		$data['kursus_anda'] = QDetailKursus::where(['id_user'=> Auth::id(), 'flag_kursus' => 1,])->get();
@@ -32,7 +32,7 @@ class HomeController extends Controller
 													$query->where('flag_kursus', 0)
 														->orWhere('flag_kursus', 2);
 												})->orderBy('flag_kursus', 'asc')->get();
-		$data['promosi'] = Promosi::first();
+		$data['promosi'] = Promosi::where('flag', 1)->first();
         return view('user.home', $data);
     }
 

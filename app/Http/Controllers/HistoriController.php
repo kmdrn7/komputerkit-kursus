@@ -7,7 +7,7 @@ use View;
 use Response;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Models\QDetailKursus;
+use App\Models\QDetailBayar;
 use Illuminate\Support\Facades\Auth;
 
 class HistoriController extends Controller
@@ -17,7 +17,7 @@ class HistoriController extends Controller
     {
 		$id_user = Auth::id();
 		$data['now'] = Carbon::now();
-		$data['histori'] = QDetailKursus::where('id_user', $id_user)->get();
+		$data['histori'] = QDetailBayar::where('id_user', $id_user)->get();
         return view('user.histori.histori', $data);
     }
 
@@ -28,7 +28,7 @@ class HistoriController extends Controller
 
 			if ( count($request->all()) >= 2 ) {
 
-				$histori = DB::table('q_detail_kursus')
+				$histori = DB::table('q_detail_bayar')
 								->where('id_user', Auth::id())
 								->whereBetween('created_at', [$request->tgl_dari, $request->tgl_sampai])
 								->get();
@@ -36,7 +36,7 @@ class HistoriController extends Controller
 				$data['histori'] = $histori;
 				return Response::json(View::make('user/histori/tbl_histori', $data)->render());
 			} else {
-				$histori = DB::table('q_detail_kursus')
+				$histori = DB::table('q_detail_bayar')
 								->where('id_user', Auth::id())
 								->get();
 				$data['histori'] = $histori;
@@ -49,7 +49,7 @@ class HistoriController extends Controller
 	{
 		if ( $this->isJsonRequest($req) ) {
 
-			return response(DB::table('q_detail_kursus')->where('id_detail_kursus', $id)->get());
+			return response(DB::table('q_detail_bayar')->where('id_detail_kursus', $id)->get());
         }
 	}
 

@@ -93,6 +93,7 @@ class MateriController extends Controller
 			'contoh_pekerjaan' => 'required',
 			'yt_embed' => 'required',
 			'yt_id' => 'required',
+			'paket' => 'required',
 		]);
 
 		Materi::create([
@@ -105,6 +106,7 @@ class MateriController extends Controller
 			'contoh_pekerjaan' => $request->contoh_pekerjaan,
 			'yt_embed' => $request->yt_embed,
 			'yt_id' => $request->yt_id,
+			'paket' => $request->paket,
 		]);
 
 		return response(['status' => 'Data berhasil masuk']);
@@ -115,6 +117,7 @@ class MateriController extends Controller
 	{
 		$checked = $request->chk;
 		$id = $request->id_kursus;
+		$paket = $request->paket;
 
 		if ( count($checked) > 0 ) {
 
@@ -131,6 +134,7 @@ class MateriController extends Controller
 					'contoh_pekerjaan' => $m->contoh_pekerjaan,
 					'yt_embed' => $m->yt_embed,
 					'yt_id' => $m->yt_id,
+					'paket' => $paket,
 				]);
 			}
 
@@ -182,6 +186,7 @@ class MateriController extends Controller
 			'contoh_pekerjaan' => 'required',
 			'yt_embed' => 'required',
 			'yt_id' => 'required',
+			'paket' => 'required',
 		]);
 
 		Materi::where('id_materi', $request->id)->update([
@@ -193,6 +198,7 @@ class MateriController extends Controller
 			'contoh_pekerjaan' => $request->contoh_pekerjaan,
 			'yt_embed' => $request->yt_embed,
 			'yt_id' => $request->yt_id,
+			'paket' => $request->paket,
 		]);
 
 		return response(['status' => 'Data berhasil diubah']);

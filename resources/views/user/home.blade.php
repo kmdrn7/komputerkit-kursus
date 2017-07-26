@@ -2,6 +2,10 @@
 	$nownow = \Carbon\Carbon::now();
 @endphp
 
+@section('title')
+	Home
+@endsection
+
 @extends('user.layouts.app')
 
 @section('custom--css')

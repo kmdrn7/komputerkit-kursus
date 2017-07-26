@@ -13,15 +13,17 @@
 /* ======================
 	LOGIN
 ========================= */
+html {
+	background-color: #F0F0F0;
+	/*background-image: url('/img/web/login/bg.png');*/
+	background-position: bottom;
+	background-repeat: no-repeat;
+	min-height: 100vh;
+}
 .login-container {
-	background-image: url('/img/web/login/bg.png');
-	background-size: cover;
-	background-position: center;
-	height: 100vh;
-	width: 100%;
-	/*padding: 50px;*/
-	display: flex;
-	overflow-y: scroll;
+	margin: auto;
+	margin-top: 40px;
+	max-width: 395px!important;
 }
 .success-panel {
 
@@ -32,38 +34,6 @@
 	position: relative;
 	/*overflow: scroll;*/
 }
-.llc,
-.lrc {
-	height: 100%;
-}
-.llc {
-	flex: 2;
-}
-.lrc {
-	flex: 1;
-	margin: auto;
-	max-width: 450px;
-}
-	.llc-c {
-		/*width: 100%;*/
-		margin: auto;
-		border-radius: 20px;
-	}
-	.llc-c img,
-	.llc-c span {
-		display: block;
-		margin: auto;
-		text-align: center;
-	}
-	.llc-c span {
-		line-height: 45px;
-		margin-top: 20px;
-		font-weight: 900;
-		font-size: 30px;
-	}
-	.llc-c span span {
-		font-size: 55px;
-	}
 .tab-col {
 	padding: 20px!important;
 	overflow-y: auto;
@@ -72,11 +42,30 @@
 	TABS
 ========================*/
 .tabs .tab a:hover, .tabs .tab a.active {
-	color: ;
+	color: rgb(50,50,50);
+}
+.tabs .indicator {
+	background-color: rgb(50,50,50)!important;
+	display: none!important;
+}
+.tabs .tab a {
+	color: black;
+}
+.tabs .tab a.active {
+	background-color: rgb(73,73,73);
+	color: whitesmoke;
+	transition: background-color .2s ease;
 }
 /* =====================
 	MODAL
 ====================== */
 .modal-content {
 	padding-bottom: 5px!important;
+}
+/* ====================
+	SCROLL BAR
+======================= */
+::-webkit-scrollbar {
+  /* This is the magic bit */
+  display: none;
 }

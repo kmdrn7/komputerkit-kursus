@@ -27,7 +27,15 @@ class AdminLoginController extends Controller
 		// Validasi form inputan data
 		$this->validate($request, [
 			'email' => 'required|email',
-			'password'=> 'required|min:6'
+			'password'=> 'required|min:6',
+			'g-recaptcha-response' => 'required|min:100'
+		], [
+			'email.required' => 'Email harus diisi untuk login',
+			'email.email' => 'Masukkan email yang valid',
+			'password.min' => 'Password harus berisi paling tidak :min karakter',
+			'password.required' => 'Password harus diisi untuk login',
+			'g-recaptcha-response.required' => 'Konfirmasikan bahwa anda bukan robot',
+			'g-recaptcha-response.min' => 'Tolong ulangi lagi',
 		]);
 
 		// Attempt to log the user in
@@ -37,13 +45,13 @@ class AdminLoginController extends Controller
 			return redirect()->intended(route('admin.dashboard'));
 		}
 
-		return redirect()->back()->withInput($request->only('email', 'remember'));
+		return redirect()->back()->withInput($request->only('email', 'remember'))->with('errLog', 'Kami tidak bisa menemukan user yang anda gunakan');
 	}
 
 	public function adminLogout()
 	{
 		Auth::guard('admin')->logout();
 
-		return redirect('/admin');
+		return redirect('/admin/login');
 	}
 }

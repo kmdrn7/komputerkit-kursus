@@ -1,5 +1,9 @@
 @extends('user.layouts.app')
 
+@section('title')
+	Tutorial
+@endsection
+
 @section('content')
 	<div class="list-container">
 

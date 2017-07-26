@@ -6,8 +6,9 @@ use DB;
 use Auth;
 use View;
 use App;
-// use Request;
 use Response;
+use Carbon\Carbon;
+use App\Models\Bayar;
 use App\Models\Materi;
 use App\Models\Kursus;
 use App\Models\Kategori;
@@ -76,15 +77,17 @@ class KursusController extends Controller
 			return view('user.kursus.list', $data);
 		}
 
-		// Lihat detail kursus
+		// Lihat detail dari kursus
 		if ( $this->isExists($id) ) {
 
 			if ( $id == 'all' ) {
 				$data['kursus'] = Kursus::all();
 			} else {
 				$idKursus = explode('--', $id)[1];
+				$data['now'] = Carbon::now();
 				$data['kursus'] = Kursus::where('slug', $id)->first();
 				$data['materi'] = Materi::where('id_kursus', $idKursus)->get();
+				$data['detail_kursus'] = QDetailKursus::where('id_user', Auth::id())->where('id_kursus', $idKursus)->first();
 			}
 
 			return view('user.kursus.detail', $data);
@@ -191,6 +194,7 @@ class KursusController extends Controller
 			$data['bank'] = DB::table('tbl_bank')->get();
 			$data['kursus'] = $kursus;
 			$data['kursus_lain'] = Kursus::where('kursus', 'like', '%'.$kursus->kursus.'%')->get();
+			$data['detail_kursus'] = QDetailKursus::where('id_user', Auth::id())->where('slug', $id)->first();
 			return view('user.kursus.checkout', $data);
 		}
 
@@ -202,14 +206,51 @@ class KursusController extends Controller
 
 		if ( $this->isExists($id) ) {
 
-			DetailKursus::create([
-				'id_kursus' => $request->id_kursus,
-				'id_user' => Auth::guard()->user()->id_user,
-				'bayar' => $request->bayar,
-				'flag_kursus' => 0,
+			$this->validate($request, [
+				'id_kursus' => 'required',
+				'nama_kursus' => 'required',
+				'price' => 'required',
+				'waktu' => 'required',
+				'bayar' => 'required',
+			], [
+				'id_kursus.required' =>  'ID Kursus harus diisi',
+				'nama_kursus.required' => 'Nama kursus harus diisi',
+				'price.required' => 'Harga kursus harus diisi',
+				'waktu.required' => 'Waktu harus diisi',
+				'bayar.required' => 'Harga bayar harus terisi',
 			]);
 
-			return redirect('/histori');
+			$id_user = Auth::guard()->user()->id_user;
+			$detail_kursus = QDetailKursus::where('id_user', $id_user)->where('slug', $id)->first();
+
+			if ( count($detail_kursus) > 0 ) {
+
+				Bayar::create([
+					'id_user' => $id_user,
+					'id_detail_kursus' => $detail_kursus->id_detail_kursus,
+					'ket_bayar' => 'perpanjangan',
+					'status' => 0,
+				]);
+
+				return redirect('/histori');
+
+			} else {
+
+				$detail = DetailKursus::create([
+					'id_kursus' => $request->id_kursus,
+					'id_user' => $id_user,
+					'bayar' => $request->bayar,
+					'flag_kursus' => 0,
+				])->id_detail_kursus;
+
+				Bayar::create([
+					'id_user' => $id_user,
+					'id_detail_kursus' => $detail,
+					'ket_bayar' => 'beli',
+				]);
+
+				return redirect('/histori');
+			}
 		}
 
 		return redirect('/me');

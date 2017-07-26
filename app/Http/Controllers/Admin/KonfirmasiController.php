@@ -20,11 +20,7 @@ class KonfirmasiController extends Controller
 	{
 		$this->request = $request;
 	}
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
 		$data['active'] = 'konf_bayar';
@@ -43,47 +39,16 @@ class KonfirmasiController extends Controller
 		}
 	}
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
 
-		// $this->validate($request, [
-		// 	'nama_bank' => 'required',
-		// 	'atas_nama' => 'required',
-		// 	'no_rekening' => 'required',
-		// ]);
-		//
-		// Bank::create([
-		// 	'nama_bank' => $request->nama_bank,
-		// 	'atas_nama' => $request->atas_nama,
-		// 	'no_rekening' => $request->no_rekening,
-		// ]);
-		//
-		// return response(['status' => 'Data berhasil masuk']);
-
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $req, $id)
     {
         if ( $this->isJsonRequest($req) ) {
@@ -92,30 +57,18 @@ class KonfirmasiController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
 		$this->validate($request, [
 			'id_id' => 'required',
 			'status' => 'required',
 			'waktu' => 'required',
+			'keterangan' => 'required'
 		]);
 
 		$id_id = explode('/', $request->id_id);
@@ -124,53 +77,68 @@ class KonfirmasiController extends Controller
 		$id_bayar = $id_id[2];
 		$id_user = $id_id[3];
 
-		$materi_detail = [];
-		$materi_collection = DB::table('tbl_materi')->select('id_materi')
-								->where('id_kursus', $id_kursus)->get();
-		foreach ($materi_collection as $mk) {
-			$materi_detail[] = [
-				'id_detail_kursus' => $id_detail_kursus,
-				'id_user' => $id_user,
-				'id_materi' => $mk->id_materi,
-				'flag_materi' => 0,
-				'flag_terbaru' => 0,
-			];
+		// Jika bukan beli, perpanjangan kursus
+		if ( $request->keterangan != 'beli' ) {
+			DB::table('tbl_bayar')->where('id_bayar', $id_bayar)->update([
+				'status' => 1,
+			]);
+
+			$tgl_selesai = QDetailBayar::find($id_bayar)->tgl_selesai->addDays($request->waktu);
+
+			DB::table('tbl_detail_kursus')->where('id_detail_kursus', $id_detail_kursus)->update([
+				'flag_kursus' => 1,
+				'tgl_selesai' => $tgl_selesai,
+			]);
+
+			return response(['status' => 'Pembayaran berhasil di konfirmasi']);
+
+		// Jika beli kursus baru
+		} else {
+
+			$materi_detail = [];
+			$materi_collection = DB::table('tbl_materi')->select('id_materi')
+									->where('id_kursus', $id_kursus)
+									->where('paket', 1)->get();
+			foreach ($materi_collection as $mk) {
+				$materi_detail[] = [
+					'id_detail_kursus' => $id_detail_kursus,
+					'id_user' => $id_user,
+					'id_materi' => $mk->id_materi,
+					'flag_materi' => 0,
+					'flag_terbaru' => 0,
+				];
+			}
+
+			$tugas_detail = [];
+			$tugas_collection = DB::table('tbl_tugas')->select('id_tugas')
+									->where('id_kursus', $id_kursus)
+									->where('paket', 1)->get();
+			foreach ($tugas_collection as $tk) {
+				$tugas_detail[] = [
+					'id_detail_kursus' => $id_detail_kursus,
+					'id_user' => $id_user,
+					'id_tugas' => $tk->id_tugas,
+					'nilai_siswa' => 0,
+					'flag' => 0
+				];
+			}
+
+			DB::table('tbl_detail_materi')->insert($materi_detail);
+			DB::table('tbl_detail_tugas')->insert($tugas_detail);
+
+			DB::table('tbl_bayar')->where('id_bayar', $id_bayar)->update([
+				'status' => 1,
+			]);
+			DB::table('tbl_detail_kursus')->where('id_detail_kursus', $id_detail_kursus)->update([
+				'flag_kursus' => 1,
+				'tgl_mulai' => Carbon::now(),
+				'tgl_selesai' => Carbon::now()->addDays($request->waktu),
+			]);
+
+			return response(['status' => 'Pembayaran berhasil di konfirmasi']);
 		}
-
-		$tugas_detail = [];
-		$tugas_collection = DB::table('tbl_tugas')->select('id_tugas')
-								->where('id_kursus', $id_kursus)->get();
-		foreach ($tugas_collection as $tk) {
-			$tugas_detail[] = [
-				'id_detail_kursus' => $id_detail_kursus,
-				'id_user' => $id_user,
-				'id_tugas' => $tk->id_tugas,
-				'nilai_siswa' => 0,
-				'flag' => 0
-			];
-		}
-
-		DB::table('tbl_detail_materi')->insert($materi_detail);
-		DB::table('tbl_detail_tugas')->insert($tugas_detail);
-
-		DB::table('tbl_bayar')->where('id_bayar', $id_bayar)->update([
-			'status' => 1,
-		]);
-		DB::table('tbl_detail_kursus')->where('id_detail_kursus', $id_detail_kursus)->update([
-			'flag_kursus' => 1,
-			'tgl_mulai' => Carbon::now(),
-			'tgl_selesai' => Carbon::now()->addDays($request->waktu),
-		]);
-
-		return response(['status' => 'Pembayaran berhasil di konfirmasi']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $req)
     {
         if ( $this->isJsonRequest($req) ) {

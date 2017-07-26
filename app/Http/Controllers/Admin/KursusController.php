@@ -8,6 +8,7 @@ use Response;
 use Carbon\Carbon;
 use App\Models\Kursus;
 use App\Models\Kategori;
+use App\BaseGenerator as BG;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -77,12 +78,17 @@ class KursusController extends Controller
 
 		if ( $request->hasFile('gambar') ) {
 
+			if ( DB::table('tbl_kursus')->count() >= 1 ) {
+				$id_kursus = Kursus::orderBy('id_kursus', 'desc')->take(1)->get()->first()->id_kursus;
+				$id = str_pad(substr($id_kursus, 2, strlen($id_kursus)) + 1, 3, '0', STR_PAD_LEFT);
+			} else {
+				$id = str_pad(1, 3, '0', STR_PAD_LEFT);
+			}
+
 			$gambar = $request->file('gambar');
 			$format = $request->gambar->getClientOriginalExtension();
 			$gambar_name = Carbon::now()->timestamp.'.'.$format;
-			$gambar->move(public_path().'/img/kursus/', $gambar_name);
-
-			$id = str_pad(substr(Kursus::orderBy('id_kursus', 'desc')->take(1)->get()->first()->id_kursus, 2, strlen(Kursus::orderBy('id_kursus', 'desc')->take(1)->get()->first()->id_kursus))+1, 3, '0', STR_PAD_LEFT);
+			$gambar->move(BG::public_path().'/img/kursus/', $gambar_name);
 			$data['id'] = $id;
 
 			Kursus::create([
@@ -155,12 +161,14 @@ class KursusController extends Controller
 		if ( $request->hasFile('gambar') ) {
 
 			$gambar_lama = $request->gambar_lama;
-			unlink(public_path() . '/img/kursus/' . $gambar_lama);
+			if ( file_exists(BG::public_path() . '/img/kursus/' . $gambar_lama) ) {
+				unlink(BG::public_path() . '/img/kursus/' . $gambar_lama);
+			}
 
 			$gambar = $request->file('gambar');
 			$format = $request->gambar->getClientOriginalExtension();
 			$gambar_name = Carbon::now()->timestamp.'.'.$format;
-			$gambar->move(public_path().'/img/kursus/', $gambar_name);
+			$gambar->move(BG::public_path().'/img/kursus/', $gambar_name);
 
 			Kursus::where('id_kursus', $request->id)->update([
 				'slug' => str_slug($request->kursus, '-').'--'.$request->id,
@@ -210,8 +218,8 @@ class KursusController extends Controller
 			$gambar = Kursus::where('id_kursus', $req->id)->first();
 			$gambar_lama = $gambar->gambar;
 
-			if ( file_exists(public_path() . '/img/kursus/' . $gambar_lama) ) {
-				unlink(public_path() . '/img/kursus/' . $gambar_lama);
+			if ( file_exists(BG::public_path() . '/img/kursus/' . $gambar_lama) ) {
+				unlink(BG::public_path() . '/img/kursus/' . $gambar_lama);
 			}
 
 			Kursus::destroy($req->id);

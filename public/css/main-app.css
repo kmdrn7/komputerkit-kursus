@@ -517,14 +517,8 @@ ul.pagination {
 	.mk-img-container img {
 		width: 600px;
 		margin-top: -130px;
-		margin-left: -250px;
+		margin-left: -245px;
 		z-index: 111;
-		/*margin-left: */
-		/*flex: 3;*/
-		/*background-image: url('/img/web/kelas/bg.png');*/
-		/*background-position: left;
-		background-size: contain;
-		background-repeat: no-repeat;*/
 	}
 	.mk-content-container {
 		flex: 5;
@@ -550,7 +544,7 @@ ul.pagination {
 				text-align: right;
 			}
 			.mkc-action {
-				margin-top: 25px;
+				margin-top: 35px;
 				text-align: right;
 			}
 				.mkc-action a {
@@ -1640,14 +1634,15 @@ ul.pagination {
 	margin-top: -20px;
 }
 .bookmark-container {
-	height: calc(100vh - 285px);
+	min-height: calc(100vh - 250px);
+	margin-bottom: 45px;
 }
 .bookmark-main-cp {
 	border-radius: 0;
 	margin-top: 120px;
 }
 .bmcpr {
-	margin-top: -100px;
+	margin-top: 30px;
 }
 .bookmark-page-header {
 	font-size: 30px;
@@ -1896,7 +1891,12 @@ ul.pagination {
 	color: rgb(51,51,51);
 	margin-bottom: 10px;
 }
-
+.progres-container {
+	display: flex;
+}
+	.prog-text {
+		padding-left: 20px;
+	}
 .kelas-kursus-detail {
 	font-size: 14px;
 	color: rgb(96,96,96);
@@ -2246,7 +2246,7 @@ ul.pagination {
 /*--------------------------*/
 .error-nav {
     height: 85px;
-    background-color: #2C3D55;
+    background-color: #343434;
 }
 .error-container {
     min-height: calc(100vh - 85px);
@@ -2258,6 +2258,13 @@ ul.pagination {
     font-weight: 300;
     font-size: 30px;
     margin-top: 0px;
+}
+.error-small a {
+	display: block!important;
+}
+.img-error {
+	max-width: 500px;
+	width: 100%;
 }
 /* ==========================
 	MEDIA SCREEN
@@ -2368,6 +2375,9 @@ ul.pagination {
 	}
 	.mkt-a {
 		font-size: 1.5em;
+	}
+	.button-nav {
+		display: none!important;
 	}
 }
 @media only screen and (max-width: 661px) {

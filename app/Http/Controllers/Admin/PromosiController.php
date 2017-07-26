@@ -6,6 +6,7 @@ use View;
 use Response;
 use Carbon\Carbon;
 use App\Models\Promosi;
+use App\BaseGenerator as BG;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -71,7 +72,7 @@ class PromosiController extends Controller
 			$gambar = $request->file('gambar');
 			$format = $request->gambar->getClientOriginalExtension();
 			$gambar_name = 'promosi-'.Carbon::now()->timestamp.'.'.$format;
-			$gambar->move(public_path().'/img/promosi/', $gambar_name);
+			$gambar->move(BG::public_path() . '/img/promosi/', $gambar_name);
 
 			Promosi::create([
 				'promosi' => $request->promosi,
@@ -132,18 +133,21 @@ class PromosiController extends Controller
 		if ( $request->hasFile('gambar') ) {
 
 			$gambar_lama = $request->gambar_lama;
-			unlink(public_path() . '/img/promosi/' . $gambar_lama);
+
+			if ( file_exists(BG::public_path() . '/img/promosi/' . $gambar_lama) ) {
+				unlink(BG::public_path() . '/img/promosi/' . $gambar_lama);
+			}
 
 			$gambar = $request->file('gambar');
 			$format = $request->gambar->getClientOriginalExtension();
 			$gambar_name = 'promosi-'.Carbon::now()->timestamp.'.'.$format;
-			$gambar->move(public_path().'/img/promosi/', $gambar_name);
+			$gambar->move(BG::public_path() . '/img/promosi/', $gambar_name);
 
 			Promosi::where('id_promosi', $request->id)->update([
 				'promosi' => $request->promosi,
 				'ket_promosi' => $request->ket_promosi,
 				'gambar' => $gambar_name,
-				'flag' => 1,
+				'flag' => $request->flag,
 			]);
 
 			return response(['status' => 'Data berhasil diubah beserta gambar']);
@@ -153,7 +157,7 @@ class PromosiController extends Controller
 			Promosi::where('id_promosi', $request->id)->update([
 				'promosi' => $request->promosi,
 				'ket_promosi' => $request->ket_promosi,
-				'flag' => 1,
+				'flag' => $request->flag,
 			]);
 
 			return response(['status' => 'Data berhasil diubah tanpa gambar']);
@@ -175,8 +179,8 @@ class PromosiController extends Controller
 			$gambar = Promosi::where('id_promosi', $req->id)->first();
 			$gambar_lama = $gambar->gambar;
 
-			if ( file_exists(public_path() . '/img/promosi/' . $gambar_lama) ) {
-				unlink(public_path() . '/img/promosi/' . $gambar_lama);
+			if ( file_exists(BG::public_path() . '/img/promosi/' . $gambar_lama) ) {
+				unlink(BG::public_path() . '/img/promosi/' . $gambar_lama);
 			}
 
 			Promosi::destroy($req->id);

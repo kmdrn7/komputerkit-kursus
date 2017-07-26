@@ -18,5 +18,10 @@ class DetailKursus extends Model
 		'flag_kursus',
 	];
 
+	protected $dates = [
+		'tgl_mulai',
+		'tgl_selesai',
+	];
+
 	protected $guarded = [];
 }

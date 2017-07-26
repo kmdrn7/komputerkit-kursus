@@ -1,5 +1,9 @@
 @extends('user.layouts.app')
 
+@section('title')
+	Tutorial {{ $kursus->kursus }}
+@endsection
+
 @section('custom--css')
 	<link href="https://fonts.googleapis.com/css?family=Acme|Fira+Sans:900" rel="stylesheet">
 	<link rel="stylesheet" href="{{ asset('css/slick.css') }}">
@@ -63,25 +67,12 @@
 				<div class="col m12 l7">
 					<div class="kdc-p flow-text">
 						<span class="kdcp-tentang" style="background-color: {{ $kursus->warna }}">Tentang</span>
-						@php
-						$array_p = preg_split('/(?<=[.?!;:])\s+/', $kursus->ket_kursus, -1, PREG_SPLIT_NO_EMPTY);
-						$count_p = count($array_p);
-						$p_1 = round($count_p / 2);
-						$p_2 = $count_p - 1;
-						@endphp
 						<p class="white-text">
-							@for ($i=0; $i < $p_1; $i++)
-								{{ $array_p[$i] }}
-							@endfor
-						</p>
-						<p class="white-text" style="">
-							@for ($i=$p_1; $i <= $p_2; $i++)
-								{{ $array_p[$i] }}
-							@endfor
+							{!! str_replace("\n", "<br>", $kursus->ket_kursus) !!}
 						</p>
 						<p class="kdcp-syarat" style="background-color: {{ $kursus->warna }}">Syarat Ikut Kursus</p>
 						<p class="white-text" style="margin-top: 20px;">
-							{{ $kursus->syarat }}
+							{!! str_replace("\n", "<br>", $kursus->syarat) !!}
 						</p>
 					</div>
 				</div>

@@ -1,5 +1,9 @@
 @extends('user.layouts.app')
 
+@section('title')
+	Konfirmasi Pembayaran
+@endsection
+
 @section('content')
 
 	<div class="konf-1">
@@ -23,7 +27,7 @@
 									<div class="form-group">
 										<label class="control-label" for="detail_materi">Faktur</label>
 										<input type="text" class="form-control" id="detail_materi" value="{{ $kursus->id_kursus }}/{{ $kursus->id_detail_kursus }}/{{ $kursus->slug }}/{{Auth::id()}}" disabled="">
-										<input type="hidden" name="detail_materi" value="{{ $kursus->id_kursus }}/{{ $kursus->id_detail_kursus }}/{{ $kursus->slug }}/{{Auth::id()}}" readonly="">
+										<input type="hidden" name="detail_materi" value="{{ $kursus->id_kursus }}/{{ $kursus->id_detail_kursus }}/{{ $kursus->slug }}/{{ $bayar->id_bayar }}" readonly="">
 									</div>
 								</div>
 							</div>
@@ -56,9 +60,9 @@
 									    <option value="" disabled selected>Pilih bank tujuan anda</option>
 										@foreach ($bank as $b)
 											@if ( $b->nama_bank === old('bank_tujuan') )
-												<option value="{{ $b->nama_bank }}" selected>{{ $b->nama_bank }}</option>
+												<option value="{{ $b->nama_bank }}" selected>{{ $b->nama_bank }} - {{ $b->atas_nama }} - {{ $b->no_rekening }}</option>
 											@else
-												<option value="{{ $b->nama_bank }}">{{ $b->nama_bank }}</option>
+												<option value="{{ $b->nama_bank }}">{{ $b->nama_bank }} - {{ $b->atas_nama }} - {{ $b->no_rekening }}</option>
 											@endif
 										@endforeach
 								    </select>
@@ -73,7 +77,8 @@
 							<div class="row">
 								<div class="input-field col s12">
 									<label for="tgl_bayar">Tanggal Transfer</label>
-									<input type="date" class="datepicker" id="tgl_bayar" name="tgl_bayar" value="{{ date('Y-m-d', strtotime(str_replace('/', '-', old('tgl_bayar')))) }}">
+									<input type="date" class="datepicker" id="tgl_bayar" name="tgl_bayar" value="{{ old('tbl_bayar') == '' ? date('Y-m-d') : date('Y-m-d', strtotime(str_replace('/', '-', old('tgl_bayar')))) }}">
+									<input type="hidden" name="ket_bayar" value="perpanjangan">
 									@if ($errors->has('tgl_bayar'))
 										<span class="help-block red-text">
 											<strong>{{ $errors->first('tgl_bayar') }}</strong>
@@ -102,6 +107,21 @@
 
 @section('content-js')
 	<script type="text/javascript">
-		$(document).ready(function(){$('.a-back').click(function(){setTimeout(function(){window.history.back()},1e3)}),$('.datepicker').pickadate({format:'dd/mm/yyyy',onSet:function(a){'select'in a&&this.close()}})});
+		$(document).ready(function() {
+			$('.a-back').click(function(event) {
+				setTimeout(function() {
+					window.history.back();
+				}, 1000);
+			});
+
+			$('.datepicker').pickadate({
+				format : 'yyyy-mm-dd',
+				onSet: function( arg ){
+			        if ( 'select' in arg ){ //prevent closing on selecting month/year
+			            this.close();
+			        }
+			    }
+		    });
+		});
 	</script>
 @endsection

@@ -76,7 +76,7 @@
 				<div class="modal-body">
 					<div class="flex-group" style="text-align: center; display: flex;">
 						<button id="baru" type="button" class="btn btn-success btn-lg" style="flex: 1; margin-right: 10px;">Masukkan baru</button>
-						<button id="lama" type="button" class="btn btn-warning btn-lg" style="flex: 1">Masukkan materi lama</button>
+						<button id="lama" type="button" class="btn btn-warning btn-lg" style="flex: 1">Masukkan tugas lama</button>
 					</div>
 					<br>
 					<p>

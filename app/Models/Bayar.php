@@ -10,6 +10,11 @@ class Bayar extends Model
 	protected $primaryKey = 'id_bayar';
 	public $timestamps = false;
 
+	protected $dates = [
+		'tgl_mulai',
+		'tgl_bayar',
+	];
+
 	protected $fillable = [
 		'id_user',
 		'id_detail_kursus',

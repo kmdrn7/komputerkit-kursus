@@ -9,7 +9,7 @@
             <div class="row no-margin-bottom valign-wrapper" style="height: 100%">
                 <div class="valign-container">
                     <div class="col m12 s12 l12 center-align">
-                        <img src="{{ asset('img/web/pacman.png') }}" alt="">
+                        <img class="img-error" src="{{ asset('img/web/pacman.png') }}" alt="">
                     </div>
                     <div class="col m12 s12 l12 center-align">
                         <p class="error-p">

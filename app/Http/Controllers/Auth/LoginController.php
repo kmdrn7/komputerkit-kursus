@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use DB;
 use Hash;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +48,10 @@ class LoginController extends Controller
 
 	public function userLogout()
 	{
+		User::where('id_user', Auth::id())->update([
+			'session_time' => NULL,
+		]);
+		
 		Auth::guard('web')->logout();
 
 		return redirect('/login');
@@ -65,12 +71,32 @@ class LoginController extends Controller
 		}
 
 		// dd($request);
-		$status = DB::table('tbl_user')->where(['email' => $request->email])->first();
+		$status = User::where(['email' => $request->email])->first();
 
 		if ( isset($status) ) {
 			if ( $status->status == 0 ) {
-
 				return redirect('/login')->with('aktivasi', 'Akun anda belum aktif, silahkan aktivasi melalui email yang kami kirim');
+			}
+
+			if ( isset($status->session_time) ) {
+				if ( $status->session_time != Carbon::createFromTimestamp(9999999999) ) {
+					if ( ($diff = $status->session_time->diffInMinutes(Carbon::now())) > 2  ) {
+						return redirect('/login')->with('err_login_time', $diff);
+					}
+				} else {
+					$diff = $status->session_time->diffInDays(Carbon::now());
+					return redirect('/login')->with('err_login_time', $diff);
+				}
+			} else {
+				if ( !isset($request->remember) ) {
+					User::where(['email' => $request->email])->update([
+						'session_time' => Carbon::now()->addMinutes(120),
+					]);
+				} else {
+					User::where(['email' => $request->email])->update([
+						'session_time' => Carbon::createFromTimestamp(9999999999),
+					]);
+				}
 			}
 		}
 
@@ -101,7 +127,7 @@ class LoginController extends Controller
 	protected function sendFailedLoginResponse(Request $request)
     {
         // $errors = [$this->username() => trans('auth.failed')];
-		$errors = [$this->username() => 'Identitas yang anda gunakan tidak terdaftar dalam sistem kami'];
+		$errors = ['identitas' => 'Identitas yang anda gunakan tidak terdaftar dalam sistem kami'];
 
         if ($request->expectsJson()) {
             return response()->json($errors, 422);

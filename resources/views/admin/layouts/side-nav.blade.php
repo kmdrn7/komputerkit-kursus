@@ -87,21 +87,33 @@
 	<li class="li--main-child {{ $active==='konf_bayar'?'active':'' }}">
 		<a href="{{ route('admin.konf') }}">
 			<i class="material-icons">add_shopping_cart</i>
-			<p>Konfirmasi Pembayaran</p>
+			<p>Konfirmasi Bayar</p>
 		</a>
 	</li>
 	<li class="li--main-child {{ $active==='buat_keahlian'?'active':'' }}">
 		<a href="{{ route('admin.buatk') }}">
-			<i class="material-icons">person</i>
-			<p>Buat Daftar Keahlian</p>
+			<i class="material-icons">extension</i>
+			<p>Daftar Keahlian</p>
 		</a>
 	</li>
-	{{-- <li class="li--main-child">
-		<a href="">
-			<i class="material-icons">supervisor_account</i>
-			<p>Bagi Pembimbing</p>
+	<li class="li--main-child {{ $active==='koreksi_tugas'?'active':'' }}">
+		<a href="{{ route('admin.koreksi_tugas') }}">
+			<i class="material-icons">gavel</i>
+			<p>Koreksi Tugas</p>
 		</a>
-	</li> --}}
+	</li>
+	<li class="li--main-child {{ $active==='upgrade_materi'?'active':'' }}">
+		<a href="{{ route('admin.upmateri') }}">
+			<i class="material-icons">rv_hookup</i>
+			<p>Upgrade Materi</p>
+		</a>
+	</li>
+	<li class="li--main-child {{ $active==='upgrade_tugas'?'active':'' }}">
+		<a href="{{ route('admin.uptugas') }}">
+			<i class="material-icons">rv_hookup</i>
+			<p>Upgrade Tugas</p>
+		</a>
+	</li>
 
 	{{-- LAPORAN --}}
 	<li class="li--main">

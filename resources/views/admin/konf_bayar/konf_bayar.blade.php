@@ -125,6 +125,12 @@
 									<input name="tgl_transfer_u" type="text" class="form-control" value="">
 								<span class="material-input"></span></div>
 	                        </div>
+							<div class="col-md-6">
+								<div class="form-group label-floating is-empty">
+									<label class="">Keterangan Bayar</label>
+									<input name="ket_u" type="text" class="form-control" value="">
+								<span class="material-input"></span></div>
+	                        </div>
 	                    </div>
 
 					</div>
@@ -214,7 +220,11 @@
 			axios.get('/admin/konfirmasi/show/' + idKursus).then(function (res) {
 				// Initialize res in data var
 				var data = res.data;
-				console.log(data);
+				if ( data.status == 1 ) {
+					$('#update').css('visibility', 'hidden');
+				} else {
+					$('#update').css('visibility', 'visible');
+				}
 				// Load data from ajax
 				$('#id_bayar').val(data.faktur);
 				$('input[name="nama_u"]').val(data.name);
@@ -224,6 +234,7 @@
 				$('input[name="bayar_u"]').val(data.bayar);
 				$('input[name="atas_nama_u"]').val(data.atas_nama +'/'+ data.nama_bank + '/' + data.bank_tujuan);
 				$('input[name="tgl_transfer_u"]').val(data.tgl_bayar);
+				$('input[name="ket_u"]').val(data.ket_bayar);
 				$('input[name="id_id"]').val(data.id_detail_kursus+'/'+data.id_kursus+'/'+data.id_bayar+'/'+data.id_user);
 				$('#modalLoading').modal('hide');
 				$('#updateModal').modal('show');
@@ -301,11 +312,13 @@
 					$('#modalLoading').modal('show');
 					var id_id = $('input[name="id_id"]').val();
 					var waktu = $('input[name="waktu_u"]').val();
+					var keterangan = $('input[name="ket_u"]').val();
 
 					var form = new FormData();
 					form.append('id_id', id_id);
 					form.append('waktu', waktu);
 					form.append('status', 1);
+					form.append('keterangan', keterangan);
 
 					// Send post request
 					axios.post('{{route("a.konf.u")}}', form).then(function(res){

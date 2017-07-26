@@ -189,11 +189,11 @@
 					<input type="hidden" id="id_promosi_delete" value="">
 					<table class="table table-striped">
 						<tr>
-							<td width="130px">ID Kursus</td>
+							<td width="130px">ID Promosi</td>
 							<td id="id_promosi_d"></td>
 						</tr>
 						<tr>
-							<td>Kursus</td>
+							<td>Promosi</td>
 							<td id="promosi_d"></td>
 						</tr>
 						<tr>

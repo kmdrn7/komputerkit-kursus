@@ -11,11 +11,6 @@
 |
 */
 
-Route::get('/test', [
-	'uses' => 'HomeController@test',
-	'as' => 'test'
-]);
-
 // ============ ROUTE USER ===============
 Route::get('/', function () {
     return redirect('/login');
@@ -24,18 +19,21 @@ Route::get('/', function () {
 // Login route
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
-// Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-// Registration Routes...
-// Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::get('register', function ()
-{
+
+// Register Route
+Route::get('register', function() {
 	return redirect('login')->with('activated_tab', 'register');
 })->name('register');
-Route::post('register', 'Auth\RegisterController@register');
+
+Route::post('register', [
+	'uses' => 'Auth\RegisterController@register',
+]);
+
 Route::get('/verify/{token}/{id}', [
 	'uses' => 'Auth\RegisterController@verify',
 	'as' => 'verify',
 ]);
+
 // Password Reset Routes...
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
@@ -152,7 +150,7 @@ Route::group(['middleware' => 'auth'], function ()
 			'as' => 'kelas.kursus.tugas.detail',
 		]);
 
-		Route::post('kursus/tugas/upload_jawaban', [
+		Route::post('kursus/tugas/upload_jawaban/{id_jawaban}', [
 			'uses' => 'KelasController@postTugas',
 			'as' => 'kelas.tugas.post',
 		]);
@@ -257,8 +255,14 @@ Route::group(['middleware' => 'auth'], function ()
 
 // Route::group(['middleware' => 'auth:admin'], function ()
 // {
+	Route::get('/app/main/register/device/admin_register/code/{code}', [
+		'as' => 'admin.device.register',
+		function($code){
+			return redirect('/admin/login')->cookie('device_auth', Hash::make($code));
+		},
+	]);
 	// ============ ROUTE ADMIN ===============
-	Route::group(['prefix' => '/admin'], function ()
+	Route::group(['prefix' => '/admin', 'middleware' => 'NoAdminNoEntry'], function ()
 	{
 
 		Route::get('/', function ()
@@ -620,6 +624,101 @@ Route::group(['middleware' => 'auth'], function ()
 			]);
 		});
 
+		Route::group(['prefix' => '/upgrade-materi'], function()
+		{
+			// Materi
+			Route::get('/', [
+				'uses' => 'Admin\UpgradeMateriController@index',
+				'as' => 'admin.upmateri'
+			]);
+			// Ajax Materi
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\UpgradeMateriController@ajax_fetch_all',
+				'as' => 'ajax.upmateri'
+			]);
+			Route::get('/fetch_option', [
+				'uses' => 'Admin\UpgradeMateriController@ajax_fetch_option',
+				'as' => 'ajax.upmateri.opt'
+			]);
+			// Tambah Materi
+			Route::post('/add', [
+				'uses' => 'Admin\UpgradeMateriController@store',
+				'as' => 'a.upmateri.a'
+			]);
+			// Tambah Materi Dari Materi Lama
+			Route::post('/add_old', [
+				'uses' => 'Admin\UpgradeMateriController@storeOld',
+				'as' => 'a.upmateriold.a'
+			]);
+			// Ubah Materi
+			Route::post('/update', [
+				'uses' => 'Admin\UpgradeMateriController@update',
+				'as' => 'a.upmateri.u'
+			]);
+			Route::post('/upgrade', [
+				'uses' => 'Admin\UpgradeMateriController@upgrade',
+				'as' => 'a.upgrade_m.u'
+			]);
+			// Hapus Materi
+			Route::post('/delete', [
+				'uses' => 'Admin\UpgradeMateriController@destroy',
+				'as' => 'a.upmateri.d'
+			]);
+			// Show Detail per Materi
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\UpgradeMateriController@show',
+				'as' => 'a.upmateri.s'
+			]);
+		});
+
+		Route::group(['prefix' => '/upgrade-tugas'], function()
+		{
+			Route::get('/', [
+				'uses' => 'Admin\UpgradeTugasController@index',
+				'as' => 'admin.uptugas'
+			]);
+
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\UpgradeTugasController@ajax_fetch_all',
+				'as' => 'ajax.uptugas'
+			]);
+
+			Route::get('/fetch_option', [
+				'uses' => 'Admin\UpgradeTugasController@ajax_fetch_option',
+				'as' => 'ajax.uptugas.opt'
+			]);
+
+			Route::post('/add', [
+				'uses' => 'Admin\UpgradeTugasController@store',
+				'as' => 'a.uptugas.a'
+			]);
+
+			Route::post('/add_old', [
+				'uses' => 'Admin\UpgradeTugasController@storeOld',
+				'as' => 'a.uptugasold.a'
+			]);
+
+			Route::post('/update', [
+				'uses' => 'Admin\UpgradeTugasController@update',
+				'as' => 'a.uptugas.u'
+			]);
+
+			Route::post('/upgrade', [
+				'uses' => 'Admin\UpgradeTugasController@upgrade',
+				'as' => 'a.upgrade_t.u'
+			]);
+
+			Route::post('/delete', [
+				'uses' => 'Admin\UpgradeTugasController@destroy',
+				'as' => 'a.uptugas.d'
+			]);
+
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\UpgradeTugasController@show',
+				'as' => 'a.uptugas.s'
+			]);
+		});
+
 		Route::group(['prefix' => '/tugas'], function()
 		{
 			// Tugas
@@ -661,6 +760,31 @@ Route::group(['middleware' => 'auth'], function ()
 			Route::get('/show/{id}', [
 				'uses' => 'Admin\TugasController@show',
 				'as' => 'a.tugas.s'
+			]);
+		});
+
+		// Koreksi Tugas
+		Route::group(['prefix' => '/koreksi-tugas'], function()
+		{
+			// Tugas
+			Route::get('', [
+				'uses' => 'Admin\KoreksiTugasController@index',
+				'as' => 'admin.koreksi_tugas'
+			]);
+			// Ajax Tugas
+			Route::get('/fetch_all', [
+				'uses' => 'Admin\KoreksiTugasController@ajax_fetch_all',
+				'as' => 'ajax.koreksi'
+			]);
+			// Ubah Tugas
+			Route::post('/update', [
+				'uses' => 'Admin\KoreksiTugasController@update',
+				'as' => 'a.koreksi.u'
+			]);
+			// Show Detail per Tugas
+			Route::get('/show/{id}', [
+				'uses' => 'Admin\KoreksiTugasController@show',
+				'as' => 'a.koreksi.s'
 			]);
 		});
 
@@ -732,7 +856,7 @@ Route::group(['middleware' => 'auth'], function ()
 			]);
 		});
 
-		Route::group(['prefix' => '/daftar_keahlian'], function()
+		Route::group(['prefix' => '/daftar-keahlian'], function()
 		{
 			// Buat Daftar Keahlian
 			Route::get('/', [

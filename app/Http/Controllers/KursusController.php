@@ -152,7 +152,7 @@ class KursusController extends Controller
 			} else {
 				$idKursus = explode('--', $id)[1];
 				$data['kursus'] = Kursus::where('slug', $id)->first();
-				$data['materi'] = Materi::where('id_kursus', $idKursus)->orderBy('no_urut', 'asc')->get();
+				$data['materi'] = Materi::where('id_kursus', $idKursus)->where('paket', 1)->orderBy('no_urut', 'asc')->get();
 			}
 
 			return view('user.kursus.detailfree', $data);

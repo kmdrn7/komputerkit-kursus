@@ -8,9 +8,10 @@ class Bayar extends Model
 {
     protected $table = 'tbl_bayar';
 	protected $primaryKey = 'id_bayar';
-	public $timestamps = false;
 
 	protected $dates = [
+		'created_at',
+		'updated_at',
 		'tgl_mulai',
 		'tgl_bayar',
 	];

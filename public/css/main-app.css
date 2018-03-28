@@ -59,7 +59,8 @@ html, body {
 	margin: 5px;
 	/*transition: all 0.3s ease 0;*/
 }
-.btn-custom > i {
+.btn-custom i,
+.btn-custom-revert > i {
 	float: none!important;
 	vertical-align: middle;
 	font-size: inherit;
@@ -70,7 +71,7 @@ html, body {
 	/*border: 1px solid black;*/
 }
 .btn-custom-large {
-	font-size: 1.6em;
+	font-size: 1.6em!important;
 }
 .btn-custom-revert {
 	font-weight: 600;
@@ -80,7 +81,6 @@ html, body {
 	background-color: transparent;
 	color: black;
 	margin: 5px;
-	/*transition: all 0.3s ease 0;*/
 }
 .btn-custom-revert:focus {
 	background-color: none;
@@ -114,10 +114,12 @@ html, body {
 .main-header {
     background-image: url('/img/web/main-header.png');
 	background-size: cover;
+	min-height: 600px;
 	height: 100vh;
 	width: 100%;
 	background-size: cover;
 	background-position: center right;
+	position: relative;
 	/*background-repeat: no-repeat;*/
 }
 .no-margin-bottom {
@@ -273,6 +275,7 @@ ul.pagination {
 .main-kursus {
 	background-image: url('/img/web/main-kursus.png');
 	background-size: cover;
+	min-height: 600px;
 	height: 100vh;
 	width: 100%;
 	background-size: cover;
@@ -2489,7 +2492,11 @@ ul.pagination {
 		line-height: 25px;
 	}
 }
-
+@media only screen and (max-width: 430px) {
+	.expert-content {
+		margin-top: 160px;
+	}
+}
 @media only screen and (max-width: 420px) {
 	.nav-header-title {
 		font-size: 2.6em;

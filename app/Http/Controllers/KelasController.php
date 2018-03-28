@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App;
 use Route;
 use App\User;
 use Carbon\Carbon;
@@ -26,11 +27,17 @@ class KelasController extends Controller
 		$this->id_user = Auth::id();
 	}
 
+	public function abort($message)
+	{
+		App::abort(404, $message);
+	}
+
     public function index()
     {
 		$data['promosi'] = Promosi::limit(1)->first();
 		$data['now'] = Carbon::now();
-		$data['qkursus'] = User::find(Auth::id())->detailkursus()->orderBy('id_detail_kursus', 'asc')->get();
+		// $data['qkursus'] = User::find(Auth::id())->detailkursus()->orderBy('id_detail_kursus', 'asc')->get();
+		$data['qkursus'] = User::find(Auth::id())->detailBayar()->orderBy('id_detail_kursus', 'asc')->groupBy('kursus')->get();
 		$data['latest'] = QDetailMateri::where([
 				'flag_terbaru'=> 1,
 				'id_user' => $this->id_user,
@@ -52,12 +59,12 @@ class KelasController extends Controller
 				$data['id'] = $id;
 				return view('user.kelas.materi', $data);
 			} else {
-				echo "salah";
+				return $this->abort("Kursus anda tidak aktif");
 			}
-
 		}
 
-		return redirect('/kelas');
+		return $this->abort("Kelas yang anda kunjungi tidak ada");
+
 	}
 
 	public function detailMateri($id, $id_materi)
@@ -84,14 +91,15 @@ class KelasController extends Controller
 					$materi = QDetailMateri::find($id_materi);
 					$no_urut = $materi->no_urut;
 					$data['materi'] = $materi;
-					$data['next'] = QDetailMateri::where(['id_detail_kursus'=>$id_detail_kursus, 'no_urut'=>($no_urut+1)])->first();
-					$data['prev'] = QDetailMateri::where(['id_detail_kursus'=>$id_detail_kursus, 'no_urut'=>($no_urut-1)])->first();
+					$data['next'] = QDetailMateri::where(['id_detail_kursus'=>$id_detail_kursus, 'no_urut'=>($no_urut+1)])->first(['id_detail_materi']);
+					$data['prev'] = QDetailMateri::where(['id_detail_kursus'=>$id_detail_kursus, 'no_urut'=>($no_urut-1)])->first(['id_detail_materi']);
 					return view('user.kelas.detailMateri', $data);
 				}
+				return $this->abort("Materi tidak ditemukan");
 			}
+			return $this->abort("Materi tidak ditemukan");
 		}
-
-		return redirect('/kelas');
+		return $this->abort("Materi tidak ditemukan");
 	}
 
 	public function showTugas($id)
@@ -108,10 +116,10 @@ class KelasController extends Controller
 				$data['id'] = $id;
 				return view('user.kelas.tugas', $data);
 			} else {
-				echo "salah";
+				return $this->abort("Materi tidak ditemukan");
 			}
-
 		}
+		return $this->abort("Materi tidak ditemukan");
 	}
 
 	public function detailTugas($id, $id_tugas)
@@ -128,10 +136,12 @@ class KelasController extends Controller
 					$data['tugas'] = QDetailTugas::find($id_tugas);
 					return view('user.kelas.detailTugas', $data);
 				}
-			}
-		}
 
-		return redirect('/kelas');
+				return $this->abort("Materi tidak ditemukan");
+			}
+			return $this->abort("Materi tidak ditemukan");
+		}
+		return $this->abort("Materi tidak ditemukan");
 	}
 
 	public function postTugas(Request $request)
@@ -147,6 +157,7 @@ class KelasController extends Controller
 		]);
 
 		DetailTugas::where('id_detail_tugas', $request->id_detail_tugas)
+					->where('id_user', Auth::id())
 					->update([
 						'jawaban' => $request->link_jawaban,
 						'flag' => 1,
@@ -170,19 +181,19 @@ class KelasController extends Controller
 
 				return view('user.kelas.diskusi', $data);
 			} else {
-				echo "salah";
+				return $this->abort("Materi tidak ditemukan");
 			}
-
+			return $this->abort("Materi tidak ditemukan");
 		}
+		return $this->abort("Materi tidak ditemukan");
 	}
 
 	public function isActive($id_kursus, $id_detail_kursus)
 	{
-		$exist = DetailKursus::where('id_user', Auth::user()->id_user)
+		$exist = DetailKursus::where('id_user', Auth::id())
 							->where('id_kursus', $id_kursus)
 							->where('id_detail_kursus', $id_detail_kursus)
 							->where('flag_kursus', 1)
-							->get()
 							->count();
 
 		if ( $exist > 0 ) {

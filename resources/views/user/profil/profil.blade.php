@@ -37,7 +37,7 @@
 
 									{{ csrf_field() }}
 
-									<div class="row">
+									<div class="row no-margin-bottom">
 										<div class="input-field col s12 m6">
 											<input value="{{ $user->name }}" id="name" type="text" class="validate" name="name">
 											<label class="active" for="name">Nama</label>
@@ -57,7 +57,7 @@
 											@endif
 										</div>
 									</div>
-									<div class="row">
+									<div class="row no-margin-bottom">
 										<div class="input-field col s12 m6">
 											<input value="{{ $user->email }}" id="email" type="email" class="validate" name="email" readonly disabled>
 											<label class="active" for="email">Email</label>
@@ -68,7 +68,7 @@
 											@endif
 										</div>
 										<div class="input-field col s12 m6">
-											<input value="{{ date('Y-m-d', strtotime(str_replace('/', '-', $user->tgl_lahir))) }}" id="tgl_lahir" type="date" class="datepicker" name="tgl_lahir">
+											<input value="{{ $user->tgl_lahir == '' ? '' : date('Y-m-d', strtotime(str_replace('/', '-', $user->tgl_lahir))) }}" id="tgl_lahir" type="date" class="datepicker" name="tgl_lahir">
 											<label class="active" for="tgl_lahir">Tanggal Lahir</label>
 											@if ($errors->has('tgl_lahir'))
 												<div class="help-block red-text">
@@ -77,7 +77,7 @@
 											@endif
 										</div>
 									</div>
-									<div class="row">
+									<div class="row no-margin-bottom">
 										<div class="input-field col s12">
 											<textarea id="alamat" name="alamat" value="" class="materialize-textarea">{{ $user->alamat }}</textarea>
 											<label for="alamat">Alamat</label>
@@ -88,10 +88,10 @@
 											@endif
 										</div>
 									</div>
-									<div class="row">
+									<div class="row no-margin-bottom">
 										<div class="input-field col s12 m12">
 											<input value="{{ $user->sekolah }}" id="sekolah" type="text" class="validate" name="sekolah">
-											<label class="active" for="sekolah">Sekolah</label>
+											<label class="active" for="sekolah">Sekolah / Universitas</label>
 											@if ($errors->has('sekolah'))
 												<div class="help-block red-text">
 													<strong>{{ $errors->first('sekolah') }}</strong>

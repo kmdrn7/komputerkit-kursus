@@ -13,8 +13,13 @@
     <!-- Styles -->
 	<link href="https://fonts.googleapis.com/css?family=Spectral:200,300,400,500,600,700,800" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
-    <link href="{{ asset('css/app.css?v='. rand(0,999)) }}" rel="stylesheet">
-	<link href="{{ asset('css/main-app.css?v=1.1.0') }}" rel="stylesheet">
+	@if ( env('APP_ENV') == 'local' )
+		<link href="{{ asset('css/app.css?v=1.1.0') }}" rel="stylesheet">
+		<link href="{{ asset('css/main-app.css?v=1.1.0' . rand(0,999)) }}" rel="stylesheet">
+	@else
+		<link href="{{ asset('css/app.css?v='. env('APP_VERSION', '1.1.1')) }}" rel="stylesheet">
+		<link href="{{ asset('css/main-app.css?v='. env('APP_VERSION', '1.1.1')) }}" rel="stylesheet">
+	@endif
 	<script src="https://use.fontawesome.com/d8b86d541f.js"></script>
 	@yield('custom--css')
 </head>
@@ -66,18 +71,11 @@
 				<a href="{{ url('/kursus/free/all') }}" class="button-nav left hide-on-med-and-down">
 					Tutorial
 				</a>
-				{{-- <a href="{{ url('kursus/free/all') }}" class="button-nav left">
-					Tutorial
-				</a>
-				<a href="{{ url('kursus/all') }}" class="button-nav left">
-					Kursus
-				</a> --}}
-				{{-- <a class='right button-collapse button-main-header hide-on-small-only' href='#' data-activates='slide-out'> --}}
 				<a class='right button-main-header hide-on-small-only' href='{{ url('/user/logout') }}' style="margin-left: 10px">
 					Logout
 				</a>
 				<a class='right button-main-header bmh-clickable hide-on-small-only' href='javascript:void(0)'>
-					{{ Auth::user()->name }}
+					<i class="material-icons right">arrow_drop_down</i> {{ Auth::user()->name }}
 				</a>
 			</div>
 		</div>
@@ -107,7 +105,7 @@
 		<div class="row no-margin-bottom ft-bot">
 			<div class="col m12 s12">
 				<div class="ft-copyright">
-					<strong>Kursus KomputerKit</strong> &copy; 2016 - {{ date('Y') }} <span style="margin: 0 5px;">||</span> <i class="fa fa-code"></i>&nbsp; dengan &nbsp;❤&nbsp; di <strong>Buduran-Sidoarjo.</strong>
+					<strong>Kursus KomputerKit</strong> &copy; 2016 - {{ date('Y') }} <span style="margin: 0 5px;">||</span> <i class="fa fa-code"></i>&nbsp; dengan &nbsp;❤&nbsp; di <strong>Buduran/Sidoarjo.</strong>
 				</div>
 			</div>
 		</div>

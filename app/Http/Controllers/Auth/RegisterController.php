@@ -32,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/me';
 
     /**
      * Create a new controller instance.
@@ -121,5 +121,7 @@ class RegisterController extends Controller
 
 			return redirect('/login')->with('token_fail', 'Token missmatch');
 		}
+
+		return redirect('/login')->with('token_fail', 'Token missmatch');
 	}
 }

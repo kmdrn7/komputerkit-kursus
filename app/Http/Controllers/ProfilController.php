@@ -27,7 +27,7 @@ class ProfilController extends Controller
 	public function postProfil(Request $request)
 	{
 		$this->validate($request, [
-			'name' => 'required',			
+			'name' => 'required',
 		], [
 			'nama.required' => 'Nama harus diisi',
 		]);
@@ -55,7 +55,10 @@ class ProfilController extends Controller
 		], [
 			'old_password.required' => 'Password lama harus diisi',
 			'old_password.old_password' => 'Password lama anda harus sesuai',
-			'new_password.confirmed' => 'Password yang anda masukkan harus sama'
+			'new_password.required' => 'Password baru anda tidak boleh kosong',
+			'new_password.min' => 'Password anda minimal :min karakter',
+			'new_password.confirmed' => 'Password yang anda masukkan harus sama',
+			'new_password_confirmation.required' => 'Konfirmasi password anda tidak boleh kosong',
 		]);
 
 		DB::table('tbl_user')

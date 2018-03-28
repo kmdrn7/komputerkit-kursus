@@ -4,6 +4,7 @@
 			<th rowspan="2" class="text-center" width="50">ID</th>
 			<th rowspan="2" class="text-center">Nama</th>
 			<th rowspan="2" class="text-center">Kursus</th>
+			<th rowspan="2" class="text-center">Jenis</th>
 			<th rowspan="2" class="text-center">Tgl Bayar</th>
 			<th colspan="2" class="text-center">Aksi</th>
 		</tr>
@@ -18,11 +19,12 @@
 				<td>{{ $k->id_bayar }}</td>
 				<td>{{ $k->name }}</td>
 				<td>{{ $k->kursus }}</td>
+				<td>{{ $k->ket_bayar }}</td>
 				<td>{{ $k->tgl_bayar }}</td>
 				<td>
 					@if ( $k->status == 0 || $k->status == 2 )
 						<button type="button" class="btn btn-info btn-update" onclick="showUpdateForm('{{ $k->id_bayar }}')">
-							Konfirmasi
+							Konfirmasi/Lihat
 						</button>
 					@else
 						<button type="button" class="btn btn-info btn-update" onclick="showUpdateForm('{{ $k->id_bayar }}')">

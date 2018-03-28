@@ -227,7 +227,7 @@
 							dan juga lihat beberapa penawaran khusus hanya untuk anda.
 						</div>
 						<div class="mkc-action">
-							<a href="{{ route('kelas') }}" class="btn-custom-revert">Masuk Kelas</a>
+							<a href="{{ route('kelas') }}" class="btn-custom-revert btn-custom-large"><i class="material-icons">event_seat</i>&nbsp; Masuk Kelas</a>
 						</div>
 					</div>
 				</div>
@@ -251,7 +251,7 @@
 									<li class="tab col s3"><a class="mtbs" href="#tab-tutor" onclick="false">Tutorial</a></li>
 								</ul>
 								<div class="tabs-item" id="tab-kursus" class="col s12">
-									<p>
+									<p class="no-margin-top">
 										<i class="material-icons tabs-icon">chrome_reader_mode</i> <br>
 										Ikuti kursus untuk mendapatkan pengalaman belajar pemrograman yang sangat menyenangkan dan juga mengesankan.
 									</p>
@@ -260,7 +260,7 @@
 									</p>
 								</div>
 								<div class="tabs-item" id="tab-tutor" class="col s12">
-									<p>
+									<p class="no-margin-top">
 										<i class="material-icons tabs-icon">play_circle_filled</i> <br>
 										Ikuti tutorial untuk sekilas mengenal mengenal tentang kursus kami
 									</p>

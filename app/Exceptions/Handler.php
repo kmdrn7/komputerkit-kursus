@@ -50,7 +50,7 @@ class Handler extends ExceptionHandler
 		} elseif ( !config('app.debug') ) {
 			return response()->view('errors.500', [], 500);
 		} else {
-			return $this->toIlluminateResponse($this->convertExceptionToResponse($e), $e);
+			return parent::render($request, $e);
 		}
 		// Real whoops pages
         // return parent::render($request, $e);

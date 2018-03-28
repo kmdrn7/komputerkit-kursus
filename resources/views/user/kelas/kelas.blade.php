@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-
 	<div class="kelas-nav valign-wrapper">
 		<div class="bnav-container container">
 			<div class="bnsp-book center-align">
@@ -67,7 +66,7 @@
 									</div>
 									<div class="col m4 s12">
 										<div class="latest-btn">
-											<a href="{{ url('/kelas/kursus/'. $latest->id_kursus .'--'. $latest->id_detail_kursus . '/materi/'. $latest->id_detail_materi) }}" class="btn btn-large btn-primary orange">Lanjutkan Belajar</a>
+											<a href="{{ url('/kelas/kursus/'. $latest->id_kursus .'--'. $latest->id_detail_kursus . '/materi/'. $latest->id_detail_materi) }}" class="btn btn-large btn-primary orange"><i class="material-icons left">play_circle_filled</i>Lanjutkan Belajar</a>
 										</div>
 									</div>
 								@else
@@ -102,7 +101,7 @@
 								@elseif ( $qk->flag_kursus == 2 )
 									<div class="contain" style="position:relative; color: black; display: block">
 								@else
-									<a href="{{ url('/konfirmasi/'. $qk->id_kursus .'--'.$qk->id_detail_kursus) }}" style="position:relative; text-decoration: none; color: black; display: block">
+									<a href="{{ url('/konfirmasi/'. $qk->id_kursus .'--'.$qk->id_detail_kursus . '--' . $qk->id_bayar) }}" style="position:relative; text-decoration: none; color: black; display: block">
 								@endif
 									<div class="row kk-content-wrapper">
 										<div class="col m12">
@@ -171,10 +170,10 @@
 												<span class="left" style="margin-top: 7px; font-weight: 300">Sisa {{ $sisa }} hari</span>
 												<a href="{{ url('/kelas/kursus/'. $qk->id_kursus .'--'. $qk->id_detail_kursus . '/materi') }}" class="waves-effect waves btn-flat-custom btn-blue right">Lihat Kursus</a>
 											@endif
-										@elseif ( $qk->flag_kursus == 2 )
+										@elseif ( $qk->flag_kursus == 2 && $qk->status == 2 )
 											<span class="left" style="margin-top: 7px; font-weight: 300; height: 44px">Pembayaran anda sedang dikonfirmasi oleh admin</span>
 										@else
-											<a href="{{ url('/konfirmasi/'. $qk->id_kursus .'--'.$qk->id_detail_kursus) }}" class="waves-effect waves btn-flat-custom btn-red right">Kirim bukti bayar</a>
+											<a href="{{ url('/konfirmasi/'. $qk->id_kursus . '--' . $qk->id_detail_kursus . '--' . $qk->id_bayar) }}" class="waves-effect waves btn-flat-custom btn-red right">Kirim bukti bayar</a>
 										@endif
 									</div>
 								</div>

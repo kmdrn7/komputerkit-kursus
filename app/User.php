@@ -50,6 +50,11 @@ class User extends Authenticatable
 		return $this->hasMany('App\Models\QDetailKursus', 'id_user');
 	}
 
+	public function detailBayar()
+	{
+		return $this->hasMany('App\Models\QDetailBayar', 'id_user');
+	}
+
 	public function bookmark()
 	{
 		return $this->hasMany('App\Models\QBookmark', 'id_user');

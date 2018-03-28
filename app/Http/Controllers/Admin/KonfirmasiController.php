@@ -145,7 +145,15 @@ class KonfirmasiController extends Controller
 
 			$det = DB::table('q_detail_bayar')->where('id_bayar', $req->id)->first();
 
-			Bayar::destroy($req->id);
+			Bayar::where('id_bayar', $req->id)->update([
+				'faktur' => NULL,
+				'atas_nama' => NULL,
+				'nama_bank' => NULL,
+				'bank_tujuan' => NULL,
+				'tgl_bayar' => NULL,
+				'status' => 0,
+			]);
+			
 			DB::table('tbl_detail_kursus')->where('id_detail_kursus', $det->id_detail_kursus)->update([
 				'flag_kursus' => 0,
 			]);

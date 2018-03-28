@@ -11,9 +11,13 @@
 	    <title>Login - Kursus KomputerKit</title>
 
 	    <!-- Styles -->
-	    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
-		<link href="{{ asset('css/app.css') }}" rel="stylesheet">
-		<link href="{{ asset('css/login-app.css?v='. rand(0,999)) }}" rel="stylesheet">
+		@if ( env('APP_ENV') == 'local' )
+			<link href="{{ asset('css/app.css?v=1.1.0') }}" rel="stylesheet">
+			<link href="{{ asset('css/login-app.css?v=1.1.0' . rand(0,999)) }}" rel="stylesheet">
+		@else
+			<link href="{{ asset('css/app.css?v='. env('APP_VERSION', '1.1.1')) }}" rel="stylesheet">
+			<link href="{{ asset('css/login-app.css?v='. env('APP_VERSION', '1.1.1')) }}" rel="stylesheet">
+		@endif
 
 		{{-- <link href="{{ asset('materialize/css/materialize.min.css') }}" rel="stylesheet"> --}}
 		<script src='https://www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit' async defer></script>
